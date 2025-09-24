@@ -1,0 +1,2 @@
+*.unity !text !filter !merge !diff
+ModdedDemoScene.unity filter=lfs diff=lfs merge=lfs -text
