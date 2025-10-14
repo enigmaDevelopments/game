@@ -4,8 +4,7 @@ using UnityEngine.AI;
 public class AI : MonoBehaviour
 {
     
-    public bool runAway = false;
-    public float stoppingDistance;
+    public float runAwayDistance;
     private NavMeshAgent agent;
     private Transform player;
     
@@ -20,10 +19,7 @@ public class AI : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 destnation;
-        if (runAway)
-            destnation = player.position + (transform.position - player.position).normalized * stoppingDistance;
-        else
-            destnation = player.position;
+            destnation = player.position + (transform.position - player.position).normalized * runAwayDistance;
         agent.SetDestination(destnation);
     }
 }
