@@ -3,8 +3,12 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
-   private NavMeshAgent agent;
-   private Transform player;
+    
+    public bool runAway = false;
+    public float stoppingDistance;
+    private NavMeshAgent agent;
+    private Transform player;
+    
 
     private void Awake()
     {
@@ -15,6 +19,11 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        agent.SetDestination(player.position);
+        Vector3 destnation;
+        if (runAway)
+            destnation = player.position + (transform.position - player.position).normalized * stoppingDistance;
+        else
+            destnation = player.position;
+        agent.SetDestination(destnation);
     }
 }
