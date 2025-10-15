@@ -1146,8 +1146,9 @@ MonoBehaviour:
   runAwayRadius: 0
   detection: 0
   detectionRadius: 0
-  veiwAngle: 0
-  veiwRadius: 0
+  raycast: 0
+  veiwAngle: 90
+  veiwRadius: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
