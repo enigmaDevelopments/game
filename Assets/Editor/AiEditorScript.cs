@@ -22,8 +22,8 @@ public class AiEditorScript : Editor
         if (ai.seight)
         {
             Handles.color = Color.green;
-            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, ai.veiwAngle / 2, ai.veiwRadius);
-            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, -ai.veiwAngle / 2, ai.veiwRadius);
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, ai.veiwAngle / 2, ai.veiwRadius);
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, -ai.veiwAngle / 2, ai.veiwRadius);
         }
     }
 
@@ -43,10 +43,14 @@ public class AiEditorScript : Editor
         if (ai.seight)
         {
             ai.raycast = EditorGUILayout.Toggle("Raycast", ai.raycast);
-            if (ai.raycast)
-                ai.enviromentMask = EditorGUILayout.LayerField("Enviroment Mask", ai.enviromentMask);
+            if (ai.raycast) 
+            {
+                SerializedProperty enviromentMask = serializedObject.FindProperty("enviromentMask");
+                EditorGUILayout.PropertyField(enviromentMask);
+            }
             ai.veiwRadius = EditorGUILayout.FloatField("Veiw Radius", ai.veiwRadius);
             ai.veiwAngle = EditorGUILayout.Slider("Veiw Angle", ai.veiwAngle, 0, 360);
+            
         }
         DrawPropertiesExcluding(serializedObject, "m_Script", "runAway", "runAwayRadius", "detection", "detectionRadius", "seight", "veiwAngle", "veiwRadius", "raycast", "enviromentMask");
     }
