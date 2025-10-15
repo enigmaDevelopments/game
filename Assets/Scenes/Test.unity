@@ -394,7 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd8083cb81f8094899d358e9d830c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 0.3
+  attackDuration: 0.15
+  attackCooldown: 0.5
   rotationAngle: 45
   slashEffectPrefab: {fileID: 5503505460791601945, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
 --- !u!1001 &7777835296580486728
