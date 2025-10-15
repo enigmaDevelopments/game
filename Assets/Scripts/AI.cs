@@ -3,12 +3,16 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
+    #if UNITY_EDITOR
+        public bool sight;
+        public bool runAway;
+        public bool detection;
+    #endif
+
     public LayerMask enviromentMask;
-    public bool runAway;
     public float runAwayRadius;
-    public bool detection;
     public float detectionRadius;
-    public bool seight;
+    
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;

@@ -68,8 +68,8 @@ public class AiEditorScript : Editor
         }
         serializedObject.ApplyModifiedProperties();
 
-        ai.seight = EditorGUILayout.Toggle("seight", ai.seight);
-        if (ai.seight)
+        ai.sight = EditorGUILayout.Toggle("Sight", ai.sight);
+        if (ai.sight)
         {
             ai.raycast = EditorGUILayout.Toggle("Raycast", ai.raycast);
             if (ai.raycast)
