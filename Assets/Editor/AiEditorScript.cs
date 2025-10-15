@@ -18,12 +18,11 @@ public class AiEditorScript : Editor
    public override void OnInspectorGUI()
    {
         AI ai = (AI)target;
-        EditorGUI.BeginChangeCheck();
+        serializedObject.Update();
+        DrawPropertiesExcluding(serializedObject, "runAway", "runAwayRadius");
         ai.runAway = EditorGUILayout.Toggle("Run Away", ai.runAway);
         if (ai.runAway)
             ai.runAwayRadius = EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius);
-        ai.detectionRadius = EditorGUILayout.FloatField("Detection Radius", ai.detectionRadius);
-        if (EditorGUI.EndChangeCheck())
-            EditorUtility.SetDirty(ai);
+        serializedObject.ApplyModifiedProperties();
     }
 }

@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
+using static UnityEngine.UI.Image;
 
 public class AI : MonoBehaviour
 {
+    public LayerMask enviromentMask;
     public bool runAway;
     public float runAwayRadius;
     public float detectionRadius;
+    public float veiwAngle;
+    public float veiwDistance;
     private NavMeshAgent agent;
     private Transform player;
     
@@ -21,7 +26,16 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, player.position) < detectionRadius)
-            agent.SetDestination(player.position + runAwayRadius * (transform.position - player.position).normalized);
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 direction = (transform.position - player.position).normalized;
+        if (distance < detectionRadius)
+            agent.SetDestination(player.position + runAwayRadius * direction);
+        else if (Vector3.Angle(transform.forward, -direction) < veiwAngle / 2 )
+            if (!Physics.Raycast(transform.position, -direction, distance, enviromentMask))
+                agent.SetDestination(player.position + runAwayRadius * direction);
+       #if UNITY_EDITOR
+       Debug.DrawRay(transform.position, -direction * distance, Color.red);
+       #endif
     }
 }
+
