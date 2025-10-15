@@ -20,12 +20,6 @@ public class AI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
-        if (!runAway)
-            runAwayRadius = 0;
-        if (!detection)
-            detectionRadius = 0;
-        if (!seight)
-            veiwRadius = 0;
     }
 
     // Update is called once per frame
