@@ -1119,7 +1119,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1142,14 +1142,15 @@ MonoBehaviour:
   enviromentMask:
     serializedVersion: 2
     m_Bits: 64
-  runAway: 0
-  runAwayRadius: 10
+  runAway: 1
+  runAwayRadius: 15
   detection: 0
-  detectionRadius: 20
+  detectionRadius: 0
   seight: 1
-  raycast: 1
-  veiwAngle: 125
+  raycast: 0
+  veiwAngle: 129
   veiwRadius: 30
+  amnisiaTime: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
