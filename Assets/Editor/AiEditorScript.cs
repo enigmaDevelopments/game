@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,51 +7,87 @@ using UnityEngine;
 
 public class AiEditorScript : Editor
 {
+    private bool runAway = true;
+    private bool detection = true;
+    private bool seight = true;
+    private float runAwayRadius = 0;
+    private float detectionRadius = 0;
+    private float veiwRadius = 0;
     private void OnSceneGUI()
     {
         AI ai = (AI)target;
-        if (ai.runAway)
+        if (runAway)
         {
             Handles.color = Color.red;
             Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayRadius);
         }
-        if (ai.detection)
+        if (detection)
         {
             Handles.color = Color.blue;
             Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.detectionRadius);
         }
-        if (ai.seight)
+        if (seight)
         {
             Handles.color = Color.green;
-            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, ai.veiwAngle / 2, ai.veiwRadius);
-            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, -ai.veiwAngle / 2, ai.veiwRadius);
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, ai.veiwAngle / 2, veiwRadius);
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, -ai.veiwAngle / 2, veiwRadius);
         }
     }
-
     public override void OnInspectorGUI()
     {
         AI ai = (AI)target;
         serializedObject.Update();
         ai.runAway = EditorGUILayout.Toggle("Run Away", ai.runAway);
         if (ai.runAway)
-            ai.runAwayRadius = EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius);
+        {
+            if (runAway)
+                runAwayRadius = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius));
+            else
+                runAway = true;
+            ai.runAwayRadius = runAwayRadius;
+        }
+        else
+        {
+            runAway = false;
+            ai.runAwayRadius = 0;
+        }
         ai.detection = EditorGUILayout.Toggle("Detection", ai.detection);
         if (ai.detection)
-            ai.detectionRadius = EditorGUILayout.FloatField("Detection Radius", ai.detectionRadius);
+        {
+            if (detection)
+                detectionRadius = Mathf.Max(0, EditorGUILayout.FloatField("Detection Radius", ai.detectionRadius));
+            else
+                detection = true;
+            ai.detectionRadius = detectionRadius;
+        }
+        else
+        {
+            detection = false;
+            ai.detectionRadius = 0;
+        }
         serializedObject.ApplyModifiedProperties();
 
         ai.seight = EditorGUILayout.Toggle("seight", ai.seight);
         if (ai.seight)
         {
             ai.raycast = EditorGUILayout.Toggle("Raycast", ai.raycast);
-            if (ai.raycast) 
+            if (ai.raycast)
             {
                 SerializedProperty enviromentMask = serializedObject.FindProperty("enviromentMask");
                 EditorGUILayout.PropertyField(enviromentMask);
             }
-            ai.veiwRadius = EditorGUILayout.FloatField("Veiw Radius", ai.veiwRadius);
+            if (seight)
+                veiwRadius = Mathf.Max(0, EditorGUILayout.FloatField("Veiw Radius", ai.veiwRadius));
+            else
+                seight = true;
+            ai.veiwRadius = veiwRadius;
             ai.veiwAngle = EditorGUILayout.Slider("Veiw Angle", ai.veiwAngle, 0, 360);
-            
+
+        }
+        else
+        {
+            seight = false;
+            ai.veiwRadius = 0;
         }
         DrawPropertiesExcluding(serializedObject, "m_Script", "runAway", "runAwayRadius", "detection", "detectionRadius", "seight", "veiwAngle", "veiwRadius", "raycast", "enviromentMask");
     }
