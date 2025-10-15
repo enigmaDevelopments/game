@@ -12,11 +12,11 @@ public class AI : MonoBehaviour
     public LayerMask enviromentMask;
     public float runAwayRadius;
     public float detectionRadius;
-    
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
     public float turningSpeed;
+
     private NavMeshAgent agent;
     private Transform player;
     private Rigidbody rb;
@@ -37,17 +37,22 @@ public class AI : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 direction = (player.position - transform.position).normalized;
-
+        #region Detection
         if (distance < detectionRadius || 
         (distance < veiwRadius &&
         Vector3.Angle(transform.forward, direction) < veiwAngle / 2 &&
         (!raycast || !Physics.Raycast(transform.position, direction, distance, enviromentMask))))
         {
+            #region On Player Detection
             lastDirection = direction;
             agent.SetDestination(player.position + runAwayRadius * -direction);
             if (agent.remainingDistance <= agent.stoppingDistance)
                 rb.MoveRotation(Quaternion.LookRotation(direction));
+            #endregion
         }
+        #endregion
+
+        #region Turning
         if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
             turningTime += turningSpeed;
@@ -58,8 +63,7 @@ public class AI : MonoBehaviour
             turningTime = 0;
             lastSelfDirection = transform.forward;
         }
-
-
+        #endregion
 
         #if UNITY_EDITOR
             Debug.DrawRay(transform.position, direction * distance, Color.red);
