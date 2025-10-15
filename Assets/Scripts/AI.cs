@@ -20,8 +20,6 @@ public class AI : MonoBehaviour
     private NavMeshAgent agent;
     private Transform player;
     private Rigidbody rb;
-    private float distance;
-    private Vector3 direction;
     private Vector3 lastSelfDirection;
     private Vector3 lastDirection;
     private float turningTime;
@@ -37,15 +35,19 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        distance = Vector3.Distance(transform.position, player.position);
-        direction = (player.position - transform.position).normalized;
+        float distance = Vector3.Distance(transform.position, player.position);
+        Vector3 direction = (player.position - transform.position).normalized;
 
-        if (distance < detectionRadius)
-            OnDetectPlayer();
-        else if ((distance < veiwRadius) &&
-        (Vector3.Angle(transform.forward, direction) < veiwAngle / 2) &&
-        (!raycast || !Physics.Raycast(transform.position, direction, distance, enviromentMask)))
-            OnDetectPlayer();
+        if (distance < detectionRadius || 
+        (distance < veiwRadius &&
+        Vector3.Angle(transform.forward, direction) < veiwAngle / 2 &&
+        (!raycast || !Physics.Raycast(transform.position, direction, distance, enviromentMask))))
+        {
+            lastDirection = direction;
+            agent.SetDestination(player.position + runAwayRadius * -direction);
+            if (agent.remainingDistance <= agent.stoppingDistance)
+                rb.MoveRotation(Quaternion.LookRotation(direction));
+        }
         if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
             turningTime += turningSpeed;
@@ -62,13 +64,5 @@ public class AI : MonoBehaviour
         #if UNITY_EDITOR
             Debug.DrawRay(transform.position, direction * distance, Color.red);
         #endif
-    }
-    private void OnDetectPlayer()
-    {  
-        lastDirection = direction;
-        agent.SetDestination(player.position + runAwayRadius * -direction);
-        if (agent.remainingDistance <= agent.stoppingDistance)
-            rb.MoveRotation(Quaternion.LookRotation(direction));
-
     }
 }
