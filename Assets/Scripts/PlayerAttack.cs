@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator Swing()
+    private IEnumerator Swing()
     {
         Console.WriteLine("SWINGING");
 
