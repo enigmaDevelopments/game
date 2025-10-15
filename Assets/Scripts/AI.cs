@@ -1,19 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.Image;
 
 public class AI : MonoBehaviour
 {
     public LayerMask enviromentMask;
     public bool runAway;
     public float runAwayRadius;
+    public bool detection;
     public float detectionRadius;
     public float veiwAngle;
     public float veiwRadius;
     private NavMeshAgent agent;
     private Transform player;
-    
+
 
     private void Awake()
     {
@@ -21,6 +20,8 @@ public class AI : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         if (!runAway)
             runAwayRadius = 0;
+        if (!detection)
+            detectionRadius = 0;
     }
 
     // Update is called once per frame
@@ -39,4 +40,3 @@ public class AI : MonoBehaviour
        #endif
     }
 }
-

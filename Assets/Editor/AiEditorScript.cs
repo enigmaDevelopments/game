@@ -1,5 +1,3 @@
-using System.CodeDom;
-using System.Security.Cryptography.X509Certificates;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,10 +17,13 @@ public class AiEditorScript : Editor
    {
         AI ai = (AI)target;
         serializedObject.Update();
-        DrawPropertiesExcluding(serializedObject, "runAway", "runAwayRadius");
+        DrawPropertiesExcluding(serializedObject, "runAway", "runAwayRadius", "detection", "detectionRadius");
         ai.runAway = EditorGUILayout.Toggle("Run Away", ai.runAway);
         if (ai.runAway)
             ai.runAwayRadius = EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius);
+        ai.detection = EditorGUILayout.Toggle("Detection", ai.detection);
+        if (ai.detection)
+            ai.detectionRadius = EditorGUILayout.FloatField("Detection Radius", ai.detectionRadius);
         serializedObject.ApplyModifiedProperties();
     }
 }
