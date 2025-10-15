@@ -1143,12 +1143,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   runAway: 0
-  runAwayRadius: 0
+  runAwayRadius: 10
   detection: 0
-  detectionRadius: 0
-  raycast: 0
-  veiwAngle: 90
-  veiwRadius: 20
+  detectionRadius: 20
+  seight: 1
+  raycast: 1
+  veiwAngle: 125
+  veiwRadius: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
