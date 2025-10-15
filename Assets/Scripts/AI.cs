@@ -8,6 +8,7 @@ public class AI : MonoBehaviour
     public float runAwayRadius;
     public bool detection;
     public float detectionRadius;
+    public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
     private NavMeshAgent agent;
@@ -33,7 +34,7 @@ public class AI : MonoBehaviour
             agent.SetDestination(player.position + runAwayRadius * direction);
         else if(distance < veiwRadius)
             if (Vector3.Angle(transform.forward, -direction) < veiwAngle / 2 )
-                if (!Physics.Raycast(transform.position, -direction, distance, enviromentMask))
+                if (!raycast || !Physics.Raycast(transform.position, -direction, distance, enviromentMask))
                     agent.SetDestination(player.position + runAwayRadius * direction);
        #if UNITY_EDITOR
        Debug.DrawRay(transform.position, -direction * distance, Color.red);
