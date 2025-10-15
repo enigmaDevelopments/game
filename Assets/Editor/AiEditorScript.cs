@@ -9,8 +9,22 @@ public class AiEditorScript : Editor
     private void OnSceneGUI()
     {
         AI ai = (AI)target;
-        Handles.color = Color.blue;
-        Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.detectionRadius);
+        if (ai.runAway)
+        {
+            Handles.color = Color.red;
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayRadius);
+        }
+        if (ai.detection)
+        {
+            Handles.color = Color.blue;
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.detectionRadius);
+        }
+        if (ai.seight)
+        {
+            Handles.color = Color.green;
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, ai.veiwAngle / 2, ai.veiwRadius);
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, -ai.veiwAngle / 2, ai.veiwRadius);
+        }
     }
 
     public override void OnInspectorGUI()
