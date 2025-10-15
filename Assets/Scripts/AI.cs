@@ -8,6 +8,7 @@ public class AI : MonoBehaviour
     public float runAwayRadius;
     public bool detection;
     public float detectionRadius;
+    public bool seight;
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
@@ -23,6 +24,8 @@ public class AI : MonoBehaviour
             runAwayRadius = 0;
         if (!detection)
             detectionRadius = 0;
+        if (!seight)
+            veiwRadius = 0;
     }
 
     // Update is called once per frame
