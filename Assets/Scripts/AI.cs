@@ -12,29 +12,60 @@ public class AI : MonoBehaviour
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
+    public float turningSpeed;
     private NavMeshAgent agent;
     private Transform player;
-
+    private Rigidbody rb;
+    private float distance;
+    private Vector3 direction;
+    private Quaternion lastSelfDirection;
+    private Quaternion lastDirection;
+    private float turningTime;
+    
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        Vector3 direction = (transform.position - player.position).normalized;
+        distance = Vector3.Distance(transform.position, player.position);
+        direction = (player.position - transform.position).normalized;
+
         if (distance < detectionRadius)
-            agent.SetDestination(player.position + runAwayRadius * direction);
-        else if(distance < veiwRadius)
-            if (Vector3.Angle(transform.forward, -direction) < veiwAngle / 2 )
-                if (!raycast || !Physics.Raycast(transform.position, -direction, distance, enviromentMask))
-                    agent.SetDestination(player.position + runAwayRadius * direction);
-       #if UNITY_EDITOR
-       Debug.DrawRay(transform.position, -direction * distance, Color.red);
-       #endif
+            OnDetectPlayer();
+        else if ((distance < veiwRadius) &&
+        (Vector3.Angle(transform.forward, direction) < veiwAngle / 2) &&
+        (!raycast || !Physics.Raycast(transform.position, direction, distance, enviromentMask)))
+            OnDetectPlayer();
+        if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
+        {
+            turningTime += turningSpeed;
+            rb.MoveRotation(Quaternion.Lerp(lastSelfDirection, lastDirection, turningTime));
+        }
+        else
+        {
+            turningTime = 0;
+            lastSelfDirection = Quaternion.LookRotation(transform.forward);
+        }
+
+
+
+        #if UNITY_EDITOR
+            Debug.DrawRay(transform.position, direction * distance, Color.red);
+            Debug.Log(turningTime);
+        #endif
+    }
+    private void OnDetectPlayer()
+    {  
+        lastDirection = Quaternion.LookRotation(direction);
+        agent.SetDestination(player.position + runAwayRadius * -direction);
+        if (agent.remainingDistance <= agent.stoppingDistance)
+            rb.MoveRotation(Quaternion.LookRotation(direction));
+
     }
 }

@@ -13,6 +13,7 @@ public class AiEditorScript : Editor
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
+
     private void OnSceneGUI()
     {
         AI ai = (AI)target;
@@ -89,6 +90,6 @@ public class AiEditorScript : Editor
             seight = false;
             ai.veiwRadius = 0;
         }
-        DrawPropertiesExcluding(serializedObject, "m_Script", "runAway", "runAwayRadius", "detection", "detectionRadius", "seight", "veiwAngle", "veiwRadius", "raycast", "enviromentMask");
+        ai.turningSpeed = EditorGUILayout.Slider("Turning Speed", ai.turningSpeed, 0, 1);
     }
 }
