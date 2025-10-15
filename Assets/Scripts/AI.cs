@@ -18,8 +18,8 @@ public class AI : MonoBehaviour
     private Rigidbody rb;
     private float distance;
     private Vector3 direction;
-    private Quaternion lastSelfDirection;
-    private Quaternion lastDirection;
+    private Vector3 lastSelfDirection;
+    private Vector3 lastDirection;
     private float turningTime;
     
 
@@ -45,24 +45,23 @@ public class AI : MonoBehaviour
         if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
             turningTime += turningSpeed;
-            rb.MoveRotation(Quaternion.Lerp(lastSelfDirection, lastDirection, turningTime));
+            rb.MoveRotation(Quaternion.Lerp(Quaternion.LookRotation(lastSelfDirection), Quaternion.LookRotation(lastDirection), turningTime));
         }
         else
         {
             turningTime = 0;
-            lastSelfDirection = Quaternion.LookRotation(transform.forward);
+            lastSelfDirection = transform.forward;
         }
 
 
 
         #if UNITY_EDITOR
             Debug.DrawRay(transform.position, direction * distance, Color.red);
-            Debug.Log(turningTime);
         #endif
     }
     private void OnDetectPlayer()
     {  
-        lastDirection = Quaternion.LookRotation(direction);
+        lastDirection = direction;
         agent.SetDestination(player.position + runAwayRadius * -direction);
         if (agent.remainingDistance <= agent.stoppingDistance)
             rb.MoveRotation(Quaternion.LookRotation(direction));
