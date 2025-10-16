@@ -84,13 +84,19 @@ public class AiEditorScript : Editor
                 seight = true;
             ai.veiwRadius = veiwRadius;
             ai.veiwAngle = EditorGUILayout.Slider("Veiw Angle", ai.veiwAngle, 0, 360);
-
         }
         else
         {
             seight = false;
             ai.veiwRadius = 0;
+            if (!ai.detection)
+            {
+                ai.omniscient = EditorGUILayout.Toggle("Omniscient", ai.omniscient);
+                if (ai.omniscient)
+                    ai.detectionRadius = float.PositiveInfinity;
+            }
         }
+
         ai.hasWeapon = EditorGUILayout.Toggle("HasWeapon", ai.hasWeapon);
         if (ai.hasWeapon)
         {

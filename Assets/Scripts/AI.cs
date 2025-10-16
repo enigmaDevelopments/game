@@ -8,6 +8,7 @@ public class AI : MonoBehaviour
         public bool runAway;
         public bool detection;
         public bool hasWeapon;
+        public bool omniscient;
     #endif
 
     public LayerMask enviromentMask;
