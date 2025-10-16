@@ -63,7 +63,7 @@ public class AI : MonoBehaviour
         if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
             turningTime += turningSpeed;
-            rb.MoveRotation(Quaternion.Lerp(Quaternion.LookRotation(lastSelfDirection), Quaternion.LookRotation(lastDirection), turningTime));
+            rb.MoveRotation(Quaternion.Slerp(Quaternion.LookRotation(lastSelfDirection), Quaternion.LookRotation(lastDirection), turningTime));
         }
         else
         {
