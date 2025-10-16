@@ -4,15 +4,16 @@ using UnityEngine;
 
 [CustomEditor(typeof(AI))]
 
-
 public class AiEditorScript : Editor
 {
     private bool runAway = true;
     private bool detection = true;
     private bool seight = true;
+    private bool hasWeapon = true;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
+    private float attackAngle = 0;
 
     private void OnSceneGUI()
     {
@@ -90,6 +91,22 @@ public class AiEditorScript : Editor
             seight = false;
             ai.veiwRadius = 0;
         }
+        ai.hasWeapon = EditorGUILayout.Toggle("HasWeapon", ai.hasWeapon);
+        if (ai.hasWeapon)
+        {
+            ai.weapon = (Weapon)EditorGUILayout.ObjectField("Weapon", ai.weapon, typeof(Weapon), true);
+            if (hasWeapon)
+                attackAngle = EditorGUILayout.Slider("Attack Angle", ai.attackAngle, 0, 360);
+            else
+                hasWeapon = true;
+            ai.attackAngle = attackAngle;
+        }
+        else
+        {
+            hasWeapon = false;
+            ai.attackAngle = 0;
+        }
+
         ai.turningSpeed = EditorGUILayout.Slider("Turning Speed", ai.turningSpeed, 0, 1);
     }
 }

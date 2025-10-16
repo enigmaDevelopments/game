@@ -7,6 +7,7 @@ public class AI : MonoBehaviour
         public bool sight;
         public bool runAway;
         public bool detection;
+        public bool hasWeapon;
     #endif
 
     public LayerMask enviromentMask;
@@ -16,6 +17,9 @@ public class AI : MonoBehaviour
     public float veiwAngle;
     public float veiwRadius;
     public float turningSpeed;
+    public Weapon weapon;
+    public float attackAngle;
+
 
     private NavMeshAgent agent;
     private Transform player;
@@ -37,17 +41,19 @@ public class AI : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 direction = (player.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, direction);
         #region Detection
         if (distance < detectionRadius || 
         (distance < veiwRadius &&
-        Vector3.Angle(transform.forward, direction) < veiwAngle / 2 &&
+         angle  < veiwAngle / 2 &&
         (!raycast || !Physics.Raycast(transform.position, direction, distance, enviromentMask))))
         {
             #region On Player Detection
             lastDirection = direction;
             agent.SetDestination(player.position + runAwayRadius * -direction);
-            if (agent.remainingDistance <= agent.stoppingDistance)
-                rb.MoveRotation(Quaternion.LookRotation(direction));
+            // attack logic
+            if (angle < attackAngle/2 && agent.remainingDistance <= agent.stoppingDistance)
+                weapon.Attack();
             #endregion
         }
         #endregion
