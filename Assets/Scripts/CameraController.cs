@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
+    public Rigidbody target;
     public float speed = 1f;
     private PlayerInput controles;
 
@@ -16,7 +17,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float movement = controles.actions["Camera"].ReadValue<float>();
-        target.Rotate(0, movement * speed, 0);
+        float movement = controles.actions["Camera"].ReadValue<float>() * speed;
+        target.MoveRotation(Quaternion.Euler(0, movement + target.rotation.eulerAngles.y, 0));
+        target.MovePosition(transform.position);
     }
 }
