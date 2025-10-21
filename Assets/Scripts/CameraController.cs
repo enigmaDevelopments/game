@@ -1,22 +1,14 @@
-using Unity.VisualScripting;
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
-    public float speed = 1f;
-    private PlayerInput controles;
+    public CinemachineOrbitalFollow follower;
+    public float upSpeed;
+    public float downSpeed;
 
-    void Start()
-    {
-        controles = GetComponent<PlayerInput>();
-        controles.ActivateInput();
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
-        target.position = transform.position;
+        follower.TrackerSettings.PositionDamping.y = follower.transform.position.y < (transform.position.y + 3) ? upSpeed : downSpeed;
     }
 }
