@@ -23,5 +23,6 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = movement3d;
         if (movement != Vector2.zero)
             rb.MoveRotation(Quaternion.LookRotation(movement3d));
+        Debug.Log(controles.actions["Camera"].ReadValue<float>());
     }
 }
