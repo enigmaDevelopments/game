@@ -317,7 +317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352772785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030404815, y: 0.0000000747574, z: -0.000000002274036, w: 0.9995377}
+  m_LocalRotation: {x: 0.030404879, y: 0.000000037428897, z: -0.0000000011385473, w: 0.9995377}
   m_LocalPosition: {x: 0.06, y: 6.4704766, z: -23.828146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -472,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504239306}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030404812, y: 0.000000074757395, z: -0.0000000022740356, w: 0.9995377}
+  m_LocalRotation: {x: 0.030404873, y: 0.000000037428887, z: -0.0000000011385471, w: 0.9995377}
   m_LocalPosition: {x: 0.06, y: 6.4704766, z: -23.828146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 15
     Center: 15
-    Range: {x: -180, y: 45}
+    Range: {x: 15, y: 45}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -641,8 +641,8 @@ MonoBehaviour:
   upSpeed: 50
   downSpeed: 3
   standeredRaduis: 25
-  middleRaduis: 0
-  closestRaduis: 0
+  minimumRaduis: 15
+  detectionSteps: 0.01
 --- !u!1 &1782044190
 GameObject:
   m_ObjectHideFlags: 0
