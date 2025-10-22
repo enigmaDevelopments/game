@@ -24,7 +24,9 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        if (Physics.Linecast(target.position, transform.position, out RaycastHit hit, enviromentMask))
+        Vector3 direction = (transform.position - target.position).normalized;
+
+        if (Physics.Raycast(new Ray(target.position,direction),out RaycastHit hit,standeredRaduis,enviromentMask))
         {
             if (middleRaduis < hit.distance)
                 follower.Radius = hit.distance;
