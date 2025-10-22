@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public CinemachineOrbitalFollow follower;
     public float upSpeed;
     public float downSpeed;
+    private CinemachineOrbitalFollow follower;
+    private Transform target;
+
+    void Start()
+    {
+        follower = GetComponent<CinemachineOrbitalFollow>();
+        target = GetComponent<CinemachineCamera>().Follow;
+    }
 
     void FixedUpdate()
     {
-        follower.TrackerSettings.PositionDamping.y = follower.transform.position.y < (transform.position.y + 3) ? upSpeed : downSpeed;
+        follower.TrackerSettings.PositionDamping.y = transform.position.y - (Mathf.Tan(follower.VerticalAxis.Value * Mathf.Deg2Rad) * follower.Radius) <= target.position.y ? upSpeed : downSpeed;
     }
 }
