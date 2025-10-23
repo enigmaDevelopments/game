@@ -1,3 +1,4 @@
+using System.Xml;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -13,17 +14,20 @@ public class CameraController : MonoBehaviour
     public float minimumRaduis;
     public float detectionSteps = 1;
     public float detectionStepsHorizontal = 5;
+    public float detectionStepsInternal = 1;
     public float defultLensFOV;
     private new CinemachineCamera camera;
     private CinemachineOrbitalFollow follower;
     private Transform target;
     private Vector3 origin;
     private float jumpTimer = 0;
+    private bool distent;
 
     private class AngleData
     {
         public float angle = float.NegativeInfinity;
         public float distance = float.NegativeInfinity;
+        public bool noHit = false;
         public AngleData(){}
     }
 
@@ -59,15 +63,18 @@ public class CameraController : MonoBehaviour
                 follower.TrackerSettings.PositionDamping.y = normalSpeed;
                 jumpTimer = 0;
             }
+        }
+        distent = 10 < Vector3.Distance(origin, target.position);
+        if (!distent)
             origin = target.position;
-        }   
+        Vector3 position = origin + Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back * follower.Radius;
+        Vector3 direction = (target.position - position).normalized;
+        float distance = Mathf.Max(Vector3.Distance(position,target.position), follower.Radius + 1);
 
-        Vector3 direction = (transform.position-origin).normalized;
-        float distance = Mathf.Max(Vector3.Distance(origin, transform.position), follower.Radius + 1);
-        if (Physics.Raycast(origin, direction, distance, enviromentMask))
+        if (Physics.Raycast(position, direction, distance, enviromentMask))
         {
-            AngleData best = BestAngle(follower.HorizontalAxis.Value);
-            if (minimumRaduis < best.distance)
+            AngleData best = BestAngle(follower.HorizontalAxis.Value, detectionSteps);
+            if (minimumRaduis < best.distance && !distent)
             {
                 follower.RadialAxis.Value = best.distance/follower.Radius;
                 follower.VerticalAxis.Value = best.angle;
@@ -78,19 +85,20 @@ public class CameraController : MonoBehaviour
                 for (float i = 0; i < 180; i += detectionStepsHorizontal)
                 {
                     float angle = ((startAngle + i + 180) % 360 + 360) % 360 - 180;
-                    AngleData sideBest = BestAngle(angle);
-                    if (minimumRaduis < sideBest.distance)
+                    AngleData sideBest = BestAngle(angle, detectionStepsInternal);
+                    if ((distent && sideBest.noHit) || (!distent && minimumRaduis < sideBest.distance))
                     {
-                        follower.RadialAxis.Value = sideBest.distance/follower.Radius;
+                        follower.RadialAxis.Value = sideBest.distance / follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
                         break;
                     }
+
                     angle = ((startAngle - i + 180) % 360 + 360) % 360 - 180;
-                    sideBest = BestAngle(angle);
-                    if (minimumRaduis < sideBest.distance)
+                    sideBest = BestAngle(angle, detectionStepsInternal);
+                    if ((distent && sideBest.noHit) || (!distent && minimumRaduis < sideBest.distance))
                     {
-                        follower.RadialAxis.Value = sideBest.distance/follower.Radius;
+                        follower.RadialAxis.Value = sideBest.distance / follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
                         break;
@@ -106,11 +114,11 @@ public class CameraController : MonoBehaviour
         camera.Lens.FieldOfView = defultLensFOV / follower.RadialAxis.Value;
     }
 
-    private AngleData BestAngle(float position)
+    private AngleData BestAngle(float position, float steps)
     {
         AngleData best = new AngleData();
 
-        for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += detectionSteps)
+        for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += steps)
         {
             Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * follower.Radius;
             #if UNITY_EDITOR
@@ -126,6 +134,7 @@ public class CameraController : MonoBehaviour
             }
             else
             {
+                best.noHit = true;
                 best.distance = follower.Radius;
                 best.angle = i;
                 return best;
