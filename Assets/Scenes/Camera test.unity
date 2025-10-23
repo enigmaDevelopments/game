@@ -225,7 +225,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.17751, y: 0, z: 29.35546}
-  m_LocalScale: {x: 23.373, y: 25.845, z: 1}
+  m_LocalScale: {x: 23.373, y: 300.62903, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -548,7 +548,7 @@ MonoBehaviour:
     BindingMode: 0
     PositionDamping: {x: 3, y: 50, z: 1}
     AngularDampingMode: 0
-    RotationDamping: {x: 0, y: 0, z: 0}
+    RotationDamping: {x: 3, y: 3, z: 3}
     QuaternionDamping: 1
   OrbitStyle: 0
   Radius: 25
@@ -638,7 +638,7 @@ MonoBehaviour:
   enviromentMask:
     serializedVersion: 2
     m_Bits: 64
-  upSpeed: 50
+  upSpeed: 25
   downSpeed: 3
   standeredRaduis: 25
   minimumRaduis: 15
