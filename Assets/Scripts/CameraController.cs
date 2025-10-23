@@ -1,7 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Splines;
+
 
 public class CameraController : MonoBehaviour
 {
@@ -14,6 +13,15 @@ public class CameraController : MonoBehaviour
     private CinemachineOrbitalFollow follower;
     private CinemachineRotationComposer rotator;
     private Transform target;
+    private Vector3 origin;
+
+    private class AngleData
+    {
+        public float angle = float.NegativeInfinity;
+        public float distance = float.NegativeInfinity;
+        public AngleData(){}
+    }
+
 
     void Start()
     {
@@ -21,51 +29,25 @@ public class CameraController : MonoBehaviour
         target = GetComponent<CinemachineCamera>().Follow;
         rotator = GetComponent<CinemachineRotationComposer>();
     }
-
+     
     void FixedUpdate()
     {
         follower.TrackerSettings.PositionDamping.y = transform.position.y - (Mathf.Tan(follower.VerticalAxis.Value * Mathf.Deg2Rad) * follower.Radius) <= target.position.y ? upSpeed : downSpeed;
     }
     private void Update()
     {
-        Vector3 origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
+        origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
         Vector3 direction = Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back;
         Debug.DrawLine(target.position, transform.position, Color.red);
         Debug.DrawRay(origin, direction * standeredRaduis, Color.blue);
         if (Physics.Linecast(target.position,transform.position) || Physics.Raycast(origin,direction, standeredRaduis))
         {
-            float bestAngle = -1;
-            float bestDistance = float.NegativeInfinity;
-
-            for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += detectionSteps)
+            AngleData best = BestAngle(follower.HorizontalAxis.Value);
+            Debug.Log(best.angle + " : " + best.distance);
+            if (minimumRaduis < best.distance)
             {
-                Vector3 newPosition = origin + Quaternion.Euler(i, follower.HorizontalAxis.Value, 0) * Vector3.back * standeredRaduis;
-                Debug.DrawLine(target.position, newPosition, Color.green);
-                if (Physics.Linecast(target.position,newPosition,out RaycastHit hit,enviromentMask))
-                {
-                    if (bestDistance < hit.distance)
-                    {
-                        if (standeredRaduis <= hit.distance)
-                        {
-                            bestDistance = minimumRaduis;
-                            bestAngle = i;
-                            break;
-                        }
-                        bestDistance = hit.distance;
-                        bestAngle = i;
-                    }
-                }
-                else
-                {
-                    bestDistance = standeredRaduis;
-                    bestAngle = i;
-                    break;
-                }
-            }
-            if (minimumRaduis < bestDistance)
-            {
-                follower.Radius = bestDistance;
-                follower.VerticalAxis.Value = bestAngle;
+                follower.Radius = best.distance;
+                follower.VerticalAxis.Value = best.angle;
             }
         }
         else
@@ -73,6 +55,31 @@ public class CameraController : MonoBehaviour
             follower.Radius = standeredRaduis;
             follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         }
-        
+    }
+
+    private AngleData BestAngle(float position)
+    {
+        AngleData best = new AngleData();
+
+        for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += detectionSteps)
+        {
+            Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * standeredRaduis;
+            Debug.DrawLine(target.position, newPosition, Color.green);
+            if (Physics.Linecast(target.position, newPosition, out RaycastHit hit, enviromentMask))
+            {
+                if (best.distance < hit.distance)
+                {
+                    best.distance = hit.distance;
+                    best.angle = i;
+                }
+            }
+            else
+            {
+                best.distance = standeredRaduis;
+                best.angle = i;
+                return best;
+            }
+        }
+        return best;
     }
 }
