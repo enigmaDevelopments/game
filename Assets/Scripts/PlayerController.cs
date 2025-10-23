@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         controles = GetComponent<PlayerInput>();
         controles.ActivateInput();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
