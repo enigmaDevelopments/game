@@ -638,11 +638,15 @@ MonoBehaviour:
   enviromentMask:
     serializedVersion: 2
     m_Bits: 64
-  upSpeed: 25
-  downSpeed: 3
+  jumpSpeed: 200
+  middleSpeed: 10
+  normalSpeed: 3
+  maxJumpHeight: 10
+  maxJumpTime: 3
   standeredRaduis: 25
   minimumRaduis: 15
   detectionSteps: 0.01
+  detectionStepsHorizontal: 5
 --- !u!1 &1782044190
 GameObject:
   m_ObjectHideFlags: 0

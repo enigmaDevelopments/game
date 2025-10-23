@@ -5,15 +5,20 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public LayerMask enviromentMask;
-    public float upSpeed;
-    public float downSpeed;
+    public float jumpSpeed;
+    public float middleSpeed;
+    public float normalSpeed;
+    public float maxJumpHeight;
+    public float maxJumpTime;
     public float standeredRaduis;
     public float minimumRaduis;
     public float detectionSteps = 1;
+    public float detectionStepsHorizontal = 5;
     private CinemachineOrbitalFollow follower;
     private CinemachineRotationComposer rotator;
     private Transform target;
     private Vector3 origin;
+    private float jumpTimer = 0;
 
     private class AngleData
     {
@@ -29,15 +34,34 @@ public class CameraController : MonoBehaviour
         target = GetComponent<CinemachineCamera>().Follow;
         rotator = GetComponent<CinemachineRotationComposer>();
     }
-     
-    void FixedUpdate()
-    {
-        follower.TrackerSettings.PositionDamping.y = transform.position.y - (Mathf.Tan(follower.VerticalAxis.Value * Mathf.Deg2Rad) * follower.Radius) <= target.position.y ? upSpeed : downSpeed;
-    }
     private void Update()
     {
-        //origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
-        origin = target.position;
+        origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
+        if (maxJumpHeight < target.position.y - origin.y)
+        {
+            follower.TrackerSettings.PositionDamping.y = normalSpeed;
+            jumpTimer = float.PositiveInfinity;
+        }
+        else
+        {
+            if (origin.y + 1 <= target.position.y)
+            {
+                if (jumpTimer < maxJumpTime)
+                {
+                    follower.TrackerSettings.PositionDamping.y = jumpSpeed;
+                    jumpTimer += Time.deltaTime;
+                }
+                else
+                    follower.TrackerSettings.PositionDamping.y = middleSpeed;
+            }
+            else
+            {
+                follower.TrackerSettings.PositionDamping.y = normalSpeed;
+                jumpTimer = 0;
+            }
+            origin = target.position;
+        }   
+
         Vector3 direction = Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back;
         Debug.DrawLine(target.position, transform.position, Color.red);
         Debug.DrawRay(origin, direction * standeredRaduis, Color.blue);
@@ -53,7 +77,7 @@ public class CameraController : MonoBehaviour
             {
                 float startAngle = follower.HorizontalAxis.Value;
                 Debug.Log(startAngle);
-                for (float i = 0; i < 180; i += 5)
+                for (float i = 0; i < 180; i += detectionStepsHorizontal)
                 {
                     float angle = ((startAngle + i + 180) % 360 + 360) % 360 - 180;
                     AngleData sideBest = BestAngle(angle);
