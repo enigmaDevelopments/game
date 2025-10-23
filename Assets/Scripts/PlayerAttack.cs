@@ -1,46 +1,24 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : AttackBase
 {
-    private PlayerInput controls;
-    private bool isAttacking = false;
-    private bool canAttack = true;
-
-    public float attackDuration = 0.15f; 
-    public float attackCooldown = 0.5f; 
-    public float rotationAngle = 45f;    
+    [Header("Melee Attack Settings")]
+    [SerializeField] private float attackDuration = 0.15f;
+    [SerializeField] private float rotationAngle = 45f;
 
     [Header("Slash Effect")]
-    public GameObject slashEffectPrefab; 
-    private GameObject activeSlash;      
+    public GameObject slashEffectPrefab;
+    private GameObject activeSlash;
 
     private Quaternion startRotation;
     private Quaternion attackRotation;
 
-    void Start()
-    {
-        controls = GetComponent<PlayerInput>();
-        Console.WriteLine("PlayerAttack initialized.");
-    }
-
-    void Update()
-    {
-        // Only allow attacking if not already swinging and cooldown is over
-        if (controls.actions["Attack"].WasPerformedThisFrame() && !isAttacking && canAttack)
-        {
-            StartCoroutine(Swing());
-        }
-    }
-
-    private IEnumerator Swing()
+    // Input is handled by AttackController; this class only knows how to execute the attack
+    protected override IEnumerator ExecuteAttack()
     {
         Console.WriteLine("SWINGING");
-
-        canAttack = false;
-        isAttacking = true;
 
         // Spawn slash effect
         if (slashEffectPrefab != null)
@@ -68,12 +46,10 @@ public class PlayerAttack : MonoBehaviour
             yield return null;
         }
 
+        // Reset rotation after swing
         transform.rotation = startRotation;
-        isAttacking = false;
 
-        // Wait for cooldown after attack finishes
-        yield return new WaitForSeconds(attackCooldown);
-        canAttack = true;
-        Console.WriteLine("Cooldown finished. Ready to attack again.");
+        // Attack completes this frame; cooldown is handled by base class
+        yield break;
     }
 }

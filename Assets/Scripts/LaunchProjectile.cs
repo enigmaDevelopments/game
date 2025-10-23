@@ -1,24 +1,23 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class FireProjectile : MonoBehaviour
+public class LaunchProjectile : AttackBase
 {
-    
+    [Header("Projectile Settings")]
     public Rigidbody projectile;
-    // Speed of the projectile when fired.
-    // This is a public variable so it can be adjusted in the Unity Editor.
-    public float speed = 4;
-    // Update is called once per frame
-    // This method checks for input and fires a projectile if the attack action is pressed.
-    void Update()
+    public float speed = 4f;
+    public Vector3 spawnOffset = new Vector3(0f, 0f, 0.5f);
+
+    protected override IEnumerator ExecuteAttack()
     {
-        // Check if the "Attack" action was pressed this frame
-        // If it was, instantiate a projectile at the player's position and set its velocity.
-        if (InputSystem.actions.FindAction("Attack").WasPressedThisFrame())
-        {
-            Rigidbody p = Instantiate(projectile, transform.position, transform.rotation);
-            p.linearVelocity = transform.forward * speed;
-        }
+        if (projectile == null)
+            yield break;
+
+        Rigidbody p = Instantiate(projectile, transform.position + transform.TransformDirection(spawnOffset), transform.rotation);
+        p.linearVelocity = transform.forward * speed;
+
+        // No additional timing needed; projectile is fired instantly.
+        yield break;
     }
 }
 
