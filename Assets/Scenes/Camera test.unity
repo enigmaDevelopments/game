@@ -646,6 +646,7 @@ MonoBehaviour:
   minimumRaduis: 15
   detectionSteps: 0.01
   detectionStepsHorizontal: 5
+  defultLensFOV: 40
 --- !u!1 &1782044190
 GameObject:
   m_ObjectHideFlags: 0

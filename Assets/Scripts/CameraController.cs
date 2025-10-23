@@ -13,6 +13,8 @@ public class CameraController : MonoBehaviour
     public float minimumRaduis;
     public float detectionSteps = 1;
     public float detectionStepsHorizontal = 5;
+    public float defultLensFOV;
+    private new CinemachineCamera camera;
     private CinemachineOrbitalFollow follower;
     private Transform target;
     private Vector3 origin;
@@ -28,6 +30,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        camera = GetComponent<CinemachineCamera>();
         follower = GetComponent<CinemachineOrbitalFollow>();
         target = GetComponent<CinemachineCamera>().Follow;
     }
@@ -100,6 +103,7 @@ public class CameraController : MonoBehaviour
             follower.RadialAxis.Value = 1;
             follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         }
+        camera.Lens.FieldOfView = defultLensFOV / follower.RadialAxis.Value;
     }
 
     private AngleData BestAngle(float position)
