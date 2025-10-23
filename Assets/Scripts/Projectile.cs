@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     {
         // When the projectile hits something, create an explosion
         // and remove the projectile.
+        Debug.Log("Projectile hit something");
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
