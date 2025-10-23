@@ -40,6 +40,7 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
+        #region change camera speed if player is jumping
         origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
         if (maxJumpHeight < target.position.y - origin.y)
         {
@@ -64,30 +65,40 @@ public class CameraController : MonoBehaviour
                 jumpTimer = 0;
             }
         }
+        #endregion
+
+        #region check if camra can see player
         distent = 10 < Vector3.Distance(origin, target.position);
         if (!distent)
             origin = target.position;
         Vector3 position = origin + Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back * follower.Radius;
         Vector3 direction = (target.position - position).normalized;
         float distance = Mathf.Max(Vector3.Distance(position,target.position), follower.Radius + 1);
+        #endregion
 
         if (Physics.Raycast(position, direction, distance, enviromentMask))
         {
+            #region move camera vertically axis and zoom if posible
             AngleData best = BestAngle(follower.HorizontalAxis.Value, detectionSteps);
             if (minimumRaduis < best.distance && !distent)
             {
                 follower.RadialAxis.Value = best.distance/follower.Radius;
                 follower.VerticalAxis.Value = best.angle;
             }
+            #endregion
+
+            #region keep camera in radius by moving the camera horizontally
             else
             {
                 float startAngle = follower.HorizontalAxis.Value;
+                bool found = false;
                 for (float i = 0; i < 180; i += detectionStepsHorizontal)
                 {
                     float angle = ((startAngle + i + 180) % 360 + 360) % 360 - 180;
                     AngleData sideBest = BestAngle(angle, detectionStepsInternal);
                     if ((distent && sideBest.noHit) || (!distent && minimumRaduis < sideBest.distance))
                     {
+                        found = true;
                         follower.RadialAxis.Value = sideBest.distance / follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
@@ -98,12 +109,22 @@ public class CameraController : MonoBehaviour
                     sideBest = BestAngle(angle, detectionStepsInternal);
                     if ((distent && sideBest.noHit) || (!distent && minimumRaduis < sideBest.distance))
                     {
+                        found = true;
                         follower.RadialAxis.Value = sideBest.distance / follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
                         break;
                     }
                 }
+                #endregion
+
+                #region if cant find a position keep the best found
+                if (!found)
+                {
+                    follower.RadialAxis.Value = best.distance / follower.Radius;
+                    follower.VerticalAxis.Value = best.angle;
+                }
+                #endregion
             }
         }
         else
@@ -111,8 +132,16 @@ public class CameraController : MonoBehaviour
             follower.RadialAxis.Value = 1;
             follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         }
+        
         camera.Lens.FieldOfView = defultLensFOV / follower.RadialAxis.Value;
     }
+
+    /// <summary>
+    /// finds the best vertical angle for a given horizontal angle
+    /// </summary>
+    /// <param name="position">horizontal angle</param>
+    /// <param name="steps">step distence</param>
+    /// <returns>Information on the best angle</returns>
 
     private AngleData BestAngle(float position, float steps)
     {
