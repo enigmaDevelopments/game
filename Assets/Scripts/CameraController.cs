@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
     public float detectionSteps = 1;
     public float detectionStepsHorizontal = 5;
     private CinemachineOrbitalFollow follower;
-    private CinemachineRotationComposer rotator;
     private Transform target;
     private Vector3 origin;
     private float jumpTimer = 0;
@@ -32,7 +31,6 @@ public class CameraController : MonoBehaviour
     {
         follower = GetComponent<CinemachineOrbitalFollow>();
         target = GetComponent<CinemachineCamera>().Follow;
-        rotator = GetComponent<CinemachineRotationComposer>();
     }
     private void Update()
     {
@@ -62,10 +60,10 @@ public class CameraController : MonoBehaviour
             origin = target.position;
         }   
 
-        Vector3 direction = Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back;
-        Debug.DrawLine(target.position, transform.position, Color.red);
-        Debug.DrawRay(origin, direction * standeredRaduis, Color.blue);
-        if (Physics.Linecast(target.position,transform.position) || Physics.Raycast(origin,direction, standeredRaduis))
+        Vector3 direction = (transform.position-origin).normalized;
+        float distance = Mathf.Max(Vector3.Distance(origin, transform.position), standeredRaduis+1);
+        Debug.DrawRay(origin, direction * distance, Color.blue);
+        if (Physics.Raycast(origin, direction, distance, enviromentMask))
         {
             AngleData best = BestAngle(follower.HorizontalAxis.Value);
             if (minimumRaduis < best.distance)
@@ -114,7 +112,7 @@ public class CameraController : MonoBehaviour
         for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += detectionSteps)
         {
             Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * standeredRaduis;
-            Debug.DrawLine(target.position, newPosition, Color.green);
+            //Debug.DrawLine(target.position, newPosition, Color.green);
             if (Physics.Linecast(target.position, newPosition, out RaycastHit hit, enviromentMask))
             {
                 if (best.distance < hit.distance)
