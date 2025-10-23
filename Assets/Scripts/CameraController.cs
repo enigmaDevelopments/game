@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
     public float normalSpeed;
     public float maxJumpHeight;
     public float maxJumpTime;
-    public float standeredRaduis;
     public float minimumRaduis;
     public float detectionSteps = 1;
     public float detectionStepsHorizontal = 5;
@@ -61,46 +60,44 @@ public class CameraController : MonoBehaviour
         }   
 
         Vector3 direction = (transform.position-origin).normalized;
-        float distance = Mathf.Max(Vector3.Distance(origin, transform.position), standeredRaduis+1);
-        Debug.DrawRay(origin, direction * distance, Color.blue);
+        float distance = Mathf.Max(Vector3.Distance(origin, transform.position), follower.Radius + 1);
         if (Physics.Raycast(origin, direction, distance, enviromentMask))
         {
             AngleData best = BestAngle(follower.HorizontalAxis.Value);
             if (minimumRaduis < best.distance)
             {
-                follower.Radius = best.distance;
+                follower.RadialAxis.Value = best.distance/follower.Radius;
                 follower.VerticalAxis.Value = best.angle;
             }
             else
             {
                 float startAngle = follower.HorizontalAxis.Value;
-                Debug.Log(startAngle);
                 for (float i = 0; i < 180; i += detectionStepsHorizontal)
                 {
                     float angle = ((startAngle + i + 180) % 360 + 360) % 360 - 180;
                     AngleData sideBest = BestAngle(angle);
                     if (minimumRaduis < sideBest.distance)
                     {
-                        follower.Radius = sideBest.distance;
+                        follower.RadialAxis.Value = sideBest.distance/follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
-                        return;
+                        break;
                     }
                     angle = ((startAngle - i + 180) % 360 + 360) % 360 - 180;
                     sideBest = BestAngle(angle);
                     if (minimumRaduis < sideBest.distance)
                     {
-                        follower.Radius = sideBest.distance;
+                        follower.RadialAxis.Value = sideBest.distance/follower.Radius;
                         follower.VerticalAxis.Value = sideBest.angle;
                         follower.HorizontalAxis.Value = angle;
-                        return;
+                        break;
                     }
                 }
             }
         }
         else
         {
-            follower.Radius = standeredRaduis;
+            follower.RadialAxis.Value = 1;
             follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         }
     }
@@ -111,8 +108,10 @@ public class CameraController : MonoBehaviour
 
         for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += detectionSteps)
         {
-            Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * standeredRaduis;
-            //Debug.DrawLine(target.position, newPosition, Color.green);
+            Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * follower.Radius;
+            #if UNITY_EDITOR
+                Debug.DrawLine(target.position, newPosition, Color.green);
+            #endif
             if (Physics.Linecast(target.position, newPosition, out RaycastHit hit, enviromentMask))
             {
                 if (best.distance < hit.distance)
@@ -123,7 +122,7 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                best.distance = standeredRaduis;
+                best.distance = follower.Radius;
                 best.angle = i;
                 return best;
             }
