@@ -16,7 +16,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "MeleeAttack",
                     "type": "Button",
                     "id": "3541be30-629d-468b-9a7d-6aac142f3fcf",
                     "expectedControlType": "",
@@ -28,6 +28,17 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "e037b45f-98e6-4b67-a57e-bd91a437958b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "e037b45f-98e6-4b67-a57e-bd91a437958b",
+                    "name": "ProjectileAttack",
+                    "type": "Button",
+                    "id": "d93dda2e-e0a1-41ab-9343-481cebfd2b56",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -183,7 +194,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df63d789-cad7-4df1-84db-f1148ea62a74",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ProjectileAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
