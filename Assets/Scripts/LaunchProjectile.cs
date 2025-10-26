@@ -15,6 +15,7 @@ public class LaunchProjectile : AttackBase
 
         Rigidbody p = Instantiate(projectile, transform.position + transform.TransformDirection(spawnOffset), transform.rotation);
         p.linearVelocity = transform.forward * speed;
+        p.GetComponent<Projectile>().owner = gameObject;
 
         // No additional timing needed; projectile is fired instantly.
         yield break;
