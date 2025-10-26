@@ -28,6 +28,11 @@ public class AI : MonoBehaviour
     private Vector3 lastSelfDirection;
     private Vector3 lastDirection;
     private float turningTime;
+
+    private bool AgentReady()
+    {
+        return agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh;
+    }
     
 
     private void Awake()
@@ -35,6 +40,9 @@ public class AI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         rb = GetComponent<Rigidbody>();
+        // Initialize directions to avoid zero-vector LookRotation
+        lastSelfDirection = transform.forward;
+        lastDirection = transform.forward;
     }
 
     // Update is called once per frame
@@ -43,6 +51,7 @@ public class AI : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 direction = (player.position - transform.position).normalized;
         float angle = Vector3.Angle(transform.forward, direction);
+        bool agentReady = AgentReady();
         #region Detection
         if (distance < detectionRadius || 
         (distance < veiwRadius &&
@@ -51,16 +60,19 @@ public class AI : MonoBehaviour
         {
             #region On Player Detection
             lastDirection = direction;
-            agent.SetDestination(player.position + runAwayRadius * -direction);
+            if (agentReady)
+            {
+                agent.SetDestination(player.position + runAwayRadius * -direction);
+            }
             // attack logic
-            if (angle < attackAngle/2 && agent.remainingDistance <= agent.stoppingDistance)
+            if (angle < attackAngle/2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
                 weapon.Attack();
             #endregion
         }
         #endregion
 
         #region Turning
-        if (agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
+        if (agentReady && agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
             turningTime += turningSpeed;
             rb.MoveRotation(Quaternion.Slerp(Quaternion.LookRotation(lastSelfDirection), Quaternion.LookRotation(lastDirection), turningTime));
@@ -74,6 +86,10 @@ public class AI : MonoBehaviour
 
         #if UNITY_EDITOR
             Debug.DrawRay(transform.position, direction * distance, Color.red);
+            if (!agentReady)
+            {
+                Debug.DrawRay(transform.position, Vector3.up, Color.yellow);
+            }
         #endif
     }
 }
