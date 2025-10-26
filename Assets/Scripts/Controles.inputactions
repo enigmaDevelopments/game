@@ -33,9 +33,7 @@
                     "interactions": "",
                     "initialStateCheck": false
                 },
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "e037b45f-98e6-4b67-a57e-bd91a437958b",
+                {
                     "name": "ProjectileAttack",
                     "type": "Button",
                     "id": "d93dda2e-e0a1-41ab-9343-481cebfd2b56",
