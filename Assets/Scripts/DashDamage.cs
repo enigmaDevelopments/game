@@ -84,12 +84,13 @@ public class DashThroughDamage : MonoBehaviour
             // Ignore self
             if (hit.gameObject == gameObject) continue;
 
-            // Try to find a health component and deal damage
-            //var health = hit.GetComponent<Health>();
-            //if (health != null)
-            //{
-            //    health.TakeDamage(dashDamage);
-            //}
+            // Try to find a PlayerStats component and deal damage
+            var playerStats = hit.GetComponent<PlayerStats>();
+            if (playerStats != null)
+            {
+                playerStats.TakeDamage(dashDamage);
+            }
+
         }
     }
 }
