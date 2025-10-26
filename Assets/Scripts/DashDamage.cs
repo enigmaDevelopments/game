@@ -90,6 +90,7 @@ public class DashThroughDamage : MonoBehaviour
             {
                 playerStats.TakeDamage(dashDamage);
             }
+
         }
     }
 }
