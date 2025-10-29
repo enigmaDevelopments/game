@@ -160,6 +160,7 @@ MonoBehaviour:
   turnSpeed: 10
   jumpForce: 20
   gravity: -25
+  bufferTime: 0.2
 --- !u!114 &2701619180435390838
 MonoBehaviour:
   m_ObjectHideFlags: 0
