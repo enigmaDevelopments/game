@@ -277,8 +277,8 @@ Transform:
   m_GameObject: {fileID: 429624564}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.18, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -330,7 +330,7 @@ MonoBehaviour:
   acceleration: 60
   deceleration: 40
   turnSpeed: 10
-  jumpForce: 30
+  jumpForce: 10
   gravity: -20
 --- !u!143 &429624568
 CharacterController:
@@ -450,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.650476
+      value: 10.470476
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -516,6 +516,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4284931381708038577, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Composition.DeadZone.Size.y
+      value: 0.03027717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284931381708038577, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Composition.ScreenPosition.y
+      value: -0.00000027939677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284931381708038577, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Composition.HardLimits.Size.y
+      value: 0.19659324
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284931381708038577, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Composition.HardLimits.Offset.y
+      value: -0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -524,13 +540,17 @@ PrefabInstance:
       propertyPath: normalSpeed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7537386550750744377, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: TrackerSettings.PositionDamping.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -528.73755
       objectReference: {fileID: 0}
     - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.650476
+      value: 10.470476
       objectReference: {fileID: 0}
     - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.z

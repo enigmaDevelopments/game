@@ -44,10 +44,14 @@ public class ThirdPersonMovement : MonoBehaviour
     
     public void OnJump(InputValue value)
     {
-        if (value.isPressed && isGrounded)
+        if (value.isPressed)
         {
-            playerVelocity.y = jumpForce;
+            if (isGrounded)
+                playerVelocity.y = jumpForce;
         }
+        else if (0 < playerVelocity.y)
+            playerVelocity.y = 0;
+
     }
 
     void Update()
