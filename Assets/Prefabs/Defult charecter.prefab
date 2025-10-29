@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5077126637147418908}
   - component: {fileID: 5820798529961940446}
   - component: {fileID: 2701619180435390838}
+  - component: {fileID: 8272016974094845243}
   m_Layer: 3
   m_Name: Defult charecter
   m_TagString: Player
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8874716997658010099}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
@@ -191,3 +192,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &8272016974094845243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8874716997658010099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65c7b5aa1d96c242ab2b8f5c1a06897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  hasMeleeWeapon: 0
+  hasProjectileWeapon: 0
+  canDash: 0
