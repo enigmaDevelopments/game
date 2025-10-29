@@ -5,7 +5,6 @@ using Unity.Cinemachine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
-    public CinemachineCamera virtualCamera;
     
     [Header("Movement Settings")]
     public float maxSpeed = 8f;
@@ -17,11 +16,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float jumpForce = 8f;
     public float gravity = -20f;
     
-    [Header("Mouse Settings")]
-    public float mouseSensitivity = 1f;
     
     private Vector2 movement;
-    private Vector2 look;
     private Vector3 playerVelocity;
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
@@ -52,12 +48,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             playerVelocity.y = jumpForce;
         }
-    }
-
-    public void OnLook(InputValue value)
-    {
-        look = value.Get<Vector2>();
-        look *= mouseSensitivity;
     }
 
     void Update()
