@@ -3,9 +3,12 @@ using UnityEngine.InputSystem;
 
 public class AttackController : MonoBehaviour
 {
-    [Header("Input")]
+    [Header("Scripts")]
     [Tooltip("Optional. If not provided, will try to GetComponent<PlayerInput>()")] 
     public PlayerInput input;
+
+    [Tooltip("Optional. If not provided, will try to GetComponent<CharacterBrain>()")]
+    public CharacterBrain brain;
 
     [Header("Attacks")]
     public AttackBase primaryAttack;   // Melee
@@ -15,6 +18,8 @@ public class AttackController : MonoBehaviour
     {
         if (input == null)
             input = GetComponent<PlayerInput>();
+        if (brain == null)
+            brain = GetComponent<CharacterBrain>();
     }
 
     private void Update()
@@ -25,12 +30,12 @@ public class AttackController : MonoBehaviour
             var melee = actions?.FindAction("MeleeAttack", throwIfNotFound: false);
             var projectile = actions?.FindAction("ProjectileAttack", throwIfNotFound: false);
 
-            if (melee != null && melee.WasPerformedThisFrame())
+            if (brain.hasMeleeWeapon && melee.WasPerformedThisFrame())
             {
                 TryPrimary();
             }
 
-            if (projectile != null && projectile.WasPerformedThisFrame())
+            if (brain.hasProjectileWeapon && projectile.WasPerformedThisFrame())
             {
                 TrySecondary();
             }
