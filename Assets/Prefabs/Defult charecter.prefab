@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7240490414405570499}
   - component: {fileID: 1621880226112655715}
   - component: {fileID: 5077126637147418908}
-  - component: {fileID: 5820798529961940446}
   - component: {fileID: 2701619180435390838}
+  - component: {fileID: 5820798529961940446}
   - component: {fileID: 8272016974094845243}
   m_Layer: 3
   m_Name: Defult charecter
@@ -142,26 +142,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5820798529961940446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8874716997658010099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dcb6453718b443f98dac56e7da53de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  controller: {fileID: 5077126637147418908}
-  maxSpeed: 8
-  acceleration: 60
-  deceleration: 40
-  turnSpeed: 10
-  jumpForce: 20
-  gravity: -25
-  bufferTime: 0.2
 --- !u!114 &2701619180435390838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +172,26 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5820798529961940446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8874716997658010099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcb6453718b443f98dac56e7da53de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  controller: {fileID: 5077126637147418908}
+  maxSpeed: 8
+  acceleration: 60
+  deceleration: 40
+  turnSpeed: 10
+  jumpForce: 20
+  gravity: -25
+  bufferTime: 0.2
 --- !u!114 &8272016974094845243
 MonoBehaviour:
   m_ObjectHideFlags: 0
