@@ -256,6 +256,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
   m_PrefabInstance: {fileID: 1196089619571474091}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &429624566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2701619180435390838, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+  m_PrefabInstance: {fileID: 1196089619571474091}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429624564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+--- !u!114 &429624572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8272016974094845243, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+  m_PrefabInstance: {fileID: 1196089619571474091}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429624564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65c7b5aa1d96c242ab2b8f5c1a06897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!114 &429624573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,8 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85704a30a4f04df4490335e952456f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackController
-  input: {fileID: 0}
-  brain: {fileID: 0}
+  input: {fileID: 429624566}
+  brain: {fileID: 429624572}
   primaryAttack: {fileID: 0}
   secondaryAttack: {fileID: 0}
 --- !u!1001 &790779262

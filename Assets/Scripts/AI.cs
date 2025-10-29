@@ -18,7 +18,7 @@ public class AI : MonoBehaviour
     public float veiwAngle;
     public float veiwRadius;
     public float turningSpeed;
-    public Weapon weapon;
+    public AttackBase attack;
     public float attackAngle;
 
 
@@ -66,7 +66,7 @@ public class AI : MonoBehaviour
             }
             // attack logic
             if (angle < attackAngle/2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
-                weapon.Attack();
+                attack.TryAttack();
             #endregion
         }
         #endregion
