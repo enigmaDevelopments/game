@@ -393,15 +393,7 @@ MonoBehaviour:
   deceleration: 40
   turnSpeed: 10
   jumpForce: 10
-  jumpApexTime: 10
-  jumpApexHeight: 10
-  fallMultiplier: 1
-  lowJumpMultiplier: 1
-  groundCheckRadius: 1
-  coyoteTime: 1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  gravity: -20
   mouseSensitivity: 5
 --- !u!143 &406554219
 CharacterController:
