@@ -15,8 +15,11 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Jump Settings")]
     public float jumpForce = 8f;
     public float gravity = -20f;
-    
-    
+
+    [Header("Timer")]
+    public float bufferTime = .5f;
+
+
     private Vector2 movement;
     private Vector3 playerVelocity;
     private Vector3 currentMoveDirection;
@@ -25,7 +28,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float coyoteTimeCounter;
     private bool isGrounded;
     private bool wasGrounded;
-    private bool jumpBuffered;
+    private float buffer = 0;
     private Transform cameraTransform;
 
     public void OnMove(InputValue value)
@@ -48,10 +51,13 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (isGrounded)
                 playerVelocity.y = jumpForce;
+            else
+                buffer = bufferTime;
         }
         else if (0 < playerVelocity.y)
             playerVelocity.y = 0;
-
+        else
+            buffer = 0;
     }
 
     void Update()
@@ -62,11 +68,19 @@ public class ThirdPersonMovement : MonoBehaviour
         if (!isGrounded)
         {
             playerVelocity.y += gravity * Time.deltaTime;
+
+            //decrment buffertime timer
+            if (0 < buffer)
+                buffer -= Time.deltaTime;
         }
         else if (playerVelocity.y < 0)
         {
             // Reset vertical velocity when grounded
             playerVelocity.y = -2f;
+
+            //Jump if jump is buffered
+            if (0 < buffer)
+                playerVelocity.y = jumpForce;
         }
 
         // Get camera-relative movement direction
