@@ -16,7 +16,7 @@ namespace Assets.Scripts.Upgrades
 
         public UpgradeProjectileSpeed()
         {
-            Title = "Hollow-Point Rounds";
+            Title = "Projectile Speed";
             Description = "+20% projectile speed per level (max 3).";
             MaxLevel = 3;
         }
@@ -44,6 +44,7 @@ namespace Assets.Scripts.Upgrades
             // New speed = baseSpeed * (1 + percent)^{CurrentLevel}
             var multiplier = Mathf.Pow(1f + percentPerLevel, CurrentLevel);
             cachedLauncher.speed = baseSpeed * multiplier;
+            Console.WriteLine($"[UpgradeProjectileSpeed] Applied level {CurrentLevel}, new speed: {cachedLauncher.speed}");
             return true;
         }
 
