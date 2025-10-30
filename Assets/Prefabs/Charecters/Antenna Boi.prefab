@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
   attackCooldown: 0.5
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
-  speed: 50
+  speed: 75
+  duration: 1.75
   spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &5732147218266836446
 PrefabInstance:

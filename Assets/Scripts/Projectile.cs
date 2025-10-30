@@ -7,12 +7,13 @@ public class Projectile : MonoBehaviour
     // Metadata passed from the launcher
     public GameObject owner;
     public string attackName;
+    public float duration;
 
     void Start()
     {
         // Deletes the projectile after 10 seconds, regardless
         // of whether it collided with anything. 
-        Destroy(gameObject, 10);
+        Destroy(gameObject, duration);
     }
 
     void OnCollisionEnter(Collision collision)
