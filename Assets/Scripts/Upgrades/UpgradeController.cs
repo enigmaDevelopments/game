@@ -7,10 +7,11 @@ namespace Assets.Scripts.Upgrades
     // Attached to the player; manages available and applied upgrades.
     public class UpgradeController : MonoBehaviour
     {
-        // Upgrades that can be rolled/shown in UI
-        [SerializeReference] [SerializeField] private List<UpgradeBase> availableUpgrades = new List<UpgradeBase>();
+        // Asset references to available upgrades (ScriptableObjects)
+        [SerializeField] private List<UpgradeBase> availableUpgrades = new List<UpgradeBase>();
 
-        // Upgrades that have been applied at least once
+        // Runtime instances of upgrades that have been applied at least once
+        private readonly Dictionary<UpgradeBase, UpgradeBase> runtimeInstances = new Dictionary<UpgradeBase, UpgradeBase>();
         private readonly List<UpgradeBase> appliedUpgrades = new List<UpgradeBase>();
 
         // Event invoked when an upgrade is applied; subscribers (UI) can react
@@ -19,51 +20,63 @@ namespace Assets.Scripts.Upgrades
         public IReadOnlyList<UpgradeBase> AvailableUpgrades => availableUpgrades;
         public IReadOnlyList<UpgradeBase> AppliedUpgrades => appliedUpgrades;
 
-        // Apply a specific upgrade to this player GameObject
-        public bool ApplyUpgrade(UpgradeBase upgrade)
+        // Apply a specific upgrade asset to this player GameObject
+        public bool ApplyUpgrade(UpgradeBase upgradeAsset)
         {
-            if (upgrade == null)
+            if (upgradeAsset == null)
                 return false;
 
-            // Ensure the upgrade applies to this gameObject (player)
-            if (!upgrade.CanApply)
+            // Get or create a runtime clone so we don't mutate the asset
+            if (!runtimeInstances.TryGetValue(upgradeAsset, out var instance) || instance == null)
+            {
+                instance = Instantiate(upgradeAsset);
+                runtimeInstances[upgradeAsset] = instance;
+            }
+
+            if (!instance.CanApply)
                 return false;
 
-            // Let the upgrade execute its effect and progress its own level
-            var progressed = upgrade.ApplyUpgrade(gameObject);
+            // Execute the upgrade's effect against this GameObject
+            var progressed = instance.ApplyUpgrade(gameObject);
             if (!progressed)
                 return false;
 
-            if (!appliedUpgrades.Contains(upgrade))
-                appliedUpgrades.Add(upgrade);
+            if (!appliedUpgrades.Contains(instance))
+                appliedUpgrades.Add(instance);
 
-            OnUpgradeApplied?.Invoke(upgrade);
+            OnUpgradeApplied?.Invoke(instance);
             return true;
         }
 
-        // Optionally allow registering new upgrades at runtime (likely through some sort of ui?)
-        public void RegisterAvailableUpgrade(UpgradeBase upgrade)
+        // Optionally allow registering new upgrades (assets) at runtime
+        public void RegisterAvailableUpgrade(UpgradeBase upgradeAsset)
         {
-            if (upgrade != null && !availableUpgrades.Contains(upgrade))
+            if (upgradeAsset != null && !availableUpgrades.Contains(upgradeAsset))
             {
-                availableUpgrades.Add(upgrade);
+                availableUpgrades.Add(upgradeAsset);
             }
+        }
+
+        // Convenience to trigger an upgrade by index from UI buttons
+        public bool ApplyUpgradeByIndex(int index)
+        {
+            if (index < 0 || index >= availableUpgrades.Count)
+                return false;
+
+            return ApplyUpgrade(availableUpgrades[index]);
         }
 
         public void ApplyTestSceneUpgrade()
         {
             if (availableUpgrades[0] != null)
             {
-                Console.WriteLine($"[UpgradeController] Applying test upgrade: {availableUpgrades[0].Title} (Level {availableUpgrades[0].CurrentLevel + 1})");
+                Console.WriteLine($"[UpgradeController] Applying test upgrade: {availableUpgrades[0].name}");
                 ApplyUpgrade(availableUpgrades[0]);
             }
             else
             {
-                Console.WriteLine("[UpgradeController] No upgrade found at index 0 to apply.");
+                Console.WriteLine("[UpgradeController] No upgrade found at index 0 for test application.");
             }
-                
-
-
         }
     }
 }

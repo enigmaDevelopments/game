@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Scripts.Upgrades;
 
 namespace Assets.Scripts.Upgrades
 {
     // Increases the projectile speed of the player's LaunchProjectile component.
-    [Serializable]
+    [CreateAssetMenu(menuName = "Upgrades/Projectile Speed", fileName = "Upgrade_ProjectileSpeed")]
     public class UpgradeProjectileSpeed : UpgradeBase
     {
         [Range(0f, 5f)] public float percentPerLevel = 0.50f; // +20% per level by default
@@ -13,13 +12,6 @@ namespace Assets.Scripts.Upgrades
         private LaunchProjectile cachedLauncher;
         private float baseSpeed;
         private bool baseCaptured;
-
-        public UpgradeProjectileSpeed()
-        {
-            Title = "Projectile Speed";
-            Description = "+20% projectile speed per level (max 3).";
-            MaxLevel = 3;
-        }
 
         public override bool ApplyUpgrade(GameObject target)
         {
@@ -44,9 +36,8 @@ namespace Assets.Scripts.Upgrades
             // New speed = baseSpeed * (1 + percent)^{CurrentLevel}
             var multiplier = Mathf.Pow(1f + percentPerLevel, CurrentLevel);
             cachedLauncher.speed = baseSpeed * multiplier;
-            Console.WriteLine($"[UpgradeProjectileSpeed] Applied level {CurrentLevel}, new speed: {cachedLauncher.speed}");
+            Debug.Log($"[UpgradeProjectileSpeed] Applied level {CurrentLevel}, new speed: {cachedLauncher.speed}");
             return true;
         }
-
     }
 }
