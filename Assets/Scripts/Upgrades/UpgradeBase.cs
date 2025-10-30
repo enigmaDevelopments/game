@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Assets.Scripts.Upgrades
 {
     // Base class for all upgrades. Holds shared metadata and level control logic.
-    public abstract class UpgradeBase
+    public abstract class UpgradeBase : ScriptableObject
     {
         // UI metadata for displaying this upgrade in a future UI
-        public Sprite Icon; 
+        public Sprite Icon;
         public string Title;
         public string Description;
 
@@ -26,6 +26,5 @@ namespace Assets.Scripts.Upgrades
             CurrentLevel++;
             return true;
         }
-
     }
 }
