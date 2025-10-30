@@ -41,7 +41,7 @@ namespace Assets.Scripts.Upgrades
             return true;
         }
 
-        // Optionally allow registering new upgrades at runtime
+        // Optionally allow registering new upgrades at runtime (likely through some sort of ui?)
         public void RegisterAvailableUpgrade(UpgradeBase upgrade)
         {
             if (upgrade != null && !availableUpgrades.Contains(upgrade))
@@ -49,5 +49,7 @@ namespace Assets.Scripts.Upgrades
                 availableUpgrades.Add(upgrade);
             }
         }
+
+
     }
 }
