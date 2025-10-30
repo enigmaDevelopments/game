@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Upgrades
 {
@@ -57,6 +58,25 @@ namespace Assets.Scripts.Upgrades
             }
         }
 
+        // Returns the current level of a specific upgrade type, or -1 if not found
+        public int GetUpgradeLevel<T>() where T : UpgradeBase
+        {
+            foreach (var instance in runtimeInstances.Values)
+            {
+                if (instance is T typed)
+                    return typed.CurrentLevel;
+            }
+
+            // fallback if the upgrade hasn’t been applied yet
+            foreach (var upgrade in availableUpgrades)
+            {
+                if (upgrade is T typed)
+                    return typed.CurrentLevel;
+            }
+
+            return -1;
+        }
+
         // Convenience to trigger an upgrade by index from UI buttons
         public bool ApplyUpgradeByIndex(int index)
         {
@@ -65,6 +85,9 @@ namespace Assets.Scripts.Upgrades
 
             return ApplyUpgrade(availableUpgrades[index]);
         }
+
+
+        #region Scene Testing
 
         public void ApplyTestSceneUpgrade()
         {
@@ -78,5 +101,23 @@ namespace Assets.Scripts.Upgrades
                 Console.WriteLine("[UpgradeController] No upgrade found at index 0 for test application.");
             }
         }
+
+        public void UpdateProjectileSpeedText(Text targetText)
+        {
+            if (targetText == null)
+                return;
+
+            int level = GetUpgradeLevel<UpgradeProjectileSpeed>();
+            if (level >= 5) targetText.text = "Level: Max";
+            else
+                targetText.text = $"Level: {Mathf.Max(0, level)}";
+        }
+
+
+        #endregion
+
+
+
+
     }
 }
