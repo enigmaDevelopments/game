@@ -7,11 +7,16 @@ namespace Assets.Scripts.Upgrades
     [CreateAssetMenu(menuName = "Upgrades/Projectile Speed", fileName = "Upgrade_ProjectileSpeed")]
     public class UpgradeProjectileSpeed : UpgradeBase
     {
-        [Range(0f, 5f)] public float percentPerLevel = 0.50f; // +20% per level by default
+        [Range(0f, 5f)] public float percentPerLevel = 0.20f; // +20% per level by default
 
         private LaunchProjectile cachedLauncher;
         private float baseSpeed;
         private bool baseCaptured;
+
+        private void OnEnable()
+        {
+            MaxLevel = 5;
+        }
 
         public override bool ApplyUpgrade(GameObject target)
         {
