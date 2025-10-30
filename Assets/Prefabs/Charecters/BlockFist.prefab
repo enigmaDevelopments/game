@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1364212213409671966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8847793752233525076}
+  - component: {fileID: 6375962331818669951}
+  m_Layer: 3
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8847793752233525076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364212213409671966}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 0.5, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6494226583712110411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6375962331818669951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364212213409671966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd81c7a1c18dd34dbe63ed5862cd6c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShotGun
+  attackCooldown: 5
+  projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
+  speed: 75
+  duration: 0.25
+  spawnOffset: {x: 0, y: 0, z: 0.5}
+  spreadX: 15
+  spreadY: 10
+  bullets: 20
 --- !u!1001 &5732147218266836446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,15 +62,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -18.86685
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.64202
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48,13 +100,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7361724612344053544, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: secondaryAttack
+      value: 
+      objectReference: {fileID: 6375962331818669951}
     - target: {fileID: 8874716997658010099, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_Name
       value: BlockFist
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8847793752233525076}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8874716997658010099, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       insertIndex: 1
@@ -166,5 +225,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlockFistBrain
   hasMeleeWeapon: 0
-  hasProjectileWeapon: 0
+  hasProjectileWeapon: 1
   canDash: 0
+--- !u!4 &6494226583712110411 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+  m_PrefabInstance: {fileID: 5732147218266836446}
+  m_PrefabAsset: {fileID: 0}
