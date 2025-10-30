@@ -1,0 +1,23 @@
+.header {
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    -unity-font-style: bold;
+    background-color: rgb(26, 26, 26);
+}
+
+:root {
+}
+
+.button {
+    font-size: 25px;
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    width: 200px;
+    height: 60px;
+    -unity-text-align: upper-center;
+    align-self: center;
+    background-color: rgb(255, 255, 255);
+    padding-top: 15px;
+    top: 40px;
+}
