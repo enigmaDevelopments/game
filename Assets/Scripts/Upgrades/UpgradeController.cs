@@ -8,7 +8,7 @@ namespace Assets.Scripts.Upgrades
     public class UpgradeController : MonoBehaviour
     {
         // Upgrades that can be rolled/shown in UI
-        [SerializeField] private List<UpgradeBase> availableUpgrades = new List<UpgradeBase>();
+        [SerializeReference] [SerializeField] private List<UpgradeBase> availableUpgrades = new List<UpgradeBase>();
 
         // Upgrades that have been applied at least once
         private readonly List<UpgradeBase> appliedUpgrades = new List<UpgradeBase>();
@@ -50,6 +50,20 @@ namespace Assets.Scripts.Upgrades
             }
         }
 
+        public void ApplyTestSceneUpgrade()
+        {
+            if (availableUpgrades[0] != null)
+            {
+                Console.WriteLine($"[UpgradeController] Applying test upgrade: {availableUpgrades[0].Title} (Level {availableUpgrades[0].CurrentLevel + 1})");
+                ApplyUpgrade(availableUpgrades[0]);
+            }
+            else
+            {
+                Console.WriteLine("[UpgradeController] No upgrade found at index 0 to apply.");
+            }
+                
 
+
+        }
     }
 }
