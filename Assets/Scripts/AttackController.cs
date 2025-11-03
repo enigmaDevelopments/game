@@ -31,18 +31,18 @@ public class AttackController : MonoBehaviour
         if (input != null)
         {
             var actions = input.actions;
-            var melee = actions?.FindAction("MeleeAttack", throwIfNotFound: false);
-            var projectile = actions?.FindAction("ProjectileAttack", throwIfNotFound: false);
+            var melee = actions?.FindAction("MeleeAttack", throwIfNotFound: true);
+            var projectile = actions?.FindAction("ProjectileAttack", throwIfNotFound: true);
 
             if (brain.hasMeleeWeapon && ((canHoldPrimary && melee.IsPressed()) || (!canHoldPrimary && melee.WasPerformedThisFrame())))
             {
                 TryPrimary();
             }
 
-            if (brain.hasProjectileWeapon && ((canHoldSecondary && projectile.IsPressed()) || (!canHoldSecondary && projectile.WasPerformedThisFrame())))
-            {
-                TrySecondary();
-            }
+            //if (brain.hasProjectileWeapon && ((canHoldSecondary && projectile.IsPressed()) || (!canHoldSecondary && projectile.WasPerformedThisFrame())))
+            //{
+            //    TrySecondary();
+            //}
         }
     }
 
