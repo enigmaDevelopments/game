@@ -14,6 +14,10 @@ public class AttackController : MonoBehaviour
     public AttackBase primaryAttack;   // Melee
     public AttackBase secondaryAttack; // Projectile
 
+    [Header("Press and Hold")]
+    public bool canHoldPrimary;
+    public bool canHoldSecondary;
+
     private void Awake()
     {
         if (input == null)
@@ -30,12 +34,12 @@ public class AttackController : MonoBehaviour
             var melee = actions?.FindAction("MeleeAttack", throwIfNotFound: false);
             var projectile = actions?.FindAction("ProjectileAttack", throwIfNotFound: false);
 
-            if (brain.hasMeleeWeapon && melee.WasPerformedThisFrame())
+            if (brain.hasMeleeWeapon && ((canHoldPrimary && melee.IsPressed()) || (!canHoldPrimary && melee.WasPerformedThisFrame())))
             {
                 TryPrimary();
             }
 
-            if (brain.hasProjectileWeapon && projectile.WasPerformedThisFrame())
+            if (brain.hasProjectileWeapon && ((canHoldSecondary && projectile.IsPressed()) || (!canHoldSecondary && projectile.WasPerformedThisFrame())))
             {
                 TrySecondary();
             }

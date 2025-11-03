@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -14,9 +15,6 @@ public class PlayerDash : MonoBehaviour
     void Update()
     {
         // Get basic input
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector3(moveX, 0f, moveZ).normalized;
 
         // Move normally when not dashing
         if (!isDashing)
@@ -49,5 +47,10 @@ public class PlayerDash : MonoBehaviour
         // Wait before you can dash again
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    public void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
     }
 }
