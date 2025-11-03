@@ -21,7 +21,7 @@
                     "id": "3541be30-629d-468b-9a7d-6aac142f3fcf",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -46,6 +46,15 @@
                     "name": "ProjectileAttack",
                     "type": "Button",
                     "id": "d93dda2e-e0a1-41ab-9343-481cebfd2b56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "special",
+                    "type": "Button",
+                    "id": "feea2b53-ff34-4596-aadb-d6e5109c6025",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -198,11 +207,33 @@
                 },
                 {
                     "name": "",
+                    "id": "aa84d5a0-40d7-423f-99b4-809db7eda2bf",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "df63d789-cad7-4df1-84db-f1148ea62a74",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "ProjectileAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23c63db2-1e44-4034-bbae-8b2a534f0b47",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "ProjectileAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -248,6 +279,28 @@
                     "processors": "Scale(factor=10)",
                     "groups": ";Keyboard&Mouse",
                     "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25e91c5c-d5ed-488f-878d-d30f3a885835",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1274ae9b-4f32-4787-98c5-7373558a7b33",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "special",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
