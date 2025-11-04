@@ -39,10 +39,10 @@ public class AttackController : MonoBehaviour
                 TryPrimary();
             }
 
-            //if (brain.hasProjectileWeapon && ((canHoldSecondary && projectile.IsPressed()) || (!canHoldSecondary && projectile.WasPerformedThisFrame())))
-            //{
-            //    TrySecondary();
-            //}
+            if (brain.hasProjectileWeapon && ((canHoldSecondary && projectile.IsPressed()) || (!canHoldSecondary && projectile.WasPerformedThisFrame())))
+            {
+                TrySecondary();
+            }
         }
     }
 
