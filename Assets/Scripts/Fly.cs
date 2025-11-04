@@ -1,35 +1,38 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Fly : MonoBehaviour
+public class Fly : ThirdPersonMovement
 {
-    [Header("Contoll references")]
-    public PlayerInput input;
-    public ThirdPersonMovement movementScript;
-    [Header("Settings")]
+
+    [Header("Flight Settings")]
     public float duration;
     public float force;
 
-    private InputAction jump;
     private float fuel;
-    private float defultGravity;
+    private bool flying;
 
-    private void Start()
+    protected override void Start()
     {
-        jump = input.actions?.FindAction("Jump", throwIfNotFound: true);
-        defultGravity = movementScript.gravity;
+        //canFasttFall = false;
+        base.Start();
     }
-    private void Update()
+    public override void OnJump(InputValue value)
     {
-        if (0 < fuel && jump.IsPressed())
+        flying = value.isPressed;
+        base.OnJump(value);
+        
+    }
+
+    protected override void Update()
+    {
+        if (0 < fuel && flying)
         {
-            movementScript.playerVelocity.y += force * Time.deltaTime;
+            playerVelocity.y += force * Time.deltaTime;
             fuel -= Time.deltaTime;
-            movementScript.gravity = 0;
         }
-        else if (movementScript.IsGrounded)
+        else if (isGrounded)
             fuel = duration;
-        else
-            movementScript.gravity = defultGravity;
+        base.Update();
     }
 }

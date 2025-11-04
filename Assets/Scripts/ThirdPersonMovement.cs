@@ -18,34 +18,33 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Timer")]
     public float bufferTime = .5f;
 
-    [HideInInspector]
-    public Vector3 playerVelocity;
-    public bool IsGrounded => isGrounded;
+    protected Vector3 playerVelocity;
     private Vector2 movement;
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
     private float currentSpeed;
     private float coyoteTimeCounter;
-    private bool isGrounded;
+    protected bool isGrounded;
     private bool wasGrounded;
     private float buffer = 0;
     private Transform cameraTransform;
+    protected bool canFasttFall = true;
 
     public void OnMove(InputValue value)
     {
-        movement = value.Get<Vector2>();
+        movement = Vector2.ClampMagnitude(value.Get<Vector2>(),1);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         cameraTransform = Camera.main.transform;
-        
+
         // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
     
-    public void OnJump(InputValue value)
+    public virtual void OnJump(InputValue value)
     {
         if (value.isPressed)
         {
@@ -54,16 +53,15 @@ public class ThirdPersonMovement : MonoBehaviour
             else
                 buffer = bufferTime;
         }
-        else if (0 < playerVelocity.y)
+        else if (canFasttFall && 0 < playerVelocity.y)
             playerVelocity.y = 0;
         else
             buffer = 0;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         isGrounded = controller.isGrounded;
-        
         // Apply gravity
         if (!isGrounded)
         {
