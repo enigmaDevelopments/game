@@ -1,13 +1,10 @@
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class Fly : MonoBehaviour
 {
     [Header("Contoll references")]
     public PlayerInput input;
-    public CharacterController controller;
     public ThirdPersonMovement movementScript;
     [Header("Settings")]
     public float duration;
@@ -26,11 +23,11 @@ public class Fly : MonoBehaviour
     {
         if (0 < fuel && jump.IsPressed())
         {
-            controller.Move(Vector3.up * force * Time.deltaTime);
+            movementScript.playerVelocity.y += force * Time.deltaTime;
             fuel -= Time.deltaTime;
             movementScript.gravity = 0;
         }
-        else if (controller.isGrounded)
+        else if (movementScript.IsGrounded)
             fuel = duration;
         else
             movementScript.gravity = defultGravity;
