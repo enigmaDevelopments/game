@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.UIElements;
 using UnityEngine;
 using static UnityEngine.UI.GridLayoutGroup;
 
@@ -9,6 +10,7 @@ public class LaunchProjectile : AttackBase
     public float speed = 4f;
     public float duration;
     public Vector3 spawnOffset = new Vector3(0f, 0f, 0.5f);
+    public int layer;
 
     protected override IEnumerator ExecuteAttack()
     {
@@ -31,6 +33,7 @@ public class LaunchProjectile : AttackBase
         Projectile projectileScript = p.GetComponent<Projectile>();
         projectileScript.duration = duration;
         projectileScript.owner = gameObject;
+        p.gameObject.layer = layer;
     } 
 }
 
