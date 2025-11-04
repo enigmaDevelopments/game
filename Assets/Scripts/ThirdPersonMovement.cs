@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -19,9 +18,10 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Timer")]
     public float bufferTime = .5f;
 
-
+    [HideInInspector]
+    public Vector3 playerVelocity;
+    public bool IsGrounded => isGrounded;
     private Vector2 movement;
-    private Vector3 playerVelocity;
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
     private float currentSpeed;
