@@ -3,7 +3,11 @@ using UnityEngine;
 public class CharacterBrain : MonoBehaviour
 {
     public AttackController attackController;
-    [Header("Settings")]
+    [Header("Defults")]
+    public GameObject defultMeleeWeapon;
+    public GameObject defultProjectileWeapon;
+    public GameObject defultSpecialWeapon;
+
     public bool hasMeleeWeapon => _hasMeleeWeapon;
     public bool hasProjectileWeapon => _hasProjectileWeapon;
     public bool hasSpecialeWeapon => _hasSpecialeWeapon;
@@ -50,5 +54,14 @@ public class CharacterBrain : MonoBehaviour
     {
         _hasSpecialeWeapon = false;
         Destroy(activeSpecialeWeapon);
+    }
+    protected virtual void Start()
+    {
+        if (defultMeleeWeapon != null) 
+            SetMeleeWeapon(defultMeleeWeapon);
+        if (defultProjectileWeapon != null)
+            SetProjectileWeapon(defultProjectileWeapon);
+        if (defultSpecialWeapon != null)
+            SetSpecialWepon(defultSpecialWeapon);
     }
 }
