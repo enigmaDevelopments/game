@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1419034353688212920}
+  - component: {fileID: 4031688639977027712}
   - component: {fileID: 7706633389480633758}
   - component: {fileID: 7088699100664738567}
-  - component: {fileID: 4031688639977027712}
   m_Layer: 3
   m_Name: Pulse Pack
   m_TagString: Untagged
@@ -34,6 +34,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4031688639977027712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699356558588022201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e543232033ce3a5419901f05937fde98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PulseCreator
+  attackCooldown: 40
+  canHold: 0
+  raduis: 50
+  force: 1000
+  upwardsModifyer: 8
+  proneTime: 3
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!198 &7706633389480633758
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4837,23 +4858,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &4031688639977027712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3699356558588022201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e543232033ce3a5419901f05937fde98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PulseCreator
-  attackCooldown: 0.5
-  raduis: 50
-  force: 1000
-  upwardsModifyer: 8
-  proneTime: 5
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 128

@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class AntennaBrain : CharacterBrain
 {
+    public enum Pack : byte
+    {
+        None,
+        laserPack,
+        sheildPack,
+        pulsePack,
+        jetPack
+    }
+    public Pack defultPack;
     [Header("Pack Objects")]
     public GameObject laserPackObject;
     public GameObject pulsePackObject;
@@ -43,7 +52,7 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 sheildPack = false;
                 jetPack = false;
-                SetSpecialWepon(laserPackObject);
+                SetSpecialWepon(pulsePackObject);
             }
             else if (_pulsePack)
             {
@@ -63,7 +72,7 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 pulsePack = false;
                 jetPack = false;
-                SetSpecialWepon(laserPackObject);
+                SetSpecialWepon(sheildPackObject);
             }
             else if (_sheildPack)
             {
@@ -107,5 +116,18 @@ public class AntennaBrain : CharacterBrain
         RemoveSpecialWepon();
     }
     #endregion
+
+    protected override void Start()
+    {
+        base.Start();
+        if (defultPack == Pack.laserPack)
+            laserPack = true;
+        else if (defultPack == Pack.pulsePack)
+            pulsePack = true;
+        else if (defultPack == Pack.sheildPack)
+            sheildPack = true;
+        else if (defultPack == Pack.jetPack) 
+            jetPack = true;
+    }
 }
 
