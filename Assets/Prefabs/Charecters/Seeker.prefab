@@ -183,4 +183,4 @@ MonoBehaviour:
   attackController: {fileID: 3001284121231995638}
   defultMeleeWeapon: {fileID: 0}
   defultProjectileWeapon: {fileID: 4955777308072718435, guid: 06a677060acc0d64ba8c3f905f043ea2, type: 3}
-  defultSpecialWeapon: {fileID: 7305828059314668461, guid: 3e6e14d6bb3cb2140a5cdb3884612015, type: 3}
+  defultSpecialWeapon: {fileID: 1382332459953695344, guid: a402cfa7cc2376e4aa1f4c5603dac618, type: 3}

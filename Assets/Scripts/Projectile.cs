@@ -10,14 +10,14 @@ public class Projectile : MonoBehaviour
     public string attackName;
     public float duration;
 
-    void Start()
+    protected virtual void Start()
     {
         // Deletes the projectile after 10 seconds, regardless
         // of whether it collided with anything. 
         Destroy(gameObject, duration);
     }
 
-    void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         // Ignore collisions with the entity that launched this projectile (including its children)
         GameObject defender = collision.rigidbody != null ? collision.rigidbody.gameObject : collision.gameObject;
