@@ -11,7 +11,6 @@ public class AntennaBrain : CharacterBrain
     private bool _pulsePack = false;
     private bool _sheildPack = false;
     private bool _jetPack = false;
-    private GameObject activePack;
 
     #region packs
     public bool laserPack
@@ -24,14 +23,11 @@ public class AntennaBrain : CharacterBrain
                 pulsePack = false;
                 sheildPack = false;
                 jetPack = false;
-                hasSpecial = true;
-                activePack = Instantiate(laserPackObject, transform);
-                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
+                SetSpecialWepon(laserPackObject);
             }
             else if (_laserPack)
             {
-                hasSpecial = false;
-                Destroy(activePack);
+                RemoveSpecialWepon();
             }
             _laserPack = value;
         }
@@ -47,14 +43,11 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 sheildPack = false;
                 jetPack = false;
-                hasSpecial = true;
-                activePack = Instantiate(pulsePackObject,transform);
-                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
+                SetSpecialWepon(laserPackObject);
             }
             else if (_pulsePack)
             {
-                hasSpecial = false;
-                Destroy(activePack);
+                RemoveSpecialWepon();
             }
             _pulsePack = value;
         }
@@ -70,14 +63,11 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 pulsePack = false;
                 jetPack = false;
-                hasSpecial = true;
-                activePack = Instantiate(sheildPackObject,transform);
-                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
+                SetSpecialWepon(laserPackObject);
             }
             else if (_sheildPack)
             {
-                hasSpecial = false;
-                Destroy(activePack);
+                RemoveSpecialWepon();
             }
             _sheildPack = value;
         }
@@ -94,7 +84,7 @@ public class AntennaBrain : CharacterBrain
                 pulsePack = false;
                 sheildPack = false;
                 jetPack = false;
-                hasSpecial = false;
+                _hasSpecialeWeapon = false;
                 
                 GetComponent<Fly>().enabled = true;
                 GetComponent<ThirdPersonMovement>().enabled = false;
@@ -106,6 +96,15 @@ public class AntennaBrain : CharacterBrain
             }
             _jetPack = value;
         }
+    }
+
+    public void RemovePack()
+    {
+        _laserPack = false;
+        _pulsePack = false;
+        _sheildPack = false;
+        _jetPack = false;
+        RemoveSpecialWepon();
     }
     #endregion
 }

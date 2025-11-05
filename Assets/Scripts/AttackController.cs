@@ -41,7 +41,7 @@ public class AttackController : MonoBehaviour
             {
                 TrySecondary();
             }
-            if (brain.hasSpecial && ((tertiaryAttack.CanHold && special.IsPressed()) || special.WasPerformedThisFrame()))
+            if (brain.hasSpecialeWeapon && ((tertiaryAttack.CanHold && special.IsPressed()) || special.WasPerformedThisFrame()))
             {
                 TryTertiary();
             }

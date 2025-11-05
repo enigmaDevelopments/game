@@ -49,6 +49,9 @@ MonoBehaviour:
   canHold: 1
   lineRenderer: {fileID: 4545021731587371288}
   raduis: 0.75
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 1731
 --- !u!120 &4545021731587371288
 LineRenderer:
   serializedVersion: 2
