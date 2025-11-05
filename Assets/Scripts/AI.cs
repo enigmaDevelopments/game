@@ -20,7 +20,7 @@ public class AI : MonoBehaviour
     public float turningSpeed;
     public AttackBase attack;
     public float attackAngle;
-
+    public static bool playerInvisable = false;
 
     private NavMeshAgent agent;
     private Transform player;
@@ -48,6 +48,8 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (playerInvisable)
+            return;
         float distance = Vector3.Distance(transform.position, player.position);
         Vector3 direction = (player.position - transform.position).normalized;
         float angle = Vector3.Angle(transform.forward, direction);
