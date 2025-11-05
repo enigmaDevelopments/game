@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotGun
   attackCooldown: 0.25
+  canHold: 0
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 10
   duration: 20
@@ -656,14 +657,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3001284121231995638, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: primaryAttack
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3001284121231995638, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: secondaryAttack
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi

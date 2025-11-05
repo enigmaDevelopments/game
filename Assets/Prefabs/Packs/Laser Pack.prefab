@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   attackCooldown: 0
+  canHold: 1
   lineRenderer: {fileID: 4545021731587371288}
   raduis: 0.75
 --- !u!120 &4545021731587371288
