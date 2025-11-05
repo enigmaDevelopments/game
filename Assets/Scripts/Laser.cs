@@ -6,6 +6,7 @@ public class Laser : AttackBase
     [Header("Laser settings")]
     public LineRenderer lineRenderer;
     public float raduis;
+    public LayerMask hitMask;
 
     private ulong timeStep = 0;
 
@@ -13,7 +14,7 @@ public class Laser : AttackBase
     protected override IEnumerator ExecuteAttack()
     {
 
-        if (Physics.SphereCast(transform.position, raduis, transform.forward, out RaycastHit hit))
+        if (Physics.SphereCast(transform.position, raduis, transform.forward, out RaycastHit hit, hitMask))
         {
             lineRenderer.positionCount = 2;
             lineRenderer.endWidth = raduis*2;
