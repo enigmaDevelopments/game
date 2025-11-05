@@ -6,7 +6,6 @@ public class AntennaBrain : CharacterBrain
     public GameObject laserPackObject;
     public GameObject pulsePackObject;
     public GameObject sheildPackObject;
-    public GameObject jetPackObject;
 
     private bool _laserPack = false;
     private bool _pulsePack = false;
@@ -25,10 +24,15 @@ public class AntennaBrain : CharacterBrain
                 pulsePack = false;
                 sheildPack = false;
                 jetPack = false;
-                activePack = Instantiate(laserPackObject,transform);
+                hasSpecial = true;
+                activePack = Instantiate(laserPackObject, transform);
+                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
             }
             else if (_laserPack)
+            {
+                hasSpecial = false;
                 Destroy(activePack);
+            }
             _laserPack = value;
         }
     }
@@ -43,10 +47,15 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 sheildPack = false;
                 jetPack = false;
+                hasSpecial = true;
                 activePack = Instantiate(pulsePackObject,transform);
+                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
             }
-            else if (_pulsePack) 
+            else if (_pulsePack)
+            {
+                hasSpecial = false;
                 Destroy(activePack);
+            }
             _pulsePack = value;
         }
     }
@@ -61,10 +70,15 @@ public class AntennaBrain : CharacterBrain
                 laserPack = false;
                 pulsePack = false;
                 jetPack = false;
+                hasSpecial = true;
                 activePack = Instantiate(sheildPackObject,transform);
+                attackController.tertiaryAttack = activePack.GetComponent<AttackBase>();
             }
             else if (_sheildPack)
-                Destroy (activePack);
+            {
+                hasSpecial = false;
+                Destroy(activePack);
+            }
             _sheildPack = value;
         }
     }
@@ -80,10 +94,16 @@ public class AntennaBrain : CharacterBrain
                 pulsePack = false;
                 sheildPack = false;
                 jetPack = false;
-                activePack = Instantiate(jetPackObject,transform);
+                hasSpecial = false;
+                
+                GetComponent<Fly>().enabled = true;
+                GetComponent<ThirdPersonMovement>().enabled = false;
             }
             else if (_jetPack)
-                Destroy (activePack);
+            {
+                GetComponent<ThirdPersonMovement>().enabled = true;
+                GetComponent<Fly>().enabled = false;
+            }
             _jetPack = value;
         }
     }

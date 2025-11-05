@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
   attackCooldown: 0.5
+  canHold: 0
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 75
   duration: 175
@@ -100,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5820798529961940446, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7361724612344053544, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: canHoldSecondary
@@ -138,6 +139,17 @@ CharacterController:
   m_CorrespondingSourceObject: {fileID: 5077126637147418908, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
   m_PrefabInstance: {fileID: 5732147218266836446}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3001284121231995638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7361724612344053544, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+  m_PrefabInstance: {fileID: 5732147218266836446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793712660526083117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85704a30a4f04df4490335e952456f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackController
 --- !u!1 &3793712660526083117 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8874716997658010099, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
@@ -234,13 +246,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c838fcf14b514d4d9744d475bd67c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntennaBrain
-  hasMeleeWeapon: 1
-  hasProjectileWeapon: 1
-  canDash: 0
+  attackController: {fileID: 3001284121231995638}
+  hasMeleeWeapon: 0
+  hasProjectileWeapon: 0
+  hasSpecial: 0
+  hasDash: 0
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
-  jetPackObject: {fileID: 667294143261707860, guid: 96918d5425449d3428fe98dc488c32ff, type: 3}
 --- !u!114 &7047486508154381646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3793712660526083117}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 347b3d3a43a5a31458f8db0df3745d0d, type: 3}
   m_Name: 
