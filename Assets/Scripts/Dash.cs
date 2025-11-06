@@ -11,12 +11,12 @@ public class PlayerDash : MonoBehaviour
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
 
-    public InputAction dash;
-    private bool canDash = true;
-
+    protected InputAction dash;
+    protected bool canDash = true;
+    protected bool isDashing = false;
     
 
-    private void Start()
+    protected virtual void Start()
     {
         dash = input.actions?.FindAction("Dash", throwIfNotFound: false);
     }
@@ -29,9 +29,10 @@ public class PlayerDash : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator Dash()
+    protected virtual System.Collections.IEnumerator Dash()
     {
         canDash = false;
+        isDashing = true;
 
         float startTime = Time.time;
         Vector3 direction = transform.forward;
@@ -41,6 +42,7 @@ public class PlayerDash : MonoBehaviour
             yield return null;
         }
 
+        isDashing = false;
         // Wait before you can dash again
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;

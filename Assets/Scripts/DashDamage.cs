@@ -1,56 +1,21 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
-public class DashThroughDamage : MonoBehaviour
+public class DashThroughDamage : PlayerDash
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-    public float dashSpeed = 20f;
-    public float dashDuration = 0.2f;
-    public float dashCooldown = 1f;
-
     [Header("Damage Settings")]
     public int dashDamage = 10; // how much damage to deal per dash hit
+    public float hitRadius = 0.5f;
+    public LayerMask hitMask;
 
-    private Rigidbody rb;
-    private CapsuleCollider col;
-    private bool canDash = true;
-    private bool isDashing = false;
-    private Vector3 moveDirection;
-    private InputAction dash;
-    private InputAction move;
+    private Collider col;
 
-    void Start()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
-        PlayerInput input = GetComponent<PlayerInput>();
-        dash = input.actions?.FindAction("Dash", throwIfNotFound: false);
-        move = input.actions?.FindAction("Move", throwIfNotFound: false);
-
+        col = GetComponent<Collider>();
+        base.Start();
     }
 
-    void Update()
-    {
-        Vector2 movment = move.ReadValue<Vector2>();
-        moveDirection = new Vector3(movment.x, 0f, movment.y).normalized;
-
-        if (dash.WasPressedThisFrame() && canDash && moveDirection != Vector3.zero)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if (!isDashing)
-        {
-            rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
-        }
-    }
-
-    private System.Collections.IEnumerator Dash()
+    protected override System.Collections.IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
@@ -59,19 +24,13 @@ public class DashThroughDamage : MonoBehaviour
         col.enabled = false;
 
         // Apply dash velocity
-        rb.linearVelocity = moveDirection * dashSpeed;
-
-        float startTime = Time.time;
-
-        while (Time.time < startTime + dashDuration)
+        StartCoroutine(base.Dash());
+        while (isDashing)
         {
-            // During dash, check for objects to damage
             CheckDashHits();
             yield return null;
         }
 
-        // Stop dash
-        rb.linearVelocity = Vector3.zero;
         col.enabled = true; // re-enable collision
 
         isDashing = false;
@@ -83,8 +42,7 @@ public class DashThroughDamage : MonoBehaviour
     private void CheckDashHits()
     {
         // Detect objects the dash passes through (small sphere around player)
-        float hitRadius = 0.5f;
-        Collider[] hitObjects = Physics.OverlapSphere(transform.position, hitRadius);
+        Collider[] hitObjects = Physics.OverlapSphere(transform.position, hitRadius, hitMask);
 
         foreach (Collider hit in hitObjects)
         {
@@ -93,10 +51,7 @@ public class DashThroughDamage : MonoBehaviour
 
             // Try to find a PlayerStats component and deal damage
             var playerStats = hit.GetComponent<PlayerStats>();
-            if (playerStats != null)
-            {
-                playerStats.TakeDamage(dashDamage);
-            }
+            playerStats.TakeDamage(dashDamage);
 
         }
     }
