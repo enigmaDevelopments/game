@@ -10,6 +10,7 @@ public class PlayerDash : MonoBehaviour
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
+    public bool canCancel;
 
     protected InputAction dash;
     protected bool canDash = true;
@@ -27,6 +28,8 @@ public class PlayerDash : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+        if (dash.WasReleasedThisFrame() && canCancel)
+            isDashing = false;
     }
 
     protected virtual System.Collections.IEnumerator Dash()
@@ -36,9 +39,9 @@ public class PlayerDash : MonoBehaviour
 
         Vector3 direction = transform.forward;
         float startTime = Time.time;
-        while (Time.time < startTime + dashDuration)
+        while (Time.time < startTime + dashDuration && isDashing)
         {
-            controller.Move(direction * dashSpeed * Time.deltaTime) ;
+            controller.Move(direction * dashSpeed * Time.deltaTime);
             yield return null;
         }
 
