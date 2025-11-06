@@ -467,61 +467,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3793712660526083117, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 755912727}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
 --- !u!4 &662984493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6494226583712110411, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
   m_PrefabInstance: {fileID: 662984492}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &755912717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3793712660526083117, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
-  m_PrefabInstance: {fileID: 662984492}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &755912722 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7706426227890982056, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
-  m_PrefabInstance: {fileID: 662984492}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755912717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
---- !u!143 &755912723 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 718674062554021058, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
-  m_PrefabInstance: {fileID: 662984492}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &755912727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755912717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52da853b7cf75f8449d1faaf68f3168f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DashThroughDamage
-  controller: {fileID: 755912723}
-  input: {fileID: 755912722}
-  dashSpeed: 20
-  dashDuration: 0.2
-  dashCooldown: 1
-  dashDamage: 10
-  hitRadius: 3
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 128
-  defultLayer: 3
-  intangableLayer: 11
 --- !u!1 &786398416
 GameObject:
   m_ObjectHideFlags: 0

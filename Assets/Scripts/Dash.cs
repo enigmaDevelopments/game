@@ -34,8 +34,8 @@ public class PlayerDash : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        float startTime = Time.time;
         Vector3 direction = transform.forward;
+        float startTime = Time.time;
         while (Time.time < startTime + dashDuration)
         {
             controller.Move(direction * dashSpeed * Time.deltaTime) ;
