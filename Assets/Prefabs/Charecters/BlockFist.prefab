@@ -207,8 +207,9 @@ MonoBehaviour:
   controller: {fileID: 718674062554021058}
   input: {fileID: 7706426227890982056}
   dashSpeed: 25
-  dashDuration: 10
+  dashDuration: 5
   dashCooldown: 0.5
+  canCancel: 1
   dashDamage: 100
   hitRadius: 0.5
   hitMask:
@@ -216,7 +217,7 @@ MonoBehaviour:
     m_Bits: 128
   defultLayer: 3
   intangableLayer: 11
-  chargeDuration: 5
+  chargeDuration: 3
 --- !u!114 &7706426227890982056 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2701619180435390838, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
