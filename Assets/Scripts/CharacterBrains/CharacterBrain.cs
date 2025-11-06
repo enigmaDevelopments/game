@@ -11,12 +11,10 @@ public class CharacterBrain : MonoBehaviour
     public bool hasMeleeWeapon => _hasMeleeWeapon;
     public bool hasProjectileWeapon => _hasProjectileWeapon;
     public bool hasSpecialeWeapon => _hasSpecialeWeapon;
-    public bool hasDash => _hasDash;
 
     protected bool _hasMeleeWeapon;
     protected bool _hasProjectileWeapon;
     protected bool _hasSpecialeWeapon;
-    protected bool _hasDash;
     private GameObject activeMeleeWeapon;
     private GameObject activeProjectileWeapon;
     private GameObject activeSpecialeWeapon;
