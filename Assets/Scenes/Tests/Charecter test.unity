@@ -398,7 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1461999738020875193, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
   dKey:
     m_Name: D Key
     m_Type: 0
@@ -520,6 +520,8 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 128
+  defultLayer: 3
+  intangableLayer: 11
 --- !u!1 &786398416
 GameObject:
   m_ObjectHideFlags: 0

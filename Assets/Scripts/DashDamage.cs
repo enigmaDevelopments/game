@@ -5,15 +5,11 @@ public class DashThroughDamage : PlayerDash
     [Header("Damage Settings")]
     public int dashDamage = 10; // how much damage to deal per dash hit
     public float hitRadius = 0.5f;
+    [Header("Layer Settings")]
     public LayerMask hitMask;
+    public int defultLayer;
+    public int intangableLayer;
 
-    private Collider col;
-
-    protected override void Start()
-    {
-        col = GetComponent<Collider>();
-        base.Start();
-    }
 
     protected override System.Collections.IEnumerator Dash()
     {
@@ -21,7 +17,7 @@ public class DashThroughDamage : PlayerDash
         isDashing = true;
 
         // ?? Disable collision so you can move through objects
-        col.enabled = false;
+        gameObject.layer = intangableLayer;
 
         // Apply dash velocity
         StartCoroutine(base.Dash());
@@ -31,7 +27,7 @@ public class DashThroughDamage : PlayerDash
             yield return null;
         }
 
-        col.enabled = true; // re-enable collision
+        gameObject.layer = defultLayer; // re-enable collision
 
         isDashing = false;
 
