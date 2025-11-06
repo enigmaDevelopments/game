@@ -384,6 +384,30 @@ MonoBehaviour:
   spreadX: 55.1
   spreadY: 90
   bullets: 100
+--- !u!114 &549331480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549331463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6e0a09cb28748499af5ccee5bff34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 0}
+  dKey:
+    m_Name: D Key
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 03b49baa-74fa-41dc-a9f7-655e3bdb8cfe
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1001 &662984492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -446,7 +470,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3793712660526083117, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 755912718}
+      addedObject: {fileID: 755912727}
   m_SourcePrefab: {fileID: 100100000, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
 --- !u!4 &662984493 stripped
 Transform:
@@ -458,32 +482,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3793712660526083117, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
   m_PrefabInstance: {fileID: 662984492}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &755912718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 755912717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d315b0e3ff000748b6dada9a65d1d5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
-  controller: {fileID: 755912723}
-  input: {fileID: 755912722}
-  dashSpeed: 20
-  dashDuration: 0.2
-  dashCooldown: 1
-  dash:
-    m_Name: Dash
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5e26473c-0c06-4a6c-82c1-0aab90849c59
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!114 &755912722 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7706426227890982056, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
@@ -500,6 +498,28 @@ CharacterController:
   m_CorrespondingSourceObject: {fileID: 718674062554021058, guid: 71f5cf2af1bc49747be47b4adf22f4a0, type: 3}
   m_PrefabInstance: {fileID: 662984492}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &755912727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755912717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52da853b7cf75f8449d1faaf68f3168f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashThroughDamage
+  controller: {fileID: 755912723}
+  input: {fileID: 755912722}
+  dashSpeed: 20
+  dashDuration: 0.2
+  dashCooldown: 1
+  dashDamage: 10
+  hitRadius: 3
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &786398416
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +839,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1384779312996231904, guid: 0d3a8cd71d53c744f8139ad5aac5d5c3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 549331472}
+    - targetCorrespondingSourceObject: {fileID: 1384779312996231904, guid: 0d3a8cd71d53c744f8139ad5aac5d5c3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 549331480}
   m_SourcePrefab: {fileID: 100100000, guid: 0d3a8cd71d53c744f8139ad5aac5d5c3, type: 3}
 --- !u!1 &1766076400
 GameObject:
