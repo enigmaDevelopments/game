@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class DashThroughDamage : MonoBehaviour
 {
@@ -16,20 +18,25 @@ public class DashThroughDamage : MonoBehaviour
     private bool canDash = true;
     private bool isDashing = false;
     private Vector3 moveDirection;
+    private InputAction dash;
+    private InputAction move;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        PlayerInput input = GetComponent<PlayerInput>();
+        dash = input.actions?.FindAction("Dash", throwIfNotFound: false);
+        move = input.actions?.FindAction("Move", throwIfNotFound: false);
+
     }
 
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        moveDirection = new Vector3(moveX, 0f, moveZ).normalized;
+        Vector2 movment = move.ReadValue<Vector2>();
+        moveDirection = new Vector3(movment.x, 0f, movment.y).normalized;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && moveDirection != Vector3.zero)
+        if (dash.WasPressedThisFrame() && canDash && moveDirection != Vector3.zero)
         {
             StartCoroutine(Dash());
         }
