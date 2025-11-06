@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2701619180435390838}
   - component: {fileID: 5820798529961940446}
   - component: {fileID: 7361724612344053544}
+  - component: {fileID: 72809220849867826}
   m_Layer: 3
   m_Name: Defult charecter
   m_TagString: Player
@@ -126,3 +127,28 @@ MonoBehaviour:
   brain: {fileID: 0}
   primaryAttack: {fileID: 0}
   secondaryAttack: {fileID: 0}
+  tertiaryAttack: {fileID: 0}
+--- !u!114 &72809220849867826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8874716997658010099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6e0a09cb28748499af5ccee5bff34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 1461999738020875193, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
+  dKey:
+    m_Name: D Key
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ff54696d-67f5-4a96-b647-5ad38e0a32d7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
