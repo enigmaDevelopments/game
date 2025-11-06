@@ -3,27 +3,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public CharacterController controller;
+    public PlayerInput input;
+    
+    [Header("Dash Settings")]
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
 
-    private bool isDashing = false;
+    public InputAction dash;
     private bool canDash = true;
-    private Vector3 moveInput;
 
+    
+
+    private void Start()
+    {
+        dash = input.actions?.FindAction("Dash", throwIfNotFound: false);
+    }
     void Update()
     {
-        // Get basic input
-
-        // Move normally when not dashing
-        if (!isDashing)
-        {
-            transform.Translate(moveInput * moveSpeed * Time.deltaTime, Space.World);
-        }
-
         // Dash input (press Left Shift)
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && moveInput != Vector3.zero)
+        if (dash.WasPressedThisFrame() && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -31,26 +31,19 @@ public class PlayerDash : MonoBehaviour
 
     private System.Collections.IEnumerator Dash()
     {
-        isDashing = true;
         canDash = false;
 
         float startTime = Time.time;
-
+        Vector3 direction = transform.forward;
         while (Time.time < startTime + dashDuration)
         {
-            transform.Translate(moveInput * dashSpeed * Time.deltaTime, Space.World);
+            controller.Move(direction * dashSpeed * Time.deltaTime) ;
             yield return null;
         }
-
-        isDashing = false;
 
         // Wait before you can dash again
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
 
-    public void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
 }
