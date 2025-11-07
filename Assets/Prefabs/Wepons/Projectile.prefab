@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3131543663768052401}
   - component: {fileID: 6415253484268864244}
   - component: {fileID: -2821667838215781843}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6070735767230092881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.56, y: 0.34993, z: 0.16005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139,7 +139,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &-2821667838215781843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +155,4 @@ MonoBehaviour:
   explosion: {fileID: 0}
   owner: {fileID: 0}
   attackName: 
+  duration: 0
