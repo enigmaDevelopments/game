@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=49e11d87f42d2e44cba998515aa5cae2&amp;type=3#MainMenuStyleSheet" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/WCP_3.png?fileID=21300000&amp;guid=d5388ecfba303f140a2d33991b00d882&amp;type=3#WCP_3&quot;); background-color: rgb(26, 26, 26); flex-direction: column;">
+        <ui:Label text="Main Menu" name="Header" class="header" style="-unity-text-align: upper-center; font-size: 200px; align-items: center; align-self: auto; align-content: auto;" />
+        <ui:Button text="Start" name="StartButton" class="button" />
+        <ui:Button text="Select Level" name="LevelSelect" class="button" style="top: 100px;" />
+        <ui:Button text="Shop" name="ShopButton" class="button" style="top: 175px;" />
+    </ui:VisualElement>
+</ui:UXML>
