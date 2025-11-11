@@ -15,15 +15,8 @@ public class Enemy : MonoBehaviour
     {
         // Find upgrades if you want to trigger them directly
         chainReactionUpgrade = FindFirstObjectByType<ChainReactionUpgrade>();
-        
-    public float health = 100f;  // Health of the enemy
-    private ChainReactionUpgrade chainReactionUpgrade;
-
-    [System.Obsolete]
-    private void Start()
-    {
-        chainReactionUpgrade = FindObjectOfType<ChainReactionUpgrade>();
     }
+
 
     public void TakeDamage(float damage)
     {
