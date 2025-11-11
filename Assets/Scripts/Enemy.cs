@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 
     private ChainReactionUpgrade chainReactionUpgrade;
 
-    // Event fired when an enemy dies — upgrades or other systems can listen
+    // Event fired when an enemy dies ï¿½ upgrades or other systems can listen
     public static event Action<Enemy> OnEnemyDeath;
 
     private void Start()
@@ -16,6 +16,13 @@ public class Enemy : MonoBehaviour
         // Find upgrades if you want to trigger them directly
         chainReactionUpgrade = FindFirstObjectByType<ChainReactionUpgrade>();
         
+    public float health = 100f;  // Health of the enemy
+    private ChainReactionUpgrade chainReactionUpgrade;
+
+    [System.Obsolete]
+    private void Start()
+    {
+        chainReactionUpgrade = FindObjectOfType<ChainReactionUpgrade>();
     }
 
     public void TakeDamage(float damage)
@@ -32,6 +39,7 @@ public class Enemy : MonoBehaviour
         Debug.Log($"{gameObject.name} died!");
 
         // Trigger chain reaction upgrade if it's active
+        // If the player has the chain reaction upgrade, try triggering it
         if (chainReactionUpgrade != null)
         {
             chainReactionUpgrade.TryTriggerChainReaction(this);
@@ -41,6 +49,7 @@ public class Enemy : MonoBehaviour
         OnEnemyDeath?.Invoke(this);
 
         // Destroy the enemy
+        // Destroy the enemy object
         Destroy(gameObject);
     }
 }
