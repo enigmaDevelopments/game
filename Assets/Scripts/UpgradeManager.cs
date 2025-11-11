@@ -18,10 +18,42 @@ public class UpgradeManager : MonoBehaviour
     public Button barrierSurgeButton;
     //public Text barrierCostText;
 
+    public Button energyRecyclerButton;
+    private EnergyRecyclerUpgrade energyRecyclerUpgrade;
+
+    public Button evasiveMomentumButton;
+    private EvasiveMomentumUpgrade evasiveMomentumUpgrade;
+
+    public Button guardianGraceButton;
+    private GuardianGraceUpgrade guardianGraceUpgrade;
+
+    public Button momentumButton;
+    private MomentumUpgrade momentumUpgrade;
+
+    public Button reactiveArmorButton;
+    private ReactiveArmorUpgrade reactiveArmorUpgrade;
+    public int reactiveArmorCost = 250;
+
+    public Button secondWindButton;
+    public int secondWindCost = 400;
+    private SecondWindUpgrade secondWindUpgrade;
+
+    public Button speedForceButton;
+    public int speedForceCost = 300;
+    private SpeedForceUpgrade speedForceUpgrade;
+
+    public Button temporalEchoButton;
+    public int temporalEchoCost = 500;
+    private TemporalEchoUpgrade temporalEchoUpgrade;
+
     // Define costs and upgrade states
     public int criticalInstinctsCost = 3;  // Example cost for the Critical Instincts upgrade
     public int chainReactionCost = 3;      // Example cost for the Chain Reaction upgrade
     public int barrierSurgeCost = 3;
+    public int energyRecyclerCost = 200;
+    public int evasiveMomentumCost = 250;
+    public int guardianGraceCost = 300;
+    public int momentumCost = 200;
 
     private int playerCurrency = 500;         // Player's current currency
 
@@ -35,6 +67,32 @@ public class UpgradeManager : MonoBehaviour
         criticalInstinctsButton.onClick.AddListener(OnCriticalInstinctsUpgrade);
         chainReactionButton.onClick.AddListener(OnChainReactionUpgrade);
         barrierSurgeButton.onClick.AddListener(OnBarrierSurgeUpgrade);
+        energyRecyclerButton.onClick.AddListener(OnEnergyRecyclerUpgrade);
+        evasiveMomentumButton.onClick.AddListener(OnEvasiveMomentumUpgrade);
+        evasiveMomentumUpgrade = FindFirstObjectByType<EvasiveMomentumUpgrade>();
+        guardianGraceButton.onClick.AddListener(OnGuardianGraceUpgrade);
+        guardianGraceUpgrade = FindFirstObjectByType<GuardianGraceUpgrade>();
+        momentumButton.onClick.AddListener(OnMomentumUpgrade);
+        momentumUpgrade = FindFirstObjectByType<MomentumUpgrade>();
+        reactiveArmorButton.onClick.AddListener(OnReactiveArmorUpgrade);
+        reactiveArmorUpgrade = FindFirstObjectByType<ReactiveArmorUpgrade>();
+        secondWindButton.onClick.AddListener(OnSecondWindUpgrade);
+        secondWindUpgrade = FindFirstObjectByType<SecondWindUpgrade>();
+        speedForceButton.onClick.AddListener(OnSpeedForceUpgrade);
+        speedForceUpgrade = FindFirstObjectByType<SpeedForceUpgrade>();
+        temporalEchoButton.onClick.AddListener(OnTemporalEchoUpgrade);
+        temporalEchoUpgrade = FindFirstObjectByType<TemporalEchoUpgrade>();
+        energyRecyclerButton.onClick.AddListener(OnEnergyRecyclerUpgrade);
+
+
+
+
+
+
+
+
+
+        energyRecyclerUpgrade = FindFirstObjectByType<EnergyRecyclerUpgrade>();
     }
 
     private void UpdateCurrencyDisplay()
@@ -113,6 +171,148 @@ public class UpgradeManager : MonoBehaviour
         else
         {
             Debug.Log("Not enough currency for Chain Reaction Upgrade!");
+        }
+    }
+
+    private void OnEnergyRecyclerUpgrade()
+    {
+        if (playerCurrency >= energyRecyclerCost)
+        {
+            playerCurrency -= energyRecyclerCost;
+            energyRecyclerUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+            Debug.Log("Energy Recycler Upgrade Activated!");
+            energyRecyclerButton.interactable = false; // disable after buying
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Energy Recycler Upgrade!");
+        }
+    }
+
+    private void OnEvasiveMomentumUpgrade()
+    {
+        if (playerCurrency >= evasiveMomentumCost)
+        {
+            playerCurrency -= evasiveMomentumCost;
+            evasiveMomentumUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+
+            evasiveMomentumButton.interactable = false;
+            Debug.Log("Evasive Momentum Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Evasive Momentum Upgrade!");
+        }
+    }
+
+    private void OnGuardianGraceUpgrade()
+    {
+        if (playerCurrency >= guardianGraceCost)
+        {
+            playerCurrency -= guardianGraceCost;
+            guardianGraceUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+
+            guardianGraceButton.interactable = false;
+            Debug.Log("Guardian Grace Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Guardian Grace Upgrade!");
+        }
+    }
+
+    private void OnMomentumUpgrade()
+    {
+        if (playerCurrency >= momentumCost)
+        {
+            playerCurrency -= momentumCost;
+            momentumUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+
+            momentumButton.interactable = false;
+            Debug.Log("Momentum Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Momentum Upgrade!");
+        }
+    }
+
+    private void OnReactiveArmorUpgrade()
+    {
+        if (playerCurrency >= reactiveArmorCost)
+        {
+            playerCurrency -= reactiveArmorCost;
+            reactiveArmorUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+
+            reactiveArmorButton.interactable = false;
+            Debug.Log("Reactive Armor Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Reactive Armor Upgrade!");
+        }
+    }
+
+    private void OnSecondWindUpgrade()
+    {
+        if (playerCurrency >= secondWindCost)
+        {
+            playerCurrency -= secondWindCost;
+            secondWindUpgrade.isActive = true;
+            UpdateCurrencyDisplay();
+
+            secondWindButton.interactable = false;
+            Debug.Log("Second Wind Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Second Wind Upgrade!");
+        }
+    }
+
+    private void OnSpeedForceUpgrade()
+    {
+        if (playerCurrency >= speedForceCost)
+        {
+            playerCurrency -= speedForceCost;
+            UpdateCurrencyDisplay();
+
+            if (speedForceUpgrade != null)
+            {
+                speedForceUpgrade.Activate();
+            }
+
+            speedForceButton.interactable = false;
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Speed Force Upgrade!");
+        }
+    }
+
+    private void OnTemporalEchoUpgrade()
+    {
+        if (playerCurrency >= temporalEchoCost)
+        {
+            playerCurrency -= temporalEchoCost;
+            UpdateCurrencyDisplay();
+
+            if (temporalEchoUpgrade != null)
+            {
+                temporalEchoUpgrade.Activate();
+            }
+
+            temporalEchoButton.interactable = false;
+            Debug.Log("Temporal Echo Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Temporal Echo Upgrade!");
         }
     }
 

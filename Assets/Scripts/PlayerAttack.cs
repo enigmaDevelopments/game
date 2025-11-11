@@ -30,6 +30,26 @@ public class PlayerAttack : MonoBehaviour
         ApplyDamageToEnemies(damage);
     }
 
+    // This method allows the Temporal Echo to repeat the attack action
+    public void RepeatAttack()
+    {
+        float damage = baseDamage;
+
+        if (criticalUpgrade != null && criticalUpgrade.IsUpgradeActive())
+        {
+            // Check if a critical hit occurs based on the upgrade's chance
+            if (Random.value <= criticalUpgrade.GetCriticalChance())  // Random.value generates a number between 0 and 1
+            {
+                // Apply critical damage
+                damage *= criticalUpgrade.GetCriticalDamageMultiplier();
+                Debug.Log("Critical Hit (Echo)!");
+            }
+        }
+
+        // Repeat the damage application, just like the original attack
+        ApplyDamageToEnemies(damage);
+    }
+
     private void ApplyDamageToEnemies(float damage)
     {
         // Example damage application logic
