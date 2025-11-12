@@ -12,7 +12,7 @@ public class SecondWindUpgrade : MonoBehaviour
 
     private void Start()
     {
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
         if (playerHealth != null)
         {
             PlayerHealth.OnPlayerDamaged += OnPlayerDamaged;
