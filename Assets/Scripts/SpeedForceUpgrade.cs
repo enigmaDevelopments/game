@@ -10,7 +10,7 @@ public class SpeedForceUpgrade : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
 
         if (isActive && playerMovement != null)
         {

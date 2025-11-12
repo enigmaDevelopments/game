@@ -14,8 +14,8 @@ public class TemporalEchoUpgrade : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
-        playerAttack = FindObjectOfType<PlayerAttack>();
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
+        playerAttack = FindAnyObjectByType<PlayerAttack>();
     }
 
     public void Activate()
