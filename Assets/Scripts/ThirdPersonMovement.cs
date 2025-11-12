@@ -124,7 +124,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         // Apply movement
-        Vector3 moveVector = currentMoveDirection * currentSpeed;
+        Vector3 moveVector = currentMoveDirection * currentSpeed * movement.magnitude;
         controller.Move(moveVector * Time.deltaTime);
         
         // Apply gravity and vertical movement
