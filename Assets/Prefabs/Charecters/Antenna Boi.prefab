@@ -1067,6 +1067,7 @@ MonoBehaviour:
   stepDistence: 2
   idleTime: 0.5
   footHeight: 0.7
+  footLength: 2
 --- !u!4 &6494226583712110411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
