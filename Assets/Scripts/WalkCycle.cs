@@ -31,7 +31,7 @@ public class WalkCycle : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence;
+        float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence / 2;
         totalDistence += distance;
         lastPosition = transform.position;
         if (0 < distance)
