@@ -29,6 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private float buffer = 0;
     private Transform cameraTransform;
     protected bool canFasttFall = true;
+    private WalkCycle walkCycle;
 
     public void OnMove(InputValue value)
     {
@@ -38,6 +39,7 @@ public class ThirdPersonMovement : MonoBehaviour
     protected virtual void Start()
     {
         cameraTransform = Camera.main.transform;
+        walkCycle = GetComponent<WalkCycle>();
 
         // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,6 +64,7 @@ public class ThirdPersonMovement : MonoBehaviour
     protected virtual void Update()
     {
         isGrounded = controller.isGrounded;
+        walkCycle.jumping = !controller.isGrounded;
         // Apply gravity
         if (!isGrounded)
         {
