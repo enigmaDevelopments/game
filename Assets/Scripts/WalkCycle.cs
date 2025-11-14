@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class WalkCycle : MonoBehaviour
 {
@@ -27,12 +29,20 @@ public class WalkCycle : MonoBehaviour
     private float idleTimer = 0;
     private float leftReturnTimer = -1;
     private float rightReturnTimer = -1;
+    private float leftHorizantalStart;
+    private float rightHorizantalStart;
+    private float leftVeriticalStart;
+    private float rightVeriticalStart;
+    private float leftHorizonmtalTimer;
+    private float rightHorizonmtalTimer;
+    private float leftVeriticalTimer;
+    private float rightVeriticalTimer;
     
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence / 2;
-        totalDistence += distance;
+        float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence;
+        totalDistence += distance / 2;
         lastPosition = transform.position;
         if (0 < distance)
             idleTimer = idleTime;
@@ -64,39 +74,53 @@ public class WalkCycle : MonoBehaviour
         }
         #endregion
         #region clamp feet to environment
-        leftFootPosition = clampToWall(leftFootPosition);
-        rightFootPosition = clampToWall(rightFootPosition);
+        leftFootPosition = clampToWall(leftFootPosition, ref leftHorizantalStart, ref leftHorizonmtalTimer, distance);
+        rightFootPosition = clampToWall(rightFootPosition, ref rightHorizantalStart, ref rightHorizonmtalTimer, distance);
 
-        leftFootPosition = clampToFloor(leftFootPosition);
-        rightFootPosition = clampToFloor(rightFootPosition);
+        leftFootPosition = clampToFloor(leftFootPosition, ref leftVeriticalStart, ref leftVeriticalTimer, distance);
+        rightFootPosition = clampToFloor(rightFootPosition, ref rightVeriticalStart, ref rightVeriticalTimer, distance);
         #endregion
 
         leftFoot.localPosition = leftFootPosition;
         rightFoot.localPosition = rightFootPosition;
     }
-    private Vector3 clampToFloor(Vector3 foot)
+    private Vector3 clampToFloor(Vector3 foot, ref float start, ref float timer, float distence)
     {
         Vector3 FootMax = foot;
         FootMax.y = stepHeight;
-        FootMax.z += footLength - .001f;
+        FootMax.z += footLength;
         FootMax = feetRoot.TransformPoint(FootMax);
-        if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, float.PositiveInfinity, enviromentMask))
+        if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight, enviromentMask))
         {
             float leftFootMin = stepHeight + footHeight - hit.distance;
-            foot.y = Mathf.Clamp(foot.y, leftFootMin, stepHeight);
+            start = Mathf.Clamp(foot.y, leftFootMin, stepHeight);
+            timer = 0;
         }
+        else
+        {
+            timer += distence;
+        }
+        foot.y = Mathf.Lerp(start,foot.y,timer);
         return foot;
     }
-    private Vector3 clampToWall(Vector3 foot)
+    private Vector3 clampToWall(Vector3 foot, ref float start, ref float timer, float distence)
     {
         Vector3 FootMax = foot;
         FootMax.z = 0;
+        FootMax.y -= footHeight;
         FootMax = feetRoot.TransformPoint(FootMax);
-        if (Physics.Raycast(FootMax, feetRoot.forward, out RaycastHit hit, footLength, enviromentMask))
+        Debug.DrawRay(FootMax, feetRoot.forward * (footLength + stepDistence), Color.red);
+        if (Physics.Raycast(FootMax, feetRoot.forward, out RaycastHit hit, footLength + stepDistence, enviromentMask))
         {
             float maxDistence = hit.distance - footLength;
-            foot.z = Mathf.Clamp(foot.z, 0, maxDistence);
+            start = Mathf.Clamp(foot.z, 0, maxDistence);
+            timer = 0;
         }
+        else
+        {
+            timer += distence;
+        }
+        foot.z = Mathf.Lerp(start, foot.z, timer);
         return foot;
     }
 

@@ -815,6 +815,10 @@ PrefabInstance:
       value: 1.26496
       objectReference: {fileID: 0}
     - target: {fileID: 5077126637147418908, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077126637147418908, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_StepOffset
       value: 2
       objectReference: {fileID: 0}
