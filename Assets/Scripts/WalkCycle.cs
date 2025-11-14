@@ -27,6 +27,10 @@ public class WalkCycle : MonoBehaviour
     public float footHeight;
     public float footLength;
 
+    [Header("State")]
+    public bool jumping = false;
+
+
     private Vector3 lastPosition;
     private float totalDistence = 0;
     private float idleTimer = 0;
@@ -56,7 +60,7 @@ public class WalkCycle : MonoBehaviour
         Vector3 rightFootPosition;
         Vector3 bodyPosition = body.localPosition;
         #region walk cycle
-        if (0 < idleTimer) {
+        if (0 < idleTimer && !jumping) {
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(totalDistence), stepDistence * horizontalCurive.Evaluate(totalDistence));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(totalDistence - .5f), stepDistence * horizontalCurive.Evaluate(totalDistence - .5f));
             bodyPosition.y = hipCurve.Evaluate(totalDistence) * hipMovment;
