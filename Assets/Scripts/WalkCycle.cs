@@ -8,6 +8,7 @@ public class WalkCycle : MonoBehaviour
     public Transform leftFoot;
     public Transform rightFoot;
     public Transform feetRoot;
+    public Transform body;
 
     [Header("Masks")]
     public LayerMask enviromentMask;
@@ -15,11 +16,13 @@ public class WalkCycle : MonoBehaviour
     [Header("Animation curves")]
     public AnimationCurve verticalCurive;
     public AnimationCurve horizontalCurive;
+    public AnimationCurve hipCurve;
 
     [Header("Walk Settings")]
     public float footDistence;
     public float stepHeight;
     public float stepDistence;
+    public float hipMovment;
     public float idleTime;
     public float footHeight;
     public float footLength;
@@ -29,6 +32,7 @@ public class WalkCycle : MonoBehaviour
     private float idleTimer = 0;
     private float leftReturnTimer = -1;
     private float rightReturnTimer = -1;
+    private float bodyReturnTimer = -1;
     private float leftHorizantalStart;
     private float rightHorizantalStart;
     private float leftVeriticalStart;
@@ -50,10 +54,12 @@ public class WalkCycle : MonoBehaviour
             idleTimer -= Time.deltaTime;
         Vector3 leftFootPosition;
         Vector3 rightFootPosition;
+        Vector3 bodyPosition = body.localPosition;
         #region walk cycle
         if (0 < idleTimer) {
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(totalDistence), stepDistence * horizontalCurive.Evaluate(totalDistence));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(totalDistence - .5f), stepDistence * horizontalCurive.Evaluate(totalDistence - .5f));
+            bodyPosition.y = hipCurve.Evaluate(totalDistence) * hipMovment;
             leftReturnTimer = -1;
         }
         #endregion
@@ -64,12 +70,14 @@ public class WalkCycle : MonoBehaviour
             {
                 leftReturnTimer = totalDistence % 1;
                 rightReturnTimer = (totalDistence - .5f) % 1;
+                bodyReturnTimer = totalDistence % .5f;
             }
             leftReturnTimer = Mathf.Clamp01(leftReturnTimer + Time.deltaTime * (leftReturnTimer < .5? -1:1));
             rightReturnTimer = Mathf.Clamp01(rightReturnTimer + Time.deltaTime * (rightReturnTimer < .5 ? -1 : 1));
+            bodyReturnTimer = Mathf.Clamp(bodyReturnTimer + Time.deltaTime * (bodyReturnTimer < .25 ? -1 : 1),0,.5f);
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(leftReturnTimer), stepDistence * horizontalCurive.Evaluate(leftReturnTimer));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(rightReturnTimer), stepDistence * horizontalCurive.Evaluate(rightReturnTimer));
-
+            bodyPosition.y = hipCurve.Evaluate(bodyReturnTimer) * hipMovment;
             totalDistence = 0;
         }
         #endregion
@@ -83,6 +91,7 @@ public class WalkCycle : MonoBehaviour
 
         leftFoot.localPosition = leftFootPosition;
         rightFoot.localPosition = rightFootPosition;
+        body.localPosition = bodyPosition;
     }
     private Vector3 clampToFloor(Vector3 foot, ref float start, ref float timer, float distence)
     {
@@ -90,7 +99,7 @@ public class WalkCycle : MonoBehaviour
         FootMax.y = stepHeight;
         FootMax.z += footLength;
         FootMax = feetRoot.TransformPoint(FootMax);
-        if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight, enviromentMask))
+        if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight+ footHeight, enviromentMask))
         {
             float leftFootMin = stepHeight + footHeight - hit.distance;
             start = Mathf.Clamp(foot.y, leftFootMin, stepHeight);
