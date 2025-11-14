@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Buttons.uss?fileID=7433441132597879392&amp;guid=ad2f163f3a57821429e2d20e906477fa&amp;type=3#Buttons" />
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/WCP_1.png?fileID=21300000&amp;guid=a5fd6cf9403aab94f8dd4810121cf0c2&amp;type=3#WCP_1&quot;); width: 1820px; height: 1080px; font-size: 20px; -unity-font-style: bold;">
+        <ui:ProgressBar value="22" title="Charging" name="Cooldown" style="align-items: stretch; align-self: flex-start; height: 35px; width: 510px; top: 35px;" />
+        <ui:ProgressBar value="22" title="Health" name="Health" style="flex-grow: 0; align-self: flex-end; width: 550px; height: 30px;" />
+        <ui:Button text="Upgrades" name="Upgrades" class="Button" style="align-self: center; height: 150px; width: 300px; -unity-font-style: bold; background-color: rgb(26, 26, 26); font-size: 30px; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>
