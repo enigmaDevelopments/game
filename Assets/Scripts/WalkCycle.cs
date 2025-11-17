@@ -49,7 +49,7 @@ public class WalkCycle : MonoBehaviour
     private float bodyEnd;
     private float bodyTimer;
 
-    
+
 
     void Update()
     {
@@ -82,9 +82,9 @@ public class WalkCycle : MonoBehaviour
                 rightReturnTimer = (totalDistence - .5f) % 1;
                 bodyReturnTimer = totalDistence % .5f;
             }
-            leftReturnTimer = Mathf.Clamp01(leftReturnTimer + Time.deltaTime * (leftReturnTimer < .5? -1:1));
+            leftReturnTimer = Mathf.Clamp01(leftReturnTimer + Time.deltaTime * (leftReturnTimer < .5 ? -1 : 1));
             rightReturnTimer = Mathf.Clamp01(rightReturnTimer + Time.deltaTime * (rightReturnTimer < .5 ? -1 : 1));
-            bodyReturnTimer = Mathf.Clamp(bodyReturnTimer + Time.deltaTime * (bodyReturnTimer < .25 ? -1 : 1),0,.5f);
+            bodyReturnTimer = Mathf.Clamp(bodyReturnTimer + Time.deltaTime * (bodyReturnTimer < .25 ? -1 : 1), 0, .5f);
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(leftReturnTimer), stepDistence * horizontalCurive.Evaluate(leftReturnTimer));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(rightReturnTimer), stepDistence * horizontalCurive.Evaluate(rightReturnTimer));
             bodyPosition = hipCurve.Evaluate(bodyReturnTimer) * hipMovment;
@@ -100,12 +100,17 @@ public class WalkCycle : MonoBehaviour
         float floorDistence;
         Debug.DrawRay(bodyCastStart, Vector3.down * defultHeight, Color.red);
         if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, defultHeight, enviromentMask))
+        {
             floorDistence = hit.distance;
+            bodyTimer += distance;
+        }
         else
+        {
             floorDistence = defultHeight;
-        bodyPosition += defultHeight - floorDistence + .1f;
+            bodyTimer = 0;
+        }
+        bodyPosition += defultHeight - Mathf.Lerp(defultHeight, floorDistence, bodyTimer);
         #endregion
-        Debug.Log(floorDistence);
         leftFoot.localPosition = leftFootPosition;
         rightFoot.localPosition = rightFootPosition;
         leftFoot.forward = leftFootAngle;
@@ -118,6 +123,7 @@ public class WalkCycle : MonoBehaviour
         FootMax.y = stepHeight;
         FootMax.z += footLength;
         FootMax = feetRoot.TransformPoint(FootMax);
+        Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight), Color.red);
         if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight + footHeight, enviromentMask))
         {
             float leftFootMin = stepHeight + footHeight - hit.distance;
@@ -137,8 +143,9 @@ public class WalkCycle : MonoBehaviour
     {
         Vector3 FootMax = foot;
         FootMax.z = 0;
-        FootMax.y -= footHeight;
+        FootMax.y -= footHeight - .1f;
         FootMax = feetRoot.TransformPoint(FootMax);
+        Debug.DrawRay(FootMax, feetRoot.forward * (footLength + stepDistence), Color.red);
         if (Physics.Raycast(FootMax, feetRoot.forward, out RaycastHit hit, footLength + stepDistence, enviromentMask))
         {
             float maxDistence = hit.distance - footLength;
