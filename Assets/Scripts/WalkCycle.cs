@@ -23,10 +23,12 @@ public class WalkCycle : MonoBehaviour
     public float footDistence;
     public float stepHeight;
     public float stepDistence;
+    public float defultHeight;
     public float hipMovment;
     public float idleTime;
     public float footHeight;
     public float footLength;
+    public float hitCylinderRadius;
 
     [Header("State")]
     public bool jumping = false;
@@ -60,12 +62,14 @@ public class WalkCycle : MonoBehaviour
             idleTimer -= Time.deltaTime;
         Vector3 leftFootPosition;
         Vector3 rightFootPosition;
-        Vector3 bodyPosition = body.localPosition;
+        Vector3 leftFootAngle = Vector3.zero;
+        Vector3 rightFootAngle = Vector3.zero;
+        float bodyPosition = body.localPosition.y;
         #region walk cycle
         if (0 < idleTimer && !jumping) {
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(totalDistence), stepDistence * horizontalCurive.Evaluate(totalDistence));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(totalDistence - .5f), stepDistence * horizontalCurive.Evaluate(totalDistence - .5f));
-            bodyPosition.y = hipCurve.Evaluate(totalDistence) * hipMovment;
+            bodyPosition = hipCurve.Evaluate(totalDistence) * hipMovment;
             leftReturnTimer = -1;
         }
         #endregion
@@ -83,21 +87,30 @@ public class WalkCycle : MonoBehaviour
             bodyReturnTimer = Mathf.Clamp(bodyReturnTimer + Time.deltaTime * (bodyReturnTimer < .25 ? -1 : 1),0,.5f);
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(leftReturnTimer), stepDistence * horizontalCurive.Evaluate(leftReturnTimer));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(rightReturnTimer), stepDistence * horizontalCurive.Evaluate(rightReturnTimer));
-            bodyPosition.y = hipCurve.Evaluate(bodyReturnTimer) * hipMovment;
+            bodyPosition = hipCurve.Evaluate(bodyReturnTimer) * hipMovment;
             totalDistence = 0;
         }
         #endregion
         #region clamp feet to environment
-        Vector3 angle = Vector3.forward;
-        leftFootPosition = clampToEnviromentmet(leftFootPosition, ref leftStart, ref leftTimer, distance, ref angle);
-        leftFoot.forward = angle;
-        rightFootPosition = clampToEnviromentmet(rightFootPosition, ref rightStart, ref rightTimer, distance, ref angle);
-        rightFoot.forward = angle;
+        leftFootPosition = clampToEnviromentmet(leftFootPosition, ref leftStart, ref leftTimer, distance, ref leftFootAngle);
+        rightFootPosition = clampToEnviromentmet(rightFootPosition, ref rightStart, ref rightTimer, distance, ref rightFootAngle);
         #endregion
-
+        #region move body to avoid cyledner colitions
+        Vector3 bodyCastStart = transform.position + transform.forward * hitCylinderRadius;
+        float floorDistence;
+        Debug.DrawRay(bodyCastStart, Vector3.down * defultHeight, Color.red);
+        if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, defultHeight, enviromentMask))
+            floorDistence = hit.distance;
+        else
+            floorDistence = defultHeight;
+        bodyPosition += defultHeight - floorDistence + .1f;
+        #endregion
+        Debug.Log(floorDistence);
         leftFoot.localPosition = leftFootPosition;
         rightFoot.localPosition = rightFootPosition;
-        body.localPosition = bodyPosition;
+        leftFoot.forward = leftFootAngle;
+        rightFoot.forward = rightFootAngle;
+        body.localPosition = new Vector3(0, bodyPosition, 0);
     }
     private Vector3 clampToFloor(Vector3 foot, ref Vector2 start, ref Vector2 timer, float distence, ref Vector3 angle, bool setTimer = false)
     {

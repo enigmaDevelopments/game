@@ -426,6 +426,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1181695093538206842, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: defultHeight
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181695093538206842, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: hitCylinderRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
