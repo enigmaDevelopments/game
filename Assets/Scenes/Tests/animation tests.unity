@@ -254,6 +254,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.55056
+      objectReference: {fileID: 0}
+    - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.780477
+      objectReference: {fileID: 0}
+    - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -31.761515
+      objectReference: {fileID: 0}
+    - target: {fileID: 98771160071014015, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: field of view
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 512375356366277632, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -299,9 +315,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Lens.FieldOfView
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1858732439}
+    - target: {fileID: 4818532982675624948, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: defultLensFOV
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.55056
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.780477
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -31.761515
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99870104
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.050953217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000020542646
+      objectReference: {fileID: 0}
+    - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000010480753
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -426,14 +478,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1181695093538206842, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: defultHeight
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181695093538206842, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: hitCylinderRadius
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
