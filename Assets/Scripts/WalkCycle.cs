@@ -91,22 +91,18 @@ public class WalkCycle : MonoBehaviour
         rightFootPosition = clampToEnviromentmet(rightFootPosition, ref rightFootAngle);
         #endregion
         #region move body to avoid cyledner colitions
-        if (jumping)
-            totalYDistence = 0;
-        else
-        {
-            totalYDistence -=  transform.InverseTransformPoint(lastPosition).y;
-            bodyPosition -= totalYDistence;
-        }
+        totalYDistence -=  transform.InverseTransformPoint(lastPosition).y;
+        bodyPosition -= totalYDistence;
         Vector3 bodyCastStart = body.position + transform.forward * hitCylinderRadius;
         if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, float.PositiveInfinity, enviromentMask))
         {
             Vector3 bodyTarget = hit.point;
             bodyTarget.y += defultHeight + totalYDistence;
             bodyTarget = body.InverseTransformPoint(bodyTarget);
-            Debug.Log(bodyTarget.y);
-            float horizontalDisternce = Vector2.Distance(transform.position, lastPosition);
-            LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
+            if (hit.distance - defultHeight < stepHeight && !jumping)
+                LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
+            else
+                LastBodyPosition = totalYDistence;
             bodyPosition += LastBodyPosition;
         }
         #endregion

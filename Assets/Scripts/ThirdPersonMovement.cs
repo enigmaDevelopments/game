@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
-    
+    public WalkCycle walkCycle;
+
     [Header("Movement Settings")]
     public float maxSpeed = 8f;
     public float acceleration = 60f;
@@ -29,7 +30,6 @@ public class ThirdPersonMovement : MonoBehaviour
     private float buffer = 0;
     private Transform cameraTransform;
     protected bool canFasttFall = true;
-    private WalkCycle walkCycle;
 
     public void OnMove(InputValue value)
     {
@@ -39,7 +39,6 @@ public class ThirdPersonMovement : MonoBehaviour
     protected virtual void Start()
     {
         cameraTransform = Camera.main.transform;
-        walkCycle = GetComponent<WalkCycle>();
 
         // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -64,7 +63,8 @@ public class ThirdPersonMovement : MonoBehaviour
     protected virtual void Update()
     {
         isGrounded = controller.isGrounded;
-        walkCycle.jumping = !controller.isGrounded;
+        if (isGrounded)
+            walkCycle.jumping = false;
         // Apply gravity
         if (!isGrounded)
         {
@@ -83,9 +83,11 @@ public class ThirdPersonMovement : MonoBehaviour
             if (0 < buffer)
                 playerVelocity.y = jumpForce;
         }
+        else
+            walkCycle.jumping = true;
 
-        // Get camera-relative movement direction
-        Vector3 forward = cameraTransform.forward;
+            // Get camera-relative movement direction
+            Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         forward.y = 0;
         right.y = 0;
