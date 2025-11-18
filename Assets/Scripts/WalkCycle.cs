@@ -34,6 +34,7 @@ public class WalkCycle : MonoBehaviour
 
     [Header("State")]
     public bool jumping = false;
+    public bool falling = false;
 
 
     private Vector3 lastPosition;
@@ -61,7 +62,7 @@ public class WalkCycle : MonoBehaviour
         Vector3 rightFootAngle = feetRoot.forward;
         float bodyPosition;
         #region walk cycle
-        if (0 < idleTimer && !jumping) {
+        if (0 < idleTimer && !jumping && !falling) {
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(totalDistence), stepDistence * horizontalCurive.Evaluate(totalDistence));
             rightFootPosition = new Vector3(-footDistence, stepHeight * verticalCurive.Evaluate(totalDistence - .5f), stepDistence * horizontalCurive.Evaluate(totalDistence - .5f));
             bodyPosition = hipCurve.Evaluate(totalDistence) * hipMovment;
@@ -99,7 +100,8 @@ public class WalkCycle : MonoBehaviour
             Vector3 bodyTarget = hit.point;
             bodyTarget.y += defultHeight + totalYDistence;
             bodyTarget = body.InverseTransformPoint(bodyTarget);
-            if (hit.distance - defultHeight < stepHeight && !jumping)
+            falling = stepHeight < hit.distance - defultHeight;
+            if (!falling && !jumping)
                 LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
             else
                 LastBodyPosition = totalYDistence;
