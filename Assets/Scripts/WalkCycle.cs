@@ -1,3 +1,4 @@
+using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -28,6 +29,7 @@ public class WalkCycle : MonoBehaviour
     public float idleTime;
     public float footHeight;
     public float footLength;
+    public float heelLength;
     public float hitCylinderRadius;
 
     [Header("State")]
@@ -42,14 +44,6 @@ public class WalkCycle : MonoBehaviour
     private float leftReturnTimer = -1;
     private float rightReturnTimer = -1;
     private float bodyReturnTimer = -1;
-
-    private Vector2 leftStart;
-    private Vector2 rightStart;
-    private Vector2 leftTimer;
-    private Vector2 rightTimer;
-    private float bodyStart;
-    private float bodyEnd;
-    private float bodyTimer;
 
 
 
@@ -126,16 +120,20 @@ public class WalkCycle : MonoBehaviour
     }
     private Vector3 clampToFloor(Vector3 foot, ref Vector3 angle)
     {
-        Vector3 FootMax = foot;
-        FootMax.y = stepHeight;
-        FootMax.z += footLength;
-        FootMax = feetRoot.TransformPoint(FootMax);
-        Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight), Color.red);
-        if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight + footHeight, enviromentMask))
+        float[] offsets = new float[] {0, footLength, heelLength};
+        foreach (float offset in offsets)
         {
-            float footMin = stepHeight + footHeight - hit.distance;
-            foot.y = Mathf.Clamp(foot.y, footMin, stepHeight);
-            angle = Vector3.ProjectOnPlane(feetRoot.forward, hit.normal).normalized;
+            Vector3 FootMax = foot;
+            FootMax.y = stepHeight;
+            FootMax.z += offset;
+            FootMax = feetRoot.TransformPoint(FootMax);
+            Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight), Color.red);
+            if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight + footHeight, enviromentMask))
+            {
+                float footMin = stepHeight + footHeight - hit.distance;
+                foot.y = Mathf.Clamp(foot.y, footMin, stepHeight);
+                angle = Vector3.ProjectOnPlane(feetRoot.forward, hit.normal).normalized;
+            }
         }
         return foot;
     }
@@ -157,6 +155,7 @@ public class WalkCycle : MonoBehaviour
     private Vector3 clampToEnviromentmet(Vector3 foot, ref Vector3 angle)
     {
         Vector3 virticalClamped = clampToFloor(foot, ref angle);
+
         return clampToWall(virticalClamped);
     }
 }
