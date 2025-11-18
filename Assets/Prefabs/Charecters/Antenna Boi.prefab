@@ -1145,6 +1145,7 @@ MonoBehaviour:
   idleTime: 0.5
   footHeight: 0.7
   footLength: 2
+  heelLength: -1.6
   hitCylinderRadius: 3.5
   jumping: 0
 --- !u!4 &6494226583712110411 stripped
