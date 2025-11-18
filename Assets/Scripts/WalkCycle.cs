@@ -135,6 +135,7 @@ public class WalkCycle : MonoBehaviour
         {
             float footMin = stepHeight + footHeight - hit.distance;
             foot.y = Mathf.Clamp(foot.y, footMin, stepHeight);
+            angle = Vector3.ProjectOnPlane(feetRoot.forward, hit.normal).normalized;
         }
         return foot;
     }
