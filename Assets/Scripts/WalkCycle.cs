@@ -36,6 +36,8 @@ public class WalkCycle : MonoBehaviour
 
     private Vector3 lastPosition;
     private float totalDistence = 0;
+    private float totalYDistence = 0;
+    float LastBodyPosition = 0;
     private float idleTimer = 0;
     private float leftReturnTimer = -1;
     private float rightReturnTimer = -1;
@@ -55,16 +57,15 @@ public class WalkCycle : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence;
         totalDistence += distance / 2;
-        lastPosition = transform.position;
         if (0 < distance)
             idleTimer = idleTime;
         else
             idleTimer -= Time.deltaTime;
         Vector3 leftFootPosition;
         Vector3 rightFootPosition;
-        Vector3 leftFootAngle = Vector3.zero;
-        Vector3 rightFootAngle = Vector3.zero;
-        float bodyPosition = body.localPosition.y;
+        Vector3 leftFootAngle = feetRoot.forward;
+        Vector3 rightFootAngle = feetRoot.forward;
+        float bodyPosition;
         #region walk cycle
         if (0 < idleTimer && !jumping) {
             leftFootPosition = new Vector3(footDistence, stepHeight * verticalCurive.Evaluate(totalDistence), stepDistence * horizontalCurive.Evaluate(totalDistence));
@@ -91,33 +92,39 @@ public class WalkCycle : MonoBehaviour
             totalDistence = 0;
         }
         #endregion
-        #region clamp feet to environment
-        leftFootPosition = clampToEnviromentmet(leftFootPosition, ref leftStart, ref leftTimer, distance, ref leftFootAngle);
-        rightFootPosition = clampToEnviromentmet(rightFootPosition, ref rightStart, ref rightTimer, distance, ref rightFootAngle);
+        #region clamp feet to environmenta
+        leftFootPosition = clampToEnviromentmet(leftFootPosition, ref leftFootAngle);
+        rightFootPosition = clampToEnviromentmet(rightFootPosition, ref rightFootAngle);
         #endregion
         #region move body to avoid cyledner colitions
-        Vector3 bodyCastStart = transform.position + transform.forward * hitCylinderRadius;
-        float floorDistence;
-        Debug.DrawRay(bodyCastStart, Vector3.down * defultHeight, Color.red);
-        if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, defultHeight, enviromentMask))
-        {
-            floorDistence = hit.distance;
-            bodyTimer += distance;
-        }
+        if (jumping)
+            totalYDistence = 0;
         else
         {
-            floorDistence = defultHeight;
-            bodyTimer = 0;
+            totalYDistence -=  transform.InverseTransformPoint(lastPosition).y;
+            bodyPosition -= totalYDistence;
         }
-        bodyPosition += defultHeight - Mathf.Lerp(defultHeight, floorDistence, bodyTimer);
+        Vector3 bodyCastStart = body.position + transform.forward * hitCylinderRadius;
+        if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, float.PositiveInfinity, enviromentMask))
+        {
+            Vector3 bodyTarget = hit.point;
+            bodyTarget.y += defultHeight + totalYDistence;
+            bodyTarget = body.InverseTransformPoint(bodyTarget);
+            Debug.Log(bodyTarget.y);
+            float horizontalDisternce = Vector2.Distance(transform.position, lastPosition);
+            LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
+            bodyPosition += LastBodyPosition;
+        }
         #endregion
         leftFoot.localPosition = leftFootPosition;
         rightFoot.localPosition = rightFootPosition;
         leftFoot.forward = leftFootAngle;
         rightFoot.forward = rightFootAngle;
         body.localPosition = new Vector3(0, bodyPosition, 0);
+
+        lastPosition = transform.position;
     }
-    private Vector3 clampToFloor(Vector3 foot, ref Vector2 start, ref Vector2 timer, float distence, ref Vector3 angle, bool setTimer = false)
+    private Vector3 clampToFloor(Vector3 foot, ref Vector3 angle)
     {
         Vector3 FootMax = foot;
         FootMax.y = stepHeight;
@@ -126,20 +133,12 @@ public class WalkCycle : MonoBehaviour
         Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight), Color.red);
         if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight + footHeight, enviromentMask))
         {
-            float leftFootMin = stepHeight + footHeight - hit.distance;
-            start.y = Mathf.Clamp(foot.y, leftFootMin, stepHeight);
-            timer.y = 0;
-            angle = Vector3.ProjectOnPlane(feetRoot.forward, hit.normal).normalized;
+            float footMin = stepHeight + footHeight - hit.distance;
+            foot.y = Mathf.Clamp(foot.y, footMin, stepHeight);
         }
-        else if (setTimer)
-        {
-            timer.y += distence;
-            angle = feetRoot.forward;
-        }
-        foot.y = Mathf.Lerp(start.y, foot.y, timer.y);
         return foot;
     }
-    private Vector3 clampToWall(Vector3 foot, ref Vector2 start, ref Vector2 timer, float distence, bool setTimer = false)
+    private Vector3 clampToWall(Vector3 foot)
     {
         Vector3 FootMax = foot;
         FootMax.z = 0;
@@ -149,23 +148,14 @@ public class WalkCycle : MonoBehaviour
         if (Physics.Raycast(FootMax, feetRoot.forward, out RaycastHit hit, footLength + stepDistence, enviromentMask))
         {
             float maxDistence = hit.distance - footLength;
-            start.x = Mathf.Clamp(foot.z, 0, maxDistence);
-            timer.x = 0;
+            foot.z = Mathf.Clamp(foot.z, 0, maxDistence);
         }
-        else if (setTimer)
-        {
-            timer.x += distence;
-        }
-        foot.z = Mathf.Lerp(start.x, foot.z, timer.x);
         return foot;
     }
 
-    private Vector3 clampToEnviromentmet(Vector3 foot, ref Vector2 start, ref Vector2 timer, float distance, ref Vector3 angle)
+    private Vector3 clampToEnviromentmet(Vector3 foot, ref Vector3 angle)
     {
-        Vector3 horizontalClamped = clampToWall(foot, ref start, ref timer, distance, true);
-        Vector3 virticalClamped = clampToFloor(foot, ref start, ref timer, distance, ref angle, true);
-        if (Vector3.Distance(foot, horizontalClamped) < Vector3.Distance(foot, virticalClamped))
-            return clampToFloor(horizontalClamped, ref start, ref timer, distance, ref angle);
-        return clampToWall(virticalClamped, ref start, ref timer, distance);
+        Vector3 virticalClamped = clampToFloor(foot, ref angle);
+        return clampToWall(virticalClamped);
     }
 }
