@@ -50,8 +50,8 @@ public class WalkCycle : MonoBehaviour
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, lastPosition) / stepDistence;
-        totalDistence += distance / 2;
+        float distance = Vector3.Distance(transform.position, lastPosition);
+        totalDistence += distance / stepDistence / 2;
         if (0 < distance)
             idleTimer = idleTime;
         else
@@ -105,7 +105,10 @@ public class WalkCycle : MonoBehaviour
             bodyTarget = body.InverseTransformPoint(bodyTarget);
             falling = stepHeight < hit.distance - defultHeight && -.1f < feetRotation;
             if (!falling && !jumping)
-                LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
+            {
+                if (.2f < Mathf.Abs(bodyTarget.y - LastBodyPosition))
+                    LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance);
+            }
             else
                 LastBodyPosition = totalYDistence;
             bodyPosition += LastBodyPosition;
