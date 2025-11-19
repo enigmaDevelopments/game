@@ -1,8 +1,0 @@
-:root {
-}
-
-.Button {
-    top: 40px;
-    width: 120px;
-    height: 120px;
-}
