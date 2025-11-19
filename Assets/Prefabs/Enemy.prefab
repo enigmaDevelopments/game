@@ -15,8 +15,7 @@ GameObject:
   - component: {fileID: 1901017311992490178}
   - component: {fileID: 1813884565041440284}
   - component: {fileID: 6775404842359146996}
-  - component: {fileID: 1018058005119115906}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -124,7 +123,7 @@ Rigidbody:
   m_GameObject: {fileID: 1384779312996231904}
   serializedVersion: 5
   m_Mass: 10
-  m_LinearDamping: 0
+  m_LinearDamping: 0.5
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -137,8 +136,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -152,7 +151,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 20
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -190,18 +189,5 @@ MonoBehaviour:
   veiwAngle: 129
   veiwRadius: 30
   turningSpeed: 0.02
-  weapon: {fileID: 1018058005119115906}
+  attack: {fileID: 0}
   attackAngle: 123
---- !u!114 &1018058005119115906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384779312996231904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d4d45ff967cd240896e2c9a84b8a00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackCooldown: 0.5

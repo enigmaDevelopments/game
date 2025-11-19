@@ -3,18 +3,24 @@ using UnityEngine.InputSystem;
 
 public class AttackController : MonoBehaviour
 {
-    [Header("Input")]
+    [Header("Scripts")]
     [Tooltip("Optional. If not provided, will try to GetComponent<PlayerInput>()")] 
     public PlayerInput input;
+
+    [Tooltip("Optional. If not provided, will try to GetComponent<CharacterBrain>()")]
+    public CharacterBrain brain;
 
     [Header("Attacks")]
     public AttackBase primaryAttack;   // Melee
     public AttackBase secondaryAttack; // Projectile
+    public AttackBase tertiaryAttack; // special
 
     private void Awake()
     {
         if (input == null)
             input = GetComponent<PlayerInput>();
+        if (brain == null)
+            brain = GetComponent<CharacterBrain>();
     }
 
     private void Update()
@@ -24,15 +30,20 @@ public class AttackController : MonoBehaviour
             var actions = input.actions;
             var melee = actions?.FindAction("MeleeAttack", throwIfNotFound: false);
             var projectile = actions?.FindAction("ProjectileAttack", throwIfNotFound: false);
+            var special = actions?.FindAction("Special", throwIfNotFound: false);
 
-            if (melee != null && melee.WasPerformedThisFrame())
+            if (brain.hasMeleeWeapon && ((primaryAttack.CanHold && melee.IsPressed()) || melee.WasPerformedThisFrame()))
             {
                 TryPrimary();
             }
 
-            if (projectile != null && projectile.WasPerformedThisFrame())
+            if (brain.hasProjectileWeapon && ((secondaryAttack.CanHold && projectile.IsPressed()) || projectile.WasPerformedThisFrame()))
             {
                 TrySecondary();
+            }
+            if (brain.hasSpecialeWeapon && ((tertiaryAttack.CanHold && special.IsPressed()) || special.WasPerformedThisFrame()))
+            {
+                TryTertiary();
             }
         }
     }
@@ -40,13 +51,20 @@ public class AttackController : MonoBehaviour
     // Public methods so AI can trigger attacks without input
     public bool TryPrimary()
     {
-        Debug.Log("Trying Primary Attack");
-        return primaryAttack != null && primaryAttack.TryAttack();
+        return TryAttack(primaryAttack);
     }
 
     public bool TrySecondary()
     {
-        Debug.Log("Trying Secondary Attack");
-        return secondaryAttack != null && secondaryAttack.TryAttack();
+        return TryAttack(secondaryAttack);
+    }
+    
+    public bool TryTertiary()
+    {
+        return TryAttack(tertiaryAttack);
+    }
+    private static bool TryAttack(AttackBase attack)
+    {
+        return attack != null && attack.TryAttack();
     }
 }
