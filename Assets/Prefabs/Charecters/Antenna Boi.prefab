@@ -1221,9 +1221,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   arm: {fileID: 1609817267010828817}
   sholder: {fileID: 5523201686547060544}
+  maxSwingAngle:
+    value:
+      x: 0
+      y: 0
+      z: 0.17364813
+      w: 0.9848077
   loadSeconds: 0.25
-  swingSeconds: 0
+  swingSeconds: 0.125
   canSwing: 0
+  swing: 0
 --- !u!4 &6494226583712110411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
