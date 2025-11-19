@@ -94,13 +94,16 @@ public class WalkCycle : MonoBehaviour
         #region move body to avoid cyledner colitions
         totalYDistence -=  transform.InverseTransformPoint(lastPosition).y;
         bodyPosition -= totalYDistence;
-        Vector3 bodyCastStart = body.position + transform.forward * hitCylinderRadius;
+        Vector3 bodyCastStart = body.position;
+        float feetRotation = leftFootAngle.y + rightFootAngle.y;
+        if (feetRotation < .1f)
+            bodyCastStart += transform.forward * hitCylinderRadius;
         if (Physics.Raycast(bodyCastStart, Vector3.down, out RaycastHit hit, float.PositiveInfinity, enviromentMask))
         {
             Vector3 bodyTarget = hit.point;
             bodyTarget.y += defultHeight + totalYDistence;
             bodyTarget = body.InverseTransformPoint(bodyTarget);
-            falling = stepHeight < hit.distance - defultHeight;
+            falling = stepHeight < hit.distance - defultHeight && -.1f < feetRotation;
             if (!falling && !jumping)
                 LastBodyPosition = Mathf.MoveTowards(LastBodyPosition, bodyTarget.y, distance * stepDistence);
             else
@@ -118,24 +121,26 @@ public class WalkCycle : MonoBehaviour
     }
     private Vector3 clampToFloor(Vector3 foot, ref Vector3 angle)
     {
-        float[] offsets = new float[] {0, footLength, heelLength};
+        float[] offsets = new float[] {0, heelLength, footLength};
         foreach (float offset in offsets)
         {
             Vector3 FootMax = foot;
-            FootMax.y = stepHeight;
+            FootMax.y = defultHeight;
             FootMax.z += offset;
             FootMax = feetRoot.TransformPoint(FootMax);
-            Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight), Color.red);
-            if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, stepHeight + footHeight, enviromentMask))
+            Debug.DrawRay(FootMax, Vector3.down * (stepHeight + footHeight + 1), Color.red);
+            if (Physics.Raycast(FootMax, Vector3.down, out RaycastHit hit, defultHeight + 5, enviromentMask))
             {
-                float footMin = stepHeight + footHeight - hit.distance;
-                foot.y = Mathf.Clamp(foot.y, footMin, stepHeight);
                 angle = Vector3.ProjectOnPlane(feetRoot.forward, hit.normal);
                 angle = feetRoot.InverseTransformDirection(angle);
                 angle.x = 0;
+                angle.Normalize();
+                float footMin = feetRoot.InverseTransformPoint(hit.point - angle * offset).y + footHeight;
+                foot.y = Mathf.Max(foot.y, footMin);
                 angle = feetRoot.TransformDirection(angle).normalized;
             }
         }
+        
         return foot;
     }
     private Vector3 clampToWall(Vector3 foot)
@@ -147,7 +152,7 @@ public class WalkCycle : MonoBehaviour
         Debug.DrawRay(FootMax, feetRoot.forward * (footLength + stepDistence), Color.red);
         if (Physics.Raycast(FootMax, feetRoot.forward, out RaycastHit hit, footLength + stepDistence, enviromentMask))
         {
-            float maxDistence = hit.distance - footLength;
+            float maxDistence = hit.distance + footLength;
             foot.z = Mathf.Clamp(foot.z, 0, maxDistence);
         }
         return foot;
@@ -155,8 +160,9 @@ public class WalkCycle : MonoBehaviour
 
     private Vector3 clampToEnviromentmet(Vector3 foot, ref Vector3 angle)
     {
+        
         Vector3 virticalClamped = clampToFloor(foot, ref angle);
-
+        
         return clampToWall(virticalClamped);
     }
 }
