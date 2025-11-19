@@ -444,6 +444,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.115
       objectReference: {fileID: 0}
+    - target: {fileID: -5990260428737819324, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -5990260428737819324, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5990260428737819324, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -5990260428737819324, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: -5801454381557256267, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.8906879
@@ -619,6 +635,22 @@ PrefabInstance:
     - target: {fileID: 7466319900015347446, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.067
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784671027270233235, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784671027270233235, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784671027270233235, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784671027270233235, guid: 2a4d37597822c4c218ae88dc0377394b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1016,10 +1048,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntennaBrain
   attackController: {fileID: 3001284121231995638}
+  meleeWeponLocation: {fileID: 3711282334340283073}
+  projectileWeponLocation: {fileID: 7401144542173567766}
+  specialWeponLocation: {fileID: 1945493739616060615}
   defultMeleeWeapon: {fileID: 0}
   defultProjectileWeapon: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
   defultSpecialWeapon: {fileID: 0}
-  defultPack: 0
+  defultPack: 1
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
@@ -1206,7 +1241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   arm: {fileID: 1999362490747065917}
   seconds: 0.25
-  canShoot: 0
+  canShoot: 1
 --- !u!114 &1123543537072932445
 MonoBehaviour:
   m_ObjectHideFlags: 0
