@@ -10,10 +10,12 @@ public class Projectile : MonoBehaviour
     public string attackName;
     public float duration;
 
+    // Damage applied when hitting an enemy
+    public float damage = 10f;
+
     protected virtual void Start()
     {
-        // Deletes the projectile after 10 seconds, regardless
-        // of whether it collided with anything. 
+        // Deletes the projectile after duration seconds
         Destroy(gameObject, duration);
     }
 
@@ -38,6 +40,20 @@ public class Projectile : MonoBehaviour
         else
         {
             Debug.Log($"Projectile hit {defender.name}");
+        }
+
+        // Apply damage if the thing hit has an Enemy component (check root and children)
+        GameObject defenderRootObj = defender.transform.root.gameObject;
+        Enemy enemy = defenderRootObj.GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            // try children if not on root
+            enemy = defenderRootObj.GetComponentInChildren<Enemy>();
+        }
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
         }
 
         // When the projectile hits something, create an explosion
