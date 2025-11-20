@@ -41,6 +41,20 @@ public class AIMovement : MonoBehaviour
         {
             projectileWeapon = GetComponentInChildren<LaunchProjectile>();
         }
+
+        // If attacking is enabled, enforce a 2 second attack interval and initialize next attack time
+        if (canAttack)
+        {
+            attackCooldown = 2f; // fire every 2 seconds as requested
+            nextAttackTime = Time.time + attackCooldown; // first shot after cooldown
+
+            // Ensure we have a reference to the player if not already assigned
+            if (player == null)
+            {
+                var p = GameObject.FindGameObjectWithTag("Player");
+                if (p != null) player = p.transform;
+            }
+        }
     }
 
     private void Update()
@@ -54,12 +68,6 @@ public class AIMovement : MonoBehaviour
         {
             // Update destination every frame to follow player
             agent.SetDestination(player.position);
-
-            // Handle attacking if enabled
-            if (canAttack && distanceToPlayer <= attackRange)
-            {
-                TryAttack();
-            }
 
             // Debug info
             if (!agent.hasPath)
@@ -76,13 +84,28 @@ public class AIMovement : MonoBehaviour
             Debug.LogWarning("Agent not on NavMesh!");
         }
 
-        // Always look at player
+        // Always look at player. If we're about to attack, snap to face the player so projectiles go toward them.
         Vector3 direction = (player.position - transform.position).normalized;
         direction.y = 0; // Keep upright
         if (direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+            // If it's time to attack, snap to face the player for an accurate shot, otherwise smooth rotate
+            if (canAttack && Time.time >= nextAttackTime)
+            {
+                transform.rotation = lookRotation;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            }
+        }
+
+        // Handle attacking if enabled. Fires every attackCooldown seconds regardless of distance to player.
+        if (canAttack && Time.time >= nextAttackTime)
+        {
+            TryAttack();
         }
     }
 
