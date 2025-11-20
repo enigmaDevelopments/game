@@ -46,7 +46,7 @@ public class InGameMenu : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.onHealthChanged.AddListener(UpdateHealthBar);
+           // playerHealth.onHealthChanged.AddListener(UpdateHealthBar);
         }
         else
         {
