@@ -14,10 +14,8 @@ GameObject:
   - component: {fileID: 286092198600877880}
   - component: {fileID: 1901017311992490178}
   - component: {fileID: 1813884565041440284}
-  - component: {fileID: -8815404256997876896}
-  - component: {fileID: 1486769800665716220}
-  - component: {fileID: -2869943595613953068}
-  - component: {fileID: -8269215661507644385}
+  - component: {fileID: -3020138878993229066}
+  - component: {fileID: -7190561491854227970}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -166,7 +164,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-8815404256997876896
+--- !u!114 &-3020138878993229066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,9 +181,8 @@ MonoBehaviour:
   canAttack: 1
   attackRange: 2
   attackCooldown: 1
-  autoRecoverToNavMesh: 1
-  navMeshSearchRadius: 10
---- !u!114 &1486769800665716220
+  projectileWeapon: {fileID: 0}
+--- !u!114 &-7190561491854227970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,48 +191,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1384779312996231904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c838fcf14b514d4d9744d475bd67c5a, type: 3}
+  m_Script: {fileID: 11500000, guid: fb514511f18b03c44a2a3f9ef6017caa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AntennaBrain
-  attackController: {fileID: 0}
-  defultMeleeWeapon: {fileID: 1382332459953695344, guid: a402cfa7cc2376e4aa1f4c5603dac618, type: 3}
-  defultProjectileWeapon: {fileID: 5109741587789198813, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
-  defultSpecialWeapon: {fileID: 4955777308072718435, guid: 06a677060acc0d64ba8c3f905f043ea2, type: 3}
-  defultPack: 1
-  laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
-  pulsePackObject: {fileID: 0}
-  sheildPackObject: {fileID: 0}
---- !u!114 &-2869943595613953068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384779312996231904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9e0415059e18648b2baa080fe668a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Hook
-  explosion: {fileID: 0}
-  owner: {fileID: 0}
-  attackName: 
-  duration: 0
-  pullInTime: 2
---- !u!114 &-8269215661507644385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384779312996231904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85704a30a4f04df4490335e952456f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttackController
-  input: {fileID: 0}
-  brain: {fileID: 0}
-  primaryAttack: {fileID: 0}
-  secondaryAttack: {fileID: 0}
-  tertiaryAttack: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  health: 100
