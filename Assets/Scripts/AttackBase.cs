@@ -5,12 +5,14 @@ public abstract class AttackBase : MonoBehaviour
 {
     [Header("Attack Settings")]
     [SerializeField] protected float attackCooldown = 0.5f;
+    [SerializeField] private bool canHold;
 
     protected bool isAttacking;
     protected bool canAttack = true;
 
     public bool IsAttacking => isAttacking;
     public float Cooldown => attackCooldown;
+    public bool CanHold => canHold;
 
     // Public entry point that consumers (like AttackController) call
     public bool TryAttack()
