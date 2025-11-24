@@ -100,7 +100,7 @@ public class AiEditorScript : Editor
         ai.hasWeapon = EditorGUILayout.Toggle("HasWeapon", ai.hasWeapon);
         if (ai.hasWeapon)
         {
-            ai.weapon = (Weapon)EditorGUILayout.ObjectField("Weapon", ai.weapon, typeof(Weapon), true);
+            ai.attack = (AttackBase)EditorGUILayout.ObjectField("Attack", ai.attack, typeof(AttackBase), true);
             if (hasWeapon)
                 attackAngle = EditorGUILayout.Slider("Attack Angle", ai.attackAngle, 0, 360);
             else

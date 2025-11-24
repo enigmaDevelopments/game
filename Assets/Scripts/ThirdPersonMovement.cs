@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
-    public CinemachineCamera virtualCamera;
     
     [Header("Movement Settings")]
     public float maxSpeed = 8f;
@@ -16,63 +14,71 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Jump Settings")]
     public float jumpForce = 8f;
     public float gravity = -20f;
-    
-    [Header("Mouse Settings")]
-    public float mouseSensitivity = 1f;
-    
+
+    [Header("Timer")]
+    public float bufferTime = .5f;
+
+    protected Vector3 playerVelocity;
     private Vector2 movement;
-    private Vector2 look;
-    private Vector3 playerVelocity;
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
     private float currentSpeed;
     private float coyoteTimeCounter;
-    private bool isGrounded;
+    protected bool isGrounded;
     private bool wasGrounded;
-    private bool jumpBuffered;
+    private float buffer = 0;
     private Transform cameraTransform;
+    protected bool canFasttFall = true;
 
     public void OnMove(InputValue value)
     {
-        movement = value.Get<Vector2>();
+        movement = Vector2.ClampMagnitude(value.Get<Vector2>(),1);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         cameraTransform = Camera.main.transform;
-        
+
         // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
     
-    public void OnJump(InputValue value)
+    public virtual void OnJump(InputValue value)
     {
-        if (value.isPressed && isGrounded)
+        if (value.isPressed)
         {
-            playerVelocity.y = jumpForce;
+            if (isGrounded)
+                playerVelocity.y = jumpForce;
+            else
+                buffer = bufferTime;
         }
+        else if (canFasttFall && 0 < playerVelocity.y)
+            playerVelocity.y = 0;
+        else
+            buffer = 0;
     }
 
-    public void OnLook(InputValue value)
-    {
-        look = value.Get<Vector2>();
-        look *= mouseSensitivity;
-    }
-
-    void Update()
+    protected virtual void Update()
     {
         isGrounded = controller.isGrounded;
-        
         // Apply gravity
         if (!isGrounded)
         {
             playerVelocity.y += gravity * Time.deltaTime;
+
+            //decrment buffertime timer
+            if (0 < buffer)
+                buffer -= Time.deltaTime;
         }
         else if (playerVelocity.y < 0)
         {
             // Reset vertical velocity when grounded
             playerVelocity.y = -2f;
+
+            //Jump if jump is buffered
+            if (0 < buffer)
+                playerVelocity.y = jumpForce;
         }
 
         // Get camera-relative movement direction

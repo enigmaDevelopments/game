@@ -1,53 +1,54 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public CharacterController controller;
+    public PlayerInput input;
+    
+    [Header("Dash Settings")]
     public float dashSpeed = 20f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
+    public bool canCancel;
 
-    private bool isDashing = false;
-    private bool canDash = true;
-    private Vector3 moveInput;
+    protected InputAction dash;
+    protected bool canDash = true;
+    protected bool isDashing = false;
+    
 
+    protected virtual void Start()
+    {
+        dash = input.actions?.FindAction("Dash", throwIfNotFound: false);
+    }
     void Update()
     {
-        // Get basic input
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector3(moveX, 0f, moveZ).normalized;
-
-        // Move normally when not dashing
-        if (!isDashing)
-        {
-            transform.Translate(moveInput * moveSpeed * Time.deltaTime, Space.World);
-        }
-
         // Dash input (press Left Shift)
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && moveInput != Vector3.zero)
+        if (dash.WasPressedThisFrame() && canDash)
         {
             StartCoroutine(Dash());
         }
+        if (dash.WasReleasedThisFrame() && canCancel)
+            isDashing = false;
     }
 
-    private System.Collections.IEnumerator Dash()
+    protected virtual System.Collections.IEnumerator Dash()
     {
-        isDashing = true;
         canDash = false;
+        isDashing = true;
 
+        Vector3 direction = transform.forward;
         float startTime = Time.time;
-
-        while (Time.time < startTime + dashDuration)
+        while (Time.time < startTime + dashDuration && isDashing)
         {
-            transform.Translate(moveInput * dashSpeed * Time.deltaTime, Space.World);
+            controller.Move(direction * dashSpeed * Time.deltaTime);
             yield return null;
         }
 
         isDashing = false;
-
         // Wait before you can dash again
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
 }
