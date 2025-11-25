@@ -34,7 +34,6 @@ public class WalkCycle : MonoBehaviour
 
     [Header("State")]
     public bool jumping = false;
-    public bool falling = false;
 
 
     private Vector3 lastPosition;
@@ -45,6 +44,7 @@ public class WalkCycle : MonoBehaviour
     private float leftReturnTimer = -1;
     private float rightReturnTimer = -1;
     private float bodyReturnTimer = -1;
+    private bool falling = false;
 
 
 
