@@ -14,7 +14,7 @@ public class EnergyRecyclerUpgrade : MonoBehaviour
         Enemy.OnEnemyDeath += HandleEnemyDeath;
 
         // Find the player and get their energy component
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update with correct tag
         if (player != null)
         {
             playerEnergy = player.GetComponent<PlayerEnergy>();
