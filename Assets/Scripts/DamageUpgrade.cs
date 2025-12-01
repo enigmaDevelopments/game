@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// script will double players damage ability if they hit 500 coins
 public class DamageUpgrade : MonoBehaviour
 {
     public float damageMultiplier = 2f;  // The multiplier to apply when the player has more than 500 coins

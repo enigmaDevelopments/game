@@ -31,7 +31,7 @@ public class MomentumUpgrade : MonoBehaviour
     private void Start()
     {
         // Find player components
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update with correct tag
         if (player != null)
         {
             playerMovement = player.GetComponent<PlayerMovement>();

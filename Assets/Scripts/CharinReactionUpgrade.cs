@@ -14,7 +14,7 @@ public class ChainReactionUpgrade : MonoBehaviour
         }
     }
 
-    private void ActivateChainReactionUpgrade()
+   public void ActivateChainReactionUpgrade()
     {
         isUpgradeActive = true;
         Debug.Log("Chain Reaction Upgrade Activated!");

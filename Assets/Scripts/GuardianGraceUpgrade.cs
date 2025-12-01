@@ -24,10 +24,10 @@ public class GuardianGraceUpgrade : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update tag
         if (player != null)
         {
-            playerHealth = player.GetComponent<PlayerHealth>();
+            playerHealth = player.GetComponent<PlayerHealth>(); //update script name
         }
     }
 

@@ -67,9 +67,6 @@ public class TemporalEchoUpgrade : MonoBehaviour
 
         // Optional: Reset the player's position back to the original state
         playerMovement.transform.position = originalPosition;
-
-        // Optional: Visualize the echo (glow, trail, etc.)
-        // Instantiate(echoEffectPrefab, echoPosition, Quaternion.identity);
     }
 
 }
