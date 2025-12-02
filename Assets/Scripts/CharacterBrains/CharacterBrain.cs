@@ -3,6 +3,10 @@ using UnityEngine;
 public class CharacterBrain : MonoBehaviour
 {
     public AttackController attackController;
+    [Header("Locations")]
+    public Transform meleeWeponLocation;
+    public Transform projectileWeponLocation;
+    public Transform specialWeponLocation;
     [Header("Defults")]
     public GameObject defultMeleeWeapon;
     public GameObject defultProjectileWeapon;
@@ -22,19 +26,19 @@ public class CharacterBrain : MonoBehaviour
     public void SetMeleeWeapon(GameObject wepon)
     {
         _hasMeleeWeapon = true;
-        activeMeleeWeapon = Instantiate(wepon, transform);
+        activeMeleeWeapon = Instantiate(wepon, meleeWeponLocation);
         attackController.primaryAttack = activeMeleeWeapon.GetComponent<AttackBase>();
     }
     public void SetProjectileWeapon(GameObject wepon)
     {
         _hasProjectileWeapon = true;
-        activeProjectileWeapon = Instantiate(wepon, transform);
+        activeProjectileWeapon = Instantiate(wepon, projectileWeponLocation);
         attackController.secondaryAttack = activeProjectileWeapon.GetComponent<AttackBase>();
     }
     public void SetSpecialWepon(GameObject wepon)
     {
         _hasSpecialeWeapon = true;
-        activeSpecialeWeapon = Instantiate(wepon, transform);
+        activeSpecialeWeapon = Instantiate(wepon, specialWeponLocation);
         attackController.tertiaryAttack = activeSpecialeWeapon.GetComponent<AttackBase>();
     }
 
