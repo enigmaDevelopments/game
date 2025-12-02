@@ -17,7 +17,7 @@ public class CriticalInstinctsUpgrade : MonoBehaviour
         }
     }
 
-    private void ActivateCriticalInstincts()
+    public void ActivateCriticalInstincts()
     {
         isUpgradeActive = true;
         Debug.Log("Critical Instincts Upgrade Activated!");

@@ -10,25 +10,32 @@ public class UpgradeManager : MonoBehaviour
 
     // Upgrade UI elements
     public Button criticalInstinctsButton;  // Button to activate Critical Instincts upgrade
-    //public Text criticalInstinctsCostText;  // Text showing the cost for Critical Instincts
+    private CriticalInstinctsUpgrade criticalInstinctsUpgrade;
+    public int criticalInstinctsCost = 3;
 
     public Button chainReactionButton;     // Button to activate Chain Reaction upgrade
-    //public Text chainReactionCostText;     // Text showing the cost for Chain Reaction
+    private ChainReactionUpgrade chainReactionUpgrade;
+    public int chainReactionCost = 3;
 
     public Button barrierSurgeButton;
-    //public Text barrierCostText;
+    private BarrierSurgeUpgrade barrierSurgeUpgrade;
+    public int barrierSurgeCost = 3;
 
     public Button energyRecyclerButton;
     private EnergyRecyclerUpgrade energyRecyclerUpgrade;
+    public int energyRecyclerCost = 200;
 
     public Button evasiveMomentumButton;
     private EvasiveMomentumUpgrade evasiveMomentumUpgrade;
+    public int evasiveMomentumCost = 250;
 
     public Button guardianGraceButton;
     private GuardianGraceUpgrade guardianGraceUpgrade;
+    public int guardianGraceCost = 300;
 
     public Button momentumButton;
     private MomentumUpgrade momentumUpgrade;
+    public int momentumCost = 200;
 
     public Button reactiveArmorButton;
     private ReactiveArmorUpgrade reactiveArmorUpgrade;
@@ -46,15 +53,6 @@ public class UpgradeManager : MonoBehaviour
     public int temporalEchoCost = 500;
     private TemporalEchoUpgrade temporalEchoUpgrade;
 
-    // Define costs and upgrade states
-    public int criticalInstinctsCost = 3;  // Example cost for the Critical Instincts upgrade
-    public int chainReactionCost = 3;      // Example cost for the Chain Reaction upgrade
-    public int barrierSurgeCost = 3;
-    public int energyRecyclerCost = 200;
-    public int evasiveMomentumCost = 250;
-    public int guardianGraceCost = 300;
-    public int momentumCost = 200;
-
     private int playerCurrency = 500;         // Player's current currency
 
     private void Start()
@@ -65,35 +63,30 @@ public class UpgradeManager : MonoBehaviour
 
         // Add listeners to upgrade buttons
         criticalInstinctsButton.onClick.AddListener(OnCriticalInstinctsUpgrade);
+        criticalInstinctsUpgrade = FindAnyObjectByType<CriticalInstinctsUpgrade>();
         chainReactionButton.onClick.AddListener(OnChainReactionUpgrade);
+        chainReactionUpgrade = FindAnyObjectByType<ChainReactionUpgrade>();
         barrierSurgeButton.onClick.AddListener(OnBarrierSurgeUpgrade);
+        barrierSurgeUpgrade = FindAnyObjectByType<BarrierSurgeUpgrade>();
         energyRecyclerButton.onClick.AddListener(OnEnergyRecyclerUpgrade);
+        energyRecyclerUpgrade = FindAnyObjectByType<EnergyRecyclerUpgrade>();
         evasiveMomentumButton.onClick.AddListener(OnEvasiveMomentumUpgrade);
-        evasiveMomentumUpgrade = FindFirstObjectByType<EvasiveMomentumUpgrade>();
+        evasiveMomentumUpgrade = FindAnyObjectByType<EvasiveMomentumUpgrade>();
         guardianGraceButton.onClick.AddListener(OnGuardianGraceUpgrade);
-        guardianGraceUpgrade = FindFirstObjectByType<GuardianGraceUpgrade>();
+        guardianGraceUpgrade = FindAnyObjectByType<GuardianGraceUpgrade>();
         momentumButton.onClick.AddListener(OnMomentumUpgrade);
-        momentumUpgrade = FindFirstObjectByType<MomentumUpgrade>();
+        momentumUpgrade = FindAnyObjectByType<MomentumUpgrade>();
         reactiveArmorButton.onClick.AddListener(OnReactiveArmorUpgrade);
-        reactiveArmorUpgrade = FindFirstObjectByType<ReactiveArmorUpgrade>();
+        reactiveArmorUpgrade = FindAnyObjectByType<ReactiveArmorUpgrade>();
         secondWindButton.onClick.AddListener(OnSecondWindUpgrade);
-        secondWindUpgrade = FindFirstObjectByType<SecondWindUpgrade>();
+        secondWindUpgrade = FindAnyObjectByType<SecondWindUpgrade>();
         speedForceButton.onClick.AddListener(OnSpeedForceUpgrade);
-        speedForceUpgrade = FindFirstObjectByType<SpeedForceUpgrade>();
+        speedForceUpgrade = FindAnyObjectByType<SpeedForceUpgrade>();
         temporalEchoButton.onClick.AddListener(OnTemporalEchoUpgrade);
-        temporalEchoUpgrade = FindFirstObjectByType<TemporalEchoUpgrade>();
-        energyRecyclerButton.onClick.AddListener(OnEnergyRecyclerUpgrade);
-
-
-
-
-
-
-
-
-
-        energyRecyclerUpgrade = FindFirstObjectByType<EnergyRecyclerUpgrade>();
+        temporalEchoUpgrade = FindAnyObjectByType<TemporalEchoUpgrade>();
+       
     }
+
 
     private void UpdateCurrencyDisplay()
     {
@@ -104,13 +97,48 @@ public class UpgradeManager : MonoBehaviour
     private void UpdateUpgradeUI()
     {
         // Update the UI based on the player's current currency and the cost of upgrades
-        //criticalInstinctsCostText.text = $"Cost: {criticalInstinctsCost}";
-        //chainReactionCostText.text = $"Cost: {chainReactionCost}";
+        playerCurrencyText.text = $"Currency: {playerCurrency}";  // Update the currency display
+
+        // List of buttons and their corresponding costs
+        Button[] upgradeButtons = new Button[]
+        {
+        criticalInstinctsButton,
+        chainReactionButton,
+        barrierSurgeButton,
+        energyRecyclerButton,
+        evasiveMomentumButton,
+        guardianGraceButton,
+        momentumButton,
+        reactiveArmorButton,
+        secondWindButton,
+        speedForceButton,
+        temporalEchoButton,
+        
+        };
+
+        int[] upgradeCosts = new int[]
+        {
+        criticalInstinctsCost,
+        chainReactionCost,
+        barrierSurgeCost,
+        energyRecyclerCost,
+        evasiveMomentumCost,
+        guardianGraceCost,
+        momentumCost,
+        reactiveArmorCost,
+        secondWindCost,
+        speedForceCost,
+        temporalEchoCost,
+        
+        };
 
         // Enable or disable buttons based on whether the player can afford the upgrade
-        criticalInstinctsButton.interactable = playerCurrency >= criticalInstinctsCost;
-        chainReactionButton.interactable = playerCurrency >= chainReactionCost;
+        for (int i = 0; i < upgradeButtons.Length; i++)
+        {
+            upgradeButtons[i].interactable = playerCurrency >= upgradeCosts[i];
+        }
     }
+
 
     public void ShowUpgradeMenu()
     {
@@ -125,7 +153,7 @@ public class UpgradeManager : MonoBehaviour
         // Close the upgrade menu panel
         upgradeMenuPanel.SetActive(false);
     }
-
+    /*----------------------------------------------------------------------------------------------------critical instincts------------------------------------------------------------------------------------------*/
     private void OnCriticalInstinctsUpgrade()
     {
         if (playerCurrency >= criticalInstinctsCost)
@@ -138,10 +166,28 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough currency for Critical Instincts Upgrade!");
+            Debug.Log("Not enough currency for Upgrade!");
         }
     }
 
+    private void ActivateCriticalInstinctsUpgrade()
+    {
+        if (criticalInstinctsUpgrade != null)
+        {
+            // Activate the Critical Instincts upgrade
+            criticalInstinctsUpgrade.ActivateCriticalInstincts(); // Call the method from CriticalInstinctsUpgrade
+
+            // Update UI after activation
+            criticalInstinctsButton.interactable = false;  // Disable the button after purchase
+            Debug.Log("Critical Instincts Upgrade Activated!");
+        }
+        else
+        {
+            Debug.LogWarning("CriticalInstinctsUpgrade not found!");
+        }
+    }
+
+    /*----------------------------------------------------------------------------------------------------Chain Reaction------------------------------------------------------------------------------------------*/
     private void OnChainReactionUpgrade()
     {
         if (playerCurrency >= chainReactionCost)
@@ -154,9 +200,25 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough currency for Chain Reaction Upgrade!");
+            Debug.Log("Not enough currency for Upgrade!");
         }
     }
+
+    private void ActivateChainReactionUpgrade()
+    {
+        if (chainReactionUpgrade != null)
+        {
+            // Call the method to activate the chain reaction upgrade
+            chainReactionUpgrade.ActivateChainReactionUpgrade();
+            Debug.Log("Chain Reaction Upgrade Activated through Button!");
+        }
+        else
+        {
+            Debug.LogWarning("ChainReactionUpgrade not found!");
+        }
+    }
+
+    /*----------------------------------------------------------------------------------------------------Barrier Surge------------------------------------------------------------------------------------------*/
 
     private void OnBarrierSurgeUpgrade()
     {
@@ -170,10 +232,24 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough currency for Chain Reaction Upgrade!");
+            Debug.Log("Not enough currency for Upgrade!");
         }
     }
 
+    private void ActivateBarrierSurgeUpgrade()
+    {
+        if(barrierSurgeUpgrade != null)
+        {
+            barrierSurgeUpgrade.ActivateBarrierSurge();
+            Debug.Log("Barrier Surge Upgrade Activated");
+        }
+        else
+        {
+            Debug.LogWarning("Upgrade not found");
+        }
+    }
+
+    /*----------------------------------------------------------------------------------------------------Energy Recycler------------------------------------------------------------------------------------------*/
     private void OnEnergyRecyclerUpgrade()
     {
         if (playerCurrency >= energyRecyclerCost)
@@ -189,6 +265,8 @@ public class UpgradeManager : MonoBehaviour
             Debug.Log("Not enough currency for Energy Recycler Upgrade!");
         }
     }
+
+    /*----------------------------------------------------------------------------------------------------Evasive Momentum------------------------------------------------------------------------------------------*/
 
     private void OnEvasiveMomentumUpgrade()
     {
@@ -207,6 +285,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------Guardian Grace------------------------------------------------------------------------------------------*/
     private void OnGuardianGraceUpgrade()
     {
         if (playerCurrency >= guardianGraceCost)
@@ -224,6 +303,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------Momentum------------------------------------------------------------------------------------------*/
     private void OnMomentumUpgrade()
     {
         if (playerCurrency >= momentumCost)
@@ -241,6 +321,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------Reactive Armor------------------------------------------------------------------------------------------*/
     private void OnReactiveArmorUpgrade()
     {
         if (playerCurrency >= reactiveArmorCost)
@@ -258,6 +339,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------Second Wind------------------------------------------------------------------------------------------*/
     private void OnSecondWindUpgrade()
     {
         if (playerCurrency >= secondWindCost)
@@ -275,6 +357,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    /*----------------------------------------------------------------------------------------------------Speed Force------------------------------------------------------------------------------------------*/
     private void OnSpeedForceUpgrade()
     {
         if (playerCurrency >= speedForceCost)
@@ -295,6 +378,28 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
+    private void ActivateSpeedForceUpgrade()
+    {
+        if (playerCurrency >= speedForceCost)
+        {
+            playerCurrency -= speedForceCost;
+            UpdateCurrencyDisplay();
+
+            if (speedForceUpgrade != null)
+            {
+                speedForceUpgrade.Activate();  // Make sure this method is defined in your SpeedForceUpgrade class
+            }
+
+            speedForceButton.interactable = false;
+            Debug.Log("Speed Force Upgrade Activated!");
+        }
+        else
+        {
+            Debug.Log("Not enough currency for Speed Force Upgrade!");
+        }
+    }
+
+    /*----------------------------------------------------------------------------------------------------Temporal Echo------------------------------------------------------------------------------------------*/
     private void OnTemporalEchoUpgrade()
     {
         if (playerCurrency >= temporalEchoCost)
@@ -314,26 +419,5 @@ public class UpgradeManager : MonoBehaviour
         {
             Debug.Log("Not enough currency for Temporal Echo Upgrade!");
         }
-    }
-
-    private void ActivateCriticalInstinctsUpgrade()
-    {
-        // Code to activate the Critical Instincts upgrade
-        // (For example, you can call a method in the CriticalInstinctsUpgrade script)
-        Debug.Log("Critical Instincts Upgrade Activated!");
-        // Here, you would activate the Critical Instincts upgrade in your game logic.
-    }
-
-    private void ActivateChainReactionUpgrade()
-    {
-        // Code to activate the Chain Reaction upgrade
-        // (For example, you can call a method in the ChainReactionUpgrade script)
-        Debug.Log("Chain Reaction Upgrade Activated!");
-        // Here, you would activate the Chain Reaction upgrade in your game logic.
-    }
-
-    private void ActivateBarrierSurgeUpgrade()
-    {
-        Debug.Log("Barrier Surge Upgrade Activated");
     }
 }
