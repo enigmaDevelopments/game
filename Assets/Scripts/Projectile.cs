@@ -56,6 +56,28 @@ public class Projectile : MonoBehaviour
             enemy.TakeDamage(damage);
         }
 
+        // Apply damage if the thing hit has a Player tag and PlayerStats component
+        if (defenderRootObj.CompareTag("Player"))
+        {
+            PlayerStats playerStats = defenderRootObj.GetComponent<PlayerStats>();
+            if (playerStats == null)
+            {
+                // try children if not on root
+                playerStats = defenderRootObj.GetComponentInChildren<PlayerStats>();
+            }
+
+            if (playerStats != null)
+            {
+                playerStats.TakeDamage((int)damage);
+                
+                // Check if player died (health <= 0)
+                if (playerStats.currentHealth <= 0)
+                {
+                    Destroy(defenderRootObj);
+                }
+            }
+        }
+
         // When the projectile hits something, create an explosion
         // and remove the projectile.
         if (explosion != null)
