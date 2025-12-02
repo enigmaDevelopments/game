@@ -11,6 +11,10 @@ public class AIMovement : MonoBehaviour
     public bool canAttack = false;
     public float attackRange = 2f;
     public float attackCooldown = 1f;
+
+    // Optional: assign a LaunchProjectile component (weapon) on this object or a child.
+    // If not assigned, the script will try to find one in children at Start().
+    public LaunchProjectile projectileWeapon;
     
     private Transform player;
     private NavMeshAgent agent;
@@ -19,7 +23,9 @@ public class AIMovement : MonoBehaviour
     private void Start()
     {
         // Find the player
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+            player = playerObj.transform;
         
         // Get and setup NavMeshAgent
         agent = GetComponent<NavMeshAgent>();
@@ -28,6 +34,26 @@ public class AIMovement : MonoBehaviour
             agent.speed = moveSpeed;
             agent.stoppingDistance = followDistance;
             agent.autoBraking = true;
+        }
+
+        // Auto-find a LaunchProjectile on this object or its children if none assigned
+        if (projectileWeapon == null)
+        {
+            projectileWeapon = GetComponentInChildren<LaunchProjectile>();
+        }
+
+        // If attacking is enabled, enforce a 2 second attack interval and initialize next attack time
+        if (canAttack)
+        {
+            attackCooldown = 2f; // fire every 2 seconds as requested
+            nextAttackTime = Time.time + attackCooldown; // first shot after cooldown
+
+            // Ensure we have a reference to the player if not already assigned
+            if (player == null)
+            {
+                var p = GameObject.FindGameObjectWithTag("Player");
+                if (p != null) player = p.transform;
+            }
         }
     }
 
@@ -42,12 +68,6 @@ public class AIMovement : MonoBehaviour
         {
             // Update destination every frame to follow player
             agent.SetDestination(player.position);
-
-            // Handle attacking if enabled
-            if (canAttack && distanceToPlayer <= attackRange)
-            {
-                TryAttack();
-            }
 
             // Debug info
             if (!agent.hasPath)
@@ -64,23 +84,51 @@ public class AIMovement : MonoBehaviour
             Debug.LogWarning("Agent not on NavMesh!");
         }
 
-        // Always look at player
+        // Always look at player. If we're about to attack, snap to face the player so projectiles go toward them.
         Vector3 direction = (player.position - transform.position).normalized;
         direction.y = 0; // Keep upright
         if (direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+            // If it's time to attack, snap to face the player for an accurate shot, otherwise smooth rotate
+            if (canAttack && Time.time >= nextAttackTime)
+            {
+                transform.rotation = lookRotation;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            }
+        }
+
+        // Handle attacking if enabled. Fires every attackCooldown seconds regardless of distance to player.
+        if (canAttack && Time.time >= nextAttackTime)
+        {
+            TryAttack();
         }
     }
 
     private void TryAttack()
     {
-        if (Time.time >= nextAttackTime)
+        if (Time.time < nextAttackTime)
+            return;
+
+        if (projectileWeapon != null)
         {
-            // Implement your attack logic here
-            Debug.Log($"{gameObject.name} is attacking!");
-            nextAttackTime = Time.time + attackCooldown;
+            // TryAttack() returns true if the attack started successfully
+            bool started = projectileWeapon.TryAttack();
+            if (started)
+            {
+                nextAttackTime = Time.time + attackCooldown;
+                Debug.Log($"{gameObject.name} fired projectile at player.");
+            }
+        }
+        else
+        {
+            // No projectile weapon — fallback to debug message
+            Debug.LogWarning($"{gameObject.name} has canAttack=true but no LaunchProjectile assigned.");
+            nextAttackTime = Time.time + attackCooldown; // still enforce cooldown to avoid spamming logs
         }
     }
 

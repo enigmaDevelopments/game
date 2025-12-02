@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class AttackController : MonoBehaviour
 {
+    [Header("Control Mode")]
+    [Tooltip("If true, attacks are controlled by AI instead of player input")]
+    public bool isAIControlled = false;
+
     [Header("Scripts")]
     [Tooltip("Optional. If not provided, will try to GetComponent<PlayerInput>()")] 
     public PlayerInput input;
@@ -15,6 +19,13 @@ public class AttackController : MonoBehaviour
     public AttackBase secondaryAttack; // Projectile
     public AttackBase tertiaryAttack; // special
 
+    [Header("AI Settings")]
+    [Tooltip("Reference to player/target for AI attacks")]
+    public Transform aiTarget;
+
+    [Tooltip("Tag to find AI target if not manually set")]
+    public string aiTargetTag = "Player";
+
     private void Awake()
     {
         if (input == null)
@@ -23,8 +34,29 @@ public class AttackController : MonoBehaviour
             brain = GetComponent<CharacterBrain>();
     }
 
+    private void Start()
+    {
+        // Find AI target if in AI mode and no target is set
+        if (isAIControlled && aiTarget == null)
+        {
+            GameObject targetObj = GameObject.FindGameObjectWithTag(aiTargetTag);
+            if (targetObj != null)
+            {
+                aiTarget = targetObj.transform;
+            }
+        }
+    }
+
     private void Update()
     {
+        if (isAIControlled)
+        {
+            // AI mode - let individual attack AI behaviors handle when to attack
+            // The attacks will call TryPrimary/TrySecondary/TryTertiary themselves
+            return;
+        }
+
+        // Player input mode
         if (input != null)
         {
             var actions = input.actions;
@@ -63,8 +95,25 @@ public class AttackController : MonoBehaviour
     {
         return TryAttack(tertiaryAttack);
     }
+
     private static bool TryAttack(AttackBase attack)
     {
         return attack != null && attack.TryAttack();
+    }
+
+    // Helper methods for AI to check attack readiness
+    public bool CanUsePrimary()
+    {
+        return primaryAttack != null && !primaryAttack.IsAttacking && brain.hasMeleeWeapon;
+    }
+
+    public bool CanUseSecondary()
+    {
+        return secondaryAttack != null && !secondaryAttack.IsAttacking && brain.hasProjectileWeapon;
+    }
+
+    public bool CanUseTertiary()
+    {
+        return tertiaryAttack != null && !tertiaryAttack.IsAttacking && brain.hasSpecialeWeapon;
     }
 }
