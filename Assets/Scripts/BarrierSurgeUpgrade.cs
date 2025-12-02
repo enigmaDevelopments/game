@@ -22,7 +22,7 @@ public class BarrierSurgeUpgrade : MonoBehaviour
         }
     }
 
-    private void ActivateBarrierSurge()
+    public void ActivateBarrierSurge()
     {
         // Increase the player's max barrier
         playerBarrier.maxBarrier += maxBarrierIncrease;

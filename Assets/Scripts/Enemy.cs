@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+// add to enemy script
+
 public class Enemy : MonoBehaviour
 {
     [Header("Enemy Settings")]

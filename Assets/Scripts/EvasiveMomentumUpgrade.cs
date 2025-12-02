@@ -22,7 +22,7 @@ public class EvasiveMomentumUpgrade : MonoBehaviour
     void Start()
     {
         // Find the player and their movement script
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player"); // update with correct tag
         if (player != null)
             playerMovement = player.GetComponent<PlayerMovement>();
     }
