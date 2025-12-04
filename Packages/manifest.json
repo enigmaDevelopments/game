@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.handzlikchris.fastscriptreload": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
     "com.pathightree.spacenavigator-driver": "https://github.com/PatHightree/SpaceNavigator.git",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.animation.rigging": "1.3.1",
