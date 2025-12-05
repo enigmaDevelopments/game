@@ -156,3 +156,4 @@ MonoBehaviour:
   owner: {fileID: 0}
   attackName: 
   duration: 0
+  damage: 10

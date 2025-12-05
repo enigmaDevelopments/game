@@ -129,7 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1190710866992498207, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
       propertyPath: m_Value
-      value: 100
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190710866992498207, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
+      propertyPath: m_MaxValue
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1672437157516849682, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
       propertyPath: m_AnchorMin.x
@@ -181,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4141519623579666866, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.6012268
+      value: 1.6011963
       objectReference: {fileID: 0}
     - target: {fileID: 4141519623579666866, guid: 2e8d8d040ec8543cfa8dbd8761ffd202, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -811,17 +815,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2395921228848780105, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 1253977779}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
       objectReference: {fileID: 0}
-    - target: {fileID: 6182072223594459333, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: m_Layer
-      value: 11
+    - target: {fileID: 5660468514417857004, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1253977779}
+    - target: {fileID: 5660468514417857004, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: maxHealth
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660468514417857004, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: canTakeDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660468514417857004, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: intangibilityDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6494226583712110411, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -920,6 +932,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9088964759533778998, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -946,7 +962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 100
-  health: 0
+  canTakeDamage: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

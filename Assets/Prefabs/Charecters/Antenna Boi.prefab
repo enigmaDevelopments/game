@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 8048644138279775256}
   - component: {fileID: 2705632665883789783}
   - component: {fileID: 7873100486138719345}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,6 +991,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: deathScene
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -1108,7 +1116,7 @@ PrefabInstance:
       addedObject: {fileID: 1123543537072932445}
     - targetCorrespondingSourceObject: {fileID: 8874716997658010099, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2395921228848780105}
+      addedObject: {fileID: 8536438598171174025}
   m_SourcePrefab: {fileID: 100100000, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
 --- !u!143 &718674062554021058 stripped
 CharacterController:
@@ -1405,7 +1413,7 @@ MonoBehaviour:
   swingSeconds: 0.2
   canSwing: 0
   swing: 0
---- !u!114 &2395921228848780105
+--- !u!114 &8536438598171174025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1414,21 +1422,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3793712660526083117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a6e0a09cb28748499af5ccee5bff34a, type: 3}
+  m_Script: {fileID: 11500000, guid: 60fff141c630b284a944376488a5e6db, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHealth: 100
-  currentHealth: 100
-  healthBar: {fileID: 0}
-  dKey:
-    m_Name: D Key
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8e110db3-a2a4-4ae5-9582-59dfe17c9e6f
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  m_EditorClassIdentifier: '::'
+  mainLayer: 3
+  intangibleLayer: 11
 --- !u!4 &6494226583712110411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}

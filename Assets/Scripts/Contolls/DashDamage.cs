@@ -7,17 +7,21 @@ public class DashThroughDamage : PlayerDash
     public float hitRadius = 0.5f;
     [Header("Layer Settings")]
     public LayerMask hitMask;
-    public int defultLayer;
-    public int intangableLayer;
+    private IntangibilityManager intangibilityManager;
 
+    protected override void Start()
+    {
+        base.Start();
+        intangibilityManager = GetComponent<IntangibilityManager>();
+    }
 
     protected override System.Collections.IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
 
-        // ?? Disable collision so you can move through objects
-        gameObject.layer = intangableLayer;
+        // Disable collision so you can move through objects
+        intangibilityManager.Timer = dashDuration;
 
         // Apply dash velocity
         StartCoroutine(base.Dash());
@@ -26,8 +30,6 @@ public class DashThroughDamage : PlayerDash
             CheckDashHits();
             yield return null;
         }
-
-        gameObject.layer = defultLayer; // re-enable collision
 
         isDashing = false;
 

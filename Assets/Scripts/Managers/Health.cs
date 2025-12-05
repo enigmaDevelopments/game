@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float maxHealth = 100;
-    public float health;
+    public float maxHealth = 7;
+    public bool canTakeDamage = true;
+    protected float health;
     protected virtual void Start()
     {
         health = maxHealth;
@@ -11,6 +12,7 @@ public class Health : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        if (!canTakeDamage) return;
         health -= damage;
         if (health <= 0)
         {
