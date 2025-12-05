@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class WeponSwing : MonoBehaviour
 {
+    [Header("Arm Parts")]
     public Transform arm;
     public Transform sholder;
+    public Transform hand;
+    [Header("Angles")]
     public quaternion maxSwingAngle;
+    public quaternion startHandAngle;
+    public quaternion endHandAngle;
+    [Header("Timings")]
     public float loadSeconds;
     public float swingSeconds;
+    [Header("States")]
     public bool canSwing;
     public bool swing;
 
@@ -48,7 +55,10 @@ public class WeponSwing : MonoBehaviour
         loadTimer = Mathf.Clamp01(loadTimer);
         arm.localRotation = Quaternion.Slerp(start, armRotation, loadTimer);
         if (swing)
+        {
             sholder.localRotation = Quaternion.Slerp(sholderRotation, maxSwingAngle, swingTimer);
+            hand.localRotation = Quaternion.Slerp(startHandAngle, endHandAngle, swingTimer);
+        }
         else
             sholder.localRotation = Quaternion.Slerp(start, sholderRotation, loadTimer);
         
