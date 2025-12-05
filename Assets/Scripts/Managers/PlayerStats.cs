@@ -1,43 +1,19 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-public class PlayerStats : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class PlayerStats : Health
 {
-    public int maxHealth = 100;
-    public int currentHealth;
-
     public HealthBar healthBar;
-    public InputAction dKey;
-
-    private void OnEnable()
-    {
-        dKey.Enable();
-    }
-
-    private void OnDisable()
-    {
-        dKey.Disable();
-    }
+    public int deathScene;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
 
-    // Update is called once per frame
-    void Update()
+    public override void TakeDamage(float damage)
     {
-        if (dKey.triggered)
-        {
-            TakeDamage(20);
-        }
+        base.TakeDamage(damage);
+        healthBar.SetHealth((int)health);
     }
-
-    public void TakeDamage(int damage)
+    protected override void Die()
     {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        SceneManager.LoadScene(deathScene);
     }
 }

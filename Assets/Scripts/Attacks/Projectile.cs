@@ -44,39 +44,9 @@ public class Projectile : MonoBehaviour
 
         // Apply damage if the thing hit has an Enemy component (check root and children)
         GameObject defenderRootObj = defender.transform.root.gameObject;
-        Enemy enemy = defenderRootObj.GetComponent<Enemy>();
-        if (enemy == null)
-        {
-            // try children if not on root
-            enemy = defenderRootObj.GetComponentInChildren<Enemy>();
-        }
-
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-
-        // Apply damage if the thing hit has a Player tag and PlayerStats component
-        if (defenderRootObj.CompareTag("Player"))
-        {
-            PlayerStats playerStats = defenderRootObj.GetComponent<PlayerStats>();
-            if (playerStats == null)
-            {
-                // try children if not on root
-                playerStats = defenderRootObj.GetComponentInChildren<PlayerStats>();
-            }
-
-            if (playerStats != null)
-            {
-                playerStats.TakeDamage((int)damage);
-                
-                // Check if player died (health <= 0)
-                if (playerStats.currentHealth <= 0)
-                {
-                    Destroy(defenderRootObj);
-                }
-            }
-        }
+        Health health = defenderRootObj.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damage);
 
         // When the projectile hits something, create an explosion
         // and remove the projectile.

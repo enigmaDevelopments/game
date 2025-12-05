@@ -3,33 +3,21 @@ using UnityEngine;
 
 // add to enemy script
 
-public class Enemy : MonoBehaviour
+public class Enemy : Health
 {
-    [Header("Enemy Settings")]
-    public float health = 100f;  // Enemy health
-
     private ChainReactionUpgrade chainReactionUpgrade;
 
     // Event fired when an enemy dies — upgrades or other systems can listen
     public static event Action<Enemy> OnEnemyDeath;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // Find upgrades if you want to trigger them directly
         chainReactionUpgrade = FindAnyObjectByType<ChainReactionUpgrade>();
-        
     }
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
+    protected override void Die()
     {
         Debug.Log($"{gameObject.name} died!");
 

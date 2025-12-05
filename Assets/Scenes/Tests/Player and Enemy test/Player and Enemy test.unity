@@ -819,6 +819,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Antenna Boi
       objectReference: {fileID: 0}
+    - target: {fileID: 6182072223594459333, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6494226583712110411, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.74156666
@@ -941,7 +945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb514511f18b03c44a2a3f9ef6017caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  health: 100
+  maxHealth: 100
+  health: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

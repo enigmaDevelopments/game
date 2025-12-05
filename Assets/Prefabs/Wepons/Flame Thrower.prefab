@@ -51,6 +51,7 @@ MonoBehaviour:
   duration: 0.75
   spawnOffset: {x: 0, y: 0, z: 0.5}
   layer: 8
+  damage: 0.1
   spreadX: 15
   spreadY: 30
   bullets: 20
