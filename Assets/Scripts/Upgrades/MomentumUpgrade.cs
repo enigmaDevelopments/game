@@ -22,7 +22,7 @@ public class MomentumUpgrade : MonoBehaviour
     [Tooltip("How quickly momentum decays when idle or hit")]
     public float decayRate = 1f;
 
-    private PlayerMovement playerMovement;
+    private ThirdPersonMovement playerMovement;
     private PlayerCombat playerCombat;
     private float currentSpeedBonus = 1f;
     private float currentDamageBonus = 1f;
@@ -31,10 +31,10 @@ public class MomentumUpgrade : MonoBehaviour
     private void Start()
     {
         // Find player components
-        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update with correct tag
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            playerMovement = player.GetComponent<PlayerMovement>();
+            playerMovement = player.GetComponent<ThirdPersonMovement>();
             playerCombat = player.GetComponent<PlayerCombat>();
         }
 
@@ -47,7 +47,7 @@ public class MomentumUpgrade : MonoBehaviour
         PlayerHealth.OnPlayerDamaged -= ResetMomentum;
     }
 
-    private void Update()
+    public void Activate()
     {
         if (!isActive || playerMovement == null) return;
 
@@ -73,7 +73,7 @@ public class MomentumUpgrade : MonoBehaviour
         currentDamageBonus = Mathf.Clamp(currentDamageBonus, 1f, maxDamageMultiplier);
 
         // Apply to player systems
-        playerMovement.momentumMultiplier = currentSpeedBonus;
+        playerMovement.maxSpeed = currentSpeedBonus;
         if (playerCombat != null)
             playerCombat.damageMultiplier = currentDamageBonus;
     }
