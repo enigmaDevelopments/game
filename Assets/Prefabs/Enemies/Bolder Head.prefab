@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 9088964759533778998}
   - component: {fileID: 972880045470474029}
   - component: {fileID: 3758053351209604504}
+  - component: {fileID: 6013335029441677393}
   m_Layer: 7
   m_Name: Bolder Head
   m_TagString: Enemy
@@ -366,7 +367,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 5
+  m_StoppingDistance: 35
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -522,6 +523,20 @@ MonoBehaviour:
   heelLength: -1.6
   hitCylinderRadius: 2.5
   jumping: 0
+--- !u!114 &6013335029441677393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318681447473263729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb514511f18b03c44a2a3f9ef6017caa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  maxHealth: 5
+  canTakeDamage: 1
 --- !u!1 &4908207136846185843
 GameObject:
   m_ObjectHideFlags: 0

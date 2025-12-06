@@ -996,7 +996,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: maxHealth
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: deathScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: canTakeDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: intangibilityDuration
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
@@ -1234,13 +1246,11 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 1.25
   canCancel: 0
-  dashDamage: 2
+  dashDamage: 1
   hitRadius: 1.5
   hitMask:
     serializedVersion: 2
     m_Bits: 128
-  defultLayer: 3
-  intangableLayer: 11
 --- !u!114 &1181695093538206842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,6 +1437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   mainLayer: 3
   intangibleLayer: 11
+  _timer: 0
 --- !u!4 &6494226583712110411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}

@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DashThroughDamage : PlayerDash
@@ -8,6 +11,7 @@ public class DashThroughDamage : PlayerDash
     [Header("Layer Settings")]
     public LayerMask hitMask;
     private IntangibilityManager intangibilityManager;
+    private List<GameObject> hits = new();
 
     protected override void Start()
     {
@@ -30,6 +34,7 @@ public class DashThroughDamage : PlayerDash
             CheckDashHits();
             yield return null;
         }
+        hits.Clear();
 
         isDashing = false;
 
@@ -44,12 +49,17 @@ public class DashThroughDamage : PlayerDash
 
         foreach (Collider hit in hitObjects)
         {
+            GameObject hitObject = hit.gameObject;
+            
             // Ignore self
             if (hit.gameObject == gameObject) continue;
+            if (hits.Contains(hitObject)) continue;
+            hits.Add(hitObject);
 
             // Try to find a PlayerStats component and deal damage
-            var playerStats = hit.GetComponent<PlayerStats>();
-            playerStats.TakeDamage(dashDamage);
+            var health = hit.GetComponent<Health>();
+            if (health != null)
+                health.TakeDamage(dashDamage);
 
         }
     }
