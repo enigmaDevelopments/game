@@ -3,9 +3,10 @@ using UnityEngine;
 
 public abstract class AttackBase : MonoBehaviour
 {
+    public new WeponAnimation animation;
     [Header("Attack Settings")]
     public float attackCooldown = 0.5f;
-    public float damage;
+    public float damage = 0;
     public bool canHold;
 
     protected bool isAttacking;

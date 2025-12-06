@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,10 @@ public class AttackController : MonoBehaviour
     public AttackBase primaryAttack;   // Melee
     public AttackBase secondaryAttack; // Projectile
     public AttackBase tertiaryAttack; // special
+    [Header ("Animations")]
+    public WeponAnimation primaryAnimation;   // Melee
+    public WeponAnimation secondaryAnimation; // Projectile
+     public WeponAnimation tertiaryAnimation; // special
 
     [Header("AI Settings")]
     [Tooltip("Reference to player/target for AI attacks")]
@@ -34,6 +39,7 @@ public class AttackController : MonoBehaviour
             brain = GetComponent<CharacterBrain>();
     }
 
+
     private void Start()
     {
         // Find AI target if in AI mode and no target is set
@@ -45,6 +51,13 @@ public class AttackController : MonoBehaviour
                 aiTarget = targetObj.transform;
             }
         }
+
+        if (primaryAttack != null && primaryAnimation != null)
+            primaryAttack.animation = primaryAnimation;
+        if (secondaryAttack != null && secondaryAnimation != null)
+            secondaryAttack.animation = secondaryAnimation;
+        if (tertiaryAttack != null && tertiaryAnimation != null)
+            tertiaryAttack.animation = tertiaryAnimation;
     }
 
     private void Update()

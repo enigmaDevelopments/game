@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Health : MonoBehaviour
+public abstract class Health : MonoBehaviour
 {
     public float maxHealth = 7;
     public bool canTakeDamage = true;
@@ -31,9 +31,9 @@ public class Health : MonoBehaviour
         TakeDamage(damage);
     }
     private IEnumerator removeId(int id) {         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(100f);
         attackIds.Remove(id);
     }
 
-    protected virtual void Die() { }
+    protected abstract void Die();
 }
