@@ -1,42 +1,63 @@
 using UnityEngine;
-using System.Collections;  // Make sure this is here for IEnumerator
-
+using System.Collections;
 
 public class BarrierSurgeUpgrade : MonoBehaviour
 {
-    public float duration = 10f; // How long the barrier surge lasts
-    public float maxBarrierIncrease = 150f;  // How much more barrier the player gets
+    public float duration = 10f;
+    public float maxBarrierIncrease = 150f;
 
     private BarrierScript playerBarrier;
+    public bool isActive = false;
+    private bool activatedThisBarrier = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Activate(BarrierScript targetBarrier)
     {
-        if (other.CompareTag("Player"))
+        if (isActive)
+            return;
+
+        if (targetBarrier == null)
         {
-            playerBarrier = other.GetComponent<BarrierScript>();
-            if (playerBarrier != null)
-            {
-                ActivateBarrierSurge();
-                Destroy(gameObject);  // Destroy the upgrade item after it's picked up
-            }
+            Debug.LogError("BarrierSurgeUpgrade: No barrier assigned!");
+            return;
         }
-    }
 
-    public void ActivateBarrierSurge()
-    {
-        // Increase the player's max barrier
+        playerBarrier = targetBarrier;
+
+        // increase max barrier
         playerBarrier.maxBarrier += maxBarrierIncrease;
-        playerBarrier.ActivateBarrier();
+        playerBarrier.ClampBarrier();
 
-        // Deactivate the barrier surge after the set duration
-        StartCoroutine(DeactivateBarrierSurgeAfterTime());
+        // activate barrier only if it wasn’t active already
+        if (!playerBarrier.IsBarrierActive)
+        {
+            playerBarrier.ActivateBarrier();
+            activatedThisBarrier = true;
+        }
+
+        isActive = true;
+
+        Debug.Log("Barrier Surge Upgrade Activated!");
+        StartCoroutine(DeactivateAfterTime());
     }
 
-    private IEnumerator DeactivateBarrierSurgeAfterTime()
+    private IEnumerator DeactivateAfterTime()
     {
         yield return new WaitForSeconds(duration);
-        playerBarrier.DeactivateBarrier();
-        playerBarrier.maxBarrier -= maxBarrierIncrease;  // Reset the max barrier back to normal
-        Debug.Log("Barrier Surge Expired");
+
+        if (playerBarrier != null)
+        {
+            // remove max barrier increase
+            playerBarrier.maxBarrier -= maxBarrierIncrease;
+            playerBarrier.ClampBarrier();
+
+            // only deactivate if THIS upgrade turned it on
+            if (activatedThisBarrier)
+                playerBarrier.DeactivateBarrier();
+
+            Debug.Log("Barrier Surge Upgrade Expired.");
+        }
+
+        isActive = false;
+        activatedThisBarrier = false;
     }
 }
