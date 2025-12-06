@@ -18,7 +18,7 @@ public class Hook : Projectile
     private CharacterController characterController;
 
 
-    protected override void Start()
+    protected override void awake()
     {
         StartCoroutine(ReturnProjectile());
         parent = owner.transform.parent;

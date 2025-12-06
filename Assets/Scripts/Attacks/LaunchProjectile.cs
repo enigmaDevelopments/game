@@ -12,9 +12,6 @@ public class LaunchProjectile : AttackBase
     public Vector3 spawnOffset = new Vector3(0f, 0f, 0.5f);
     public int layer;
 
-    [Header("Damage")]
-    public float damage = 10f;
-
     protected override IEnumerator ExecuteAttack()
     {
         if (projectile == null)
@@ -29,7 +26,7 @@ public class LaunchProjectile : AttackBase
         Shoot(Quaternion.identity);
     }
 
-    protected void Shoot(Quaternion rotation)
+    protected Projectile Shoot(Quaternion rotation)
     {
         Rigidbody p = Instantiate(projectile, transform.position + transform.TransformDirection(spawnOffset), transform.rotation);
         p.linearVelocity = rotation * transform.forward * speed;
@@ -38,6 +35,7 @@ public class LaunchProjectile : AttackBase
         projectileScript.owner = gameObject;
         projectileScript.damage = damage;
         p.gameObject.layer = layer;
+        return projectileScript;
     } 
 }
 

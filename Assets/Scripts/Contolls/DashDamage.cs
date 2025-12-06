@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DashThroughDamage : PlayerDash
@@ -11,7 +8,6 @@ public class DashThroughDamage : PlayerDash
     [Header("Layer Settings")]
     public LayerMask hitMask;
     private IntangibilityManager intangibilityManager;
-    private List<GameObject> hits = new();
 
     protected override void Start()
     {
@@ -27,14 +23,14 @@ public class DashThroughDamage : PlayerDash
         // Disable collision so you can move through objects
         intangibilityManager.Timer = dashDuration;
 
+        int id = Random.Range(int.MinValue, int.MaxValue);
         // Apply dash velocity
         StartCoroutine(base.Dash());
         while (isDashing)
         {
-            CheckDashHits();
+            CheckDashHits(id);
             yield return null;
         }
-        hits.Clear();
 
         isDashing = false;
 
@@ -42,7 +38,7 @@ public class DashThroughDamage : PlayerDash
         canDash = true;
     }
 
-    private void CheckDashHits()
+    private void CheckDashHits(int id)
     {
         // Detect objects the dash passes through (small sphere around player)
         Collider[] hitObjects = Physics.OverlapSphere(transform.position, hitRadius, hitMask);
@@ -53,13 +49,11 @@ public class DashThroughDamage : PlayerDash
             
             // Ignore self
             if (hit.gameObject == gameObject) continue;
-            if (hits.Contains(hitObject)) continue;
-            hits.Add(hitObject);
 
             // Try to find a PlayerStats component and deal damage
             var health = hit.GetComponent<Health>();
             if (health != null)
-                health.TakeDamage(dashDamage);
+                health.TakeDamage(dashDamage,id);
 
         }
     }

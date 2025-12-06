@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Health : MonoBehaviour
 {
     public float maxHealth = 7;
     public bool canTakeDamage = true;
     protected float health;
+    private List<int> attackIds = new();
     protected virtual void Start()
     {
         health = maxHealth;
@@ -19,5 +22,18 @@ public class Health : MonoBehaviour
             Die();
         }
     }
+    public virtual void TakeDamage(float damage, int attackId)
+    {
+        if (!canTakeDamage) return;
+        if (attackIds.Contains(attackId)) return;
+        attackIds.Add(attackId);
+        removeId(attackId);
+        TakeDamage(damage);
+    }
+    private IEnumerator removeId(int id) {         
+        yield return new WaitForSeconds(0.5f);
+        attackIds.Remove(id);
+    }
+
     protected virtual void Die() { }
 }

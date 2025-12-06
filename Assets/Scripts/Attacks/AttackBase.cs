@@ -4,8 +4,9 @@ using UnityEngine;
 public abstract class AttackBase : MonoBehaviour
 {
     [Header("Attack Settings")]
-    [SerializeField] protected float attackCooldown = 0.5f;
-    [SerializeField] private bool canHold;
+    public float attackCooldown = 0.5f;
+    public float damage;
+    public bool canHold;
 
     protected bool isAttacking;
     protected bool canAttack = true;

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -9,14 +8,16 @@ public class Projectile : MonoBehaviour
     public GameObject owner;
     public string attackName;
     public float duration;
+    public int id;
 
     // Damage applied when hitting an enemy
     public float damage = 10f;
 
-    protected virtual void Start()
+    protected virtual void awake()
     {
         // Deletes the projectile after duration seconds
         Destroy(gameObject, duration);
+        id = Random.Range(int.MinValue, int.MaxValue);
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -35,7 +36,7 @@ public class Projectile : MonoBehaviour
 
         if (owner != null)
         {
-            Debug.Log($"{owner.name} {attackName} hit {defender.name}");
+            Debug.Log($"{owner.name} {attackName} hit {defender.name} id {id}");
         }
         else
         {
@@ -46,7 +47,7 @@ public class Projectile : MonoBehaviour
         GameObject defenderRootObj = defender.transform.root.gameObject;
         Health health = defenderRootObj.GetComponent<Health>();
         if (health != null)
-            health.TakeDamage(damage);
+            health.TakeDamage(damage, id);
 
         // When the projectile hits something, create an explosion
         // and remove the projectile.

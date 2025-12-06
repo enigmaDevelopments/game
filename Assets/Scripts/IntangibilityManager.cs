@@ -4,7 +4,7 @@ public class IntangibilityManager : MonoBehaviour
 {
     public int mainLayer;
     public int intangibleLayer;
-    public float _timer;
+    private float _timer;
     private Health health;
     public float Timer {
         set
@@ -24,6 +24,7 @@ public class IntangibilityManager : MonoBehaviour
         {
             health.canTakeDamage = true;
             gameObject.layer = mainLayer;
+            _timer = 0;
         }
         else
         {
