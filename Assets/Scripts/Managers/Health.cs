@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Health : MonoBehaviour
 {
     public float maxHealth = 7;
-    public bool canTakeDamage = true;
+    [HideInInspector]  public bool canTakeDamage = true;
     protected float health;
     private List<int> attackIds = new();
     protected virtual void Start()

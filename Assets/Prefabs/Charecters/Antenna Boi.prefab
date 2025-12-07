@@ -1305,10 +1305,10 @@ MonoBehaviour:
       w: 0.7010574
   endHandAngle:
     value:
-      x: 0.5
-      y: -0.5
-      z: -0.5
-      w: 0.5
+      x: 0.5773676
+      y: -0.4713975
+      z: -0.4713975
+      w: 0.4713975
 --- !u!114 &8536438598171174025
 MonoBehaviour:
   m_ObjectHideFlags: 0

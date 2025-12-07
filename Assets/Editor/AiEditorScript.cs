@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEditor;
 using UnityEngine;
@@ -123,11 +124,22 @@ public class AiEditorScript : Editor
             else
                 lookAtPlayer = true;
            ai.turningSpeed = turningSpeed;
+           SerializedProperty rotationProp = serializedObject.FindProperty("rotaionTransform");
+           EditorGUILayout.PropertyField(rotationProp);
         }
         else
         {
             lookAtPlayer = false;
             ai.turningSpeed = 0;
+            ai.rotaionTransform = ai.transform;
         }
+
+        // Draw the 'head' Transform property so it can be assigned in the Inspector.
+        SerializedProperty headProp = serializedObject.FindProperty("head");
+        EditorGUILayout.PropertyField(headProp);
+
+        serializedObject.ApplyModifiedProperties();
+        if (ai.head == null)
+            ai.head = ai.transform;
     }
 }

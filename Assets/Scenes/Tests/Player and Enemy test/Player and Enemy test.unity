@@ -876,6 +876,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2874664872790771975, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2874664872790771975, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2874664872790771975, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3318681447473263729, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
       propertyPath: m_Name
       value: Bolder Head
@@ -919,6 +931,14 @@ PrefabInstance:
     - target: {fileID: 5749020389944765904, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088964759533778998, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_Speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9088964759533778998, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
+      propertyPath: m_Acceleration
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
