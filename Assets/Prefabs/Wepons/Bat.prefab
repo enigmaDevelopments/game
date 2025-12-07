@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4679761963627320130}
   - component: {fileID: 594284971952617188}
   - component: {fileID: 4189843230406764333}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -126,3 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6847b2a83c855bc42b4f5ee4f02856ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  animation: {fileID: 0}
+  attackCooldown: 0.4
+  damage: 3
+  canHold: 0

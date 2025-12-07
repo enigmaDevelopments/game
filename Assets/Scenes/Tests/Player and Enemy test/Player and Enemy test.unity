@@ -815,6 +815,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1123543537072932445, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: attackSeconds
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
@@ -823,6 +827,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1253977779}
+    - target: {fileID: 6354886169092116565, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: defultProjectileWeapon
+      value: 
+      objectReference: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
     - target: {fileID: 6494226583712110411, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.74156666
