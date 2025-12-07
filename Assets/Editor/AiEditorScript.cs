@@ -10,11 +10,13 @@ public class AiEditorScript : Editor
     private bool seight = true;
     private bool hasWeapon = true;
     private bool lookAtPlayer = true;
+    private bool pitch = true;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
     private float attackAngle = 0;
     private float turningSpeed = 0;
+    private float maxPitch = 0;
 
     private void OnSceneGUI()
     {
@@ -124,10 +126,23 @@ public class AiEditorScript : Editor
             } 
             else
                 lookAtPlayer = true;
-           ai.turningSpeed = turningSpeed;
-           ai.offsetAngle = Quaternion.Inverse(Quaternion.Euler(ai.offsetVector));
-           SerializedProperty rotationProp = serializedObject.FindProperty("rotaionTransform");
-           EditorGUILayout.PropertyField(rotationProp);
+            ai.pitchRotation = EditorGUILayout.Toggle("Has Pitch Rotation", ai.pitchRotation);
+            if (ai.pitchRotation)
+            {
+                if (pitch)
+                    maxPitch = EditorGUILayout.Slider("Max Pitch", ai.pitchMaximum, 0, 180);
+                pitch = true;
+                ai.pitchMaximum = maxPitch;
+            }
+            else
+            {
+                ai.pitchMaximum = 0;
+                pitch = false;
+            }
+            ai.turningSpeed = turningSpeed;
+            ai.offsetAngle = Quaternion.Inverse(Quaternion.Euler(ai.offsetVector));
+            SerializedProperty rotationProp = serializedObject.FindProperty("rotaionTransform");
+            EditorGUILayout.PropertyField(rotationProp);
             
         }
         else

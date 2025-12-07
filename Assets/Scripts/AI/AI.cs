@@ -10,6 +10,7 @@ public class AI : MonoBehaviour
         public bool hasWeapon;
         public bool omniscient;
         public bool lookAtPlayer;
+        public bool pitchRotation;
         public Vector3 offsetVector;
     #endif
 
@@ -26,6 +27,7 @@ public class AI : MonoBehaviour
     public Transform rotaionTransform;
     public Transform head;
     public Quaternion offsetAngle;
+    public float pitchMaximum;
 
     private NavMeshAgent agent;
     private Transform player;
@@ -76,7 +78,10 @@ public class AI : MonoBehaviour
         #region Turning
         if (agentReady)
         {
-            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * offsetAngle, turningSpeed * Time.deltaTime);
+            //rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * offsetAngle, turningSpeed * Time.deltaTime);
+            Vector3 lookAt = (Quaternion.LookRotation(lastDirection) ).eulerAngles;
+            lookAt.x = Mathf.Clamp(lookAt.x - (lookAt.x<180?0:360), -pitchMaximum, pitchMaximum);
+            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.Euler(lookAt) * offsetAngle, turningSpeed * Time.deltaTime);
         }
         #endregion
 

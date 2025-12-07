@@ -363,8 +363,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2.43
-  m_Speed: 20
-  m_Acceleration: 10
+  m_Speed: 7
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 35
@@ -393,19 +393,23 @@ MonoBehaviour:
   hasWeapon: 1
   omniscient: 0
   lookAtPlayer: 1
+  pitchRotation: 1
+  offsetVector: {x: -90, y: -0, z: 180}
   enviromentMask:
     serializedVersion: 2
     m_Bits: 64
   runAwayRadius: 0
-  detectionRadius: 10
+  detectionRadius: 20
   raycast: 1
   veiwAngle: 120
-  veiwRadius: 50
+  veiwRadius: 80
   turningSpeed: 45
   attack: {fileID: 3304264625608708018}
   attackAngle: 90
   rotaionTransform: {fileID: 2874664872790771975}
   head: {fileID: 7703866436787312931}
+  offsetAngle: {x: -0.00000003090862, y: -0.70710677, z: -0.70710677, w: -0.00000003090862}
+  pitchMaximum: 180
 --- !u!114 &3758053351209604504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,7 +451,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5
+      time: 0.45
       value: 0
       inSlope: -9.574262
       outSlope: 0
