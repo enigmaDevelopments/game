@@ -975,6 +975,10 @@ PrefabInstance:
       propertyPath: canHoldSecondary
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7361724612344053544, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: primaryAnimation
+      value: 
+      objectReference: {fileID: 1123543537072932445}
     - target: {fileID: 8874716997658010099, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
@@ -1083,7 +1087,7 @@ MonoBehaviour:
   projectileWeponLocation: {fileID: 7401144542173567766}
   specialWeponLocation: {fileID: 1945493739616060615}
   defultMeleeWeapon: {fileID: 3510184050645953104, guid: b66b1c0bc9a0f4e4a906bd1b5b5d6aeb, type: 3}
-  defultProjectileWeapon: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
+  defultProjectileWeapon: {fileID: 3616371094543105801, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
   defultSpecialWeapon: {fileID: 0}
   defultPack: 1
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
@@ -1282,6 +1286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f593031d9766744b188f18fe248aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  loadSeconds: 0.25
+  attackSeconds: 0.2
   arm: {fileID: 1609817267010828817}
   sholder: {fileID: 5523201686547060544}
   hand: {fileID: 3711282334340283073}
@@ -1299,14 +1305,10 @@ MonoBehaviour:
       w: 0.7010574
   endHandAngle:
     value:
-      x: 0.27059805
-      y: -0.2705981
-      z: -0.65328145
-      w: 0.6532815
-  loadSeconds: 0.25
-  swingSeconds: 0.2
-  canSwing: 0
-  swing: 0
+      x: 0.5
+      y: -0.5
+      z: -0.5
+      w: 0.5
 --- !u!114 &8536438598171174025
 MonoBehaviour:
   m_ObjectHideFlags: 0

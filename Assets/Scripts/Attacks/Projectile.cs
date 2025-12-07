@@ -20,20 +20,10 @@ public class Projectile : MonoBehaviour
         id = Random.Range(int.MinValue, int.MaxValue);
     }
 
-    protected virtual void OnCollisionEnter(Collision collision)
+    protected virtual void OnTriggerEnter(Collider collision)
     {
-        // Ignore collisions with the entity that launched this projectile (including its children)
-        GameObject defender = collision.rigidbody != null ? collision.rigidbody.gameObject : collision.gameObject;
-        if (owner != null)
-        {
-            var ownerRoot = owner.transform.root;
-            var defenderRoot = defender.transform.root;
-            if (defenderRoot == ownerRoot)
-            {
-                return; // return early before any logging or effects
-            }
-        }
-
+        #if UNITY_EDITOR
+        GameObject defender = collision.gameObject;
         if (owner != null)
         {
             Debug.Log($"{owner.name} {attackName} hit {defender.name} id {id}");
@@ -42,6 +32,7 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log($"Projectile hit {defender.name}");
         }
+        #endif
 
         // Apply damage if the thing hit has an Enemy component (check root and children)
         GameObject defenderRootObj = defender.transform.root.gameObject;

@@ -16,7 +16,7 @@ public class WeponSwing : WeponAnimation
     Quaternion armRotation = Quaternion.Euler(0, 90, 0);
     Quaternion sholderRotation = Quaternion.Euler(0, 0, -90);
 
-    // Update is called once per frame
+
     protected override void moveStance()
     {
         arm.localRotation = Quaternion.Slerp(start, armRotation, loadTimer);

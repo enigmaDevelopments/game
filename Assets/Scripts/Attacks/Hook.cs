@@ -57,7 +57,7 @@ public class Hook : Projectile
 
     }
 
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnTriggerEnter(Collider collision)
     {
         hooked = true;
         GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
