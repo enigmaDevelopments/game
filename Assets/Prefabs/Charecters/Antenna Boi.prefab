@@ -1087,7 +1087,7 @@ MonoBehaviour:
   projectileWeponLocation: {fileID: 7401144542173567766}
   specialWeponLocation: {fileID: 1945493739616060615}
   defultMeleeWeapon: {fileID: 3510184050645953104, guid: b66b1c0bc9a0f4e4a906bd1b5b5d6aeb, type: 3}
-  defultProjectileWeapon: {fileID: 3616371094543105801, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
+  defultProjectileWeapon: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
   defultSpecialWeapon: {fileID: 0}
   defultPack: 1
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   loadSeconds: 0.25
-  attackSeconds: 0.2
+  attackSeconds: 0.15
   arm: {fileID: 1609817267010828817}
   sholder: {fileID: 5523201686547060544}
   hand: {fileID: 3711282334340283073}

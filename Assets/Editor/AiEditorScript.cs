@@ -10,10 +10,12 @@ public class AiEditorScript : Editor
     private bool detection = true;
     private bool seight = true;
     private bool hasWeapon = true;
+    private bool lookAtPlayer = true;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
     private float attackAngle = 0;
+    private float turningSpeed = 0;
 
     private void OnSceneGUI()
     {
@@ -97,7 +99,7 @@ public class AiEditorScript : Editor
             }
         }
 
-        ai.hasWeapon = EditorGUILayout.Toggle("HasWeapon", ai.hasWeapon);
+        ai.hasWeapon = EditorGUILayout.Toggle("Has Weapon", ai.hasWeapon);
         if (ai.hasWeapon)
         {
             ai.attack = (AttackBase)EditorGUILayout.ObjectField("Attack", ai.attack, typeof(AttackBase), true);
@@ -113,6 +115,19 @@ public class AiEditorScript : Editor
             ai.attackAngle = 0;
         }
 
-        ai.turningSpeed = EditorGUILayout.Slider("Turning Speed", ai.turningSpeed, 0, 1);
+        ai.lookAtPlayer = EditorGUILayout.Toggle("Look At Player", ai.lookAtPlayer);
+        if (ai.lookAtPlayer)
+        {
+            if (lookAtPlayer)
+                turningSpeed = Mathf.Max(0, EditorGUILayout.FloatField("Turning Speed", ai.turningSpeed));
+            else
+                lookAtPlayer = true;
+           ai.turningSpeed = turningSpeed;
+        }
+        else
+        {
+            lookAtPlayer = false;
+            ai.turningSpeed = 0;
+        }
     }
 }

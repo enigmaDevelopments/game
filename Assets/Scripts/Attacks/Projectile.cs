@@ -13,11 +13,14 @@ public class Projectile : MonoBehaviour
     // Damage applied when hitting an enemy
     public float damage = 10f;
 
-    protected virtual void awake()
+    private void Awake()
+    {
+        id = Random.Range(int.MinValue, int.MaxValue);
+    }
+    protected virtual void Start()
     {
         // Deletes the projectile after duration seconds
         Destroy(gameObject, duration);
-        id = Random.Range(int.MinValue, int.MaxValue);
     }
 
     protected virtual void OnTriggerEnter(Collider collision)

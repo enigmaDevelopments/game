@@ -9,6 +9,7 @@ public class AI : MonoBehaviour
         public bool detection;
         public bool hasWeapon;
         public bool omniscient;
+        public bool lookAtPlayer;
     #endif
 
     public LayerMask enviromentMask;
@@ -25,7 +26,6 @@ public class AI : MonoBehaviour
     private NavMeshAgent agent;
     private Transform player;
     private Rigidbody rb;
-    private Vector3 lastSelfDirection;
     private Vector3 lastDirection;
     private float turningTime;
 
@@ -41,7 +41,6 @@ public class AI : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         rb = GetComponent<Rigidbody>();
         // Initialize directions to avoid zero-vector LookRotation
-        lastSelfDirection = transform.forward;
         lastDirection = transform.forward;
     }
 
@@ -76,22 +75,16 @@ public class AI : MonoBehaviour
         #region Turning
         if (agentReady && agent.remainingDistance <= agent.stoppingDistance && turningTime < 1)
         {
-            turningTime += turningSpeed;
-            rb.MoveRotation(Quaternion.Slerp(Quaternion.LookRotation(lastSelfDirection), Quaternion.LookRotation(lastDirection), turningTime));
-        }
-        else
-        {
-            turningTime = 0;
-            lastSelfDirection = transform.forward;
+            transform.rotation = Quaternion.RotateTowards(Quaternion.LookRotation(transform.forward), Quaternion.LookRotation(lastDirection), turningSpeed * Time.deltaTime);
         }
         #endregion
 
+        #region Debug
         #if UNITY_EDITOR
-            Debug.DrawRay(transform.position, direction * distance, Color.red);
-            if (!agentReady)
-            {
-                Debug.DrawRay(transform.position, Vector3.up, Color.yellow);
-            }
+        Debug.DrawRay(transform.position, direction * distance, Color.red);
+        if (!agentReady)
+            Debug.DrawRay(transform.position, Vector3.up, Color.yellow);
         #endif
+        #endregion
     }
 }
