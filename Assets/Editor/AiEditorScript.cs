@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using System.Runtime.InteropServices.ComTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -120,26 +118,32 @@ public class AiEditorScript : Editor
         if (ai.lookAtPlayer)
         {
             if (lookAtPlayer)
+            {
                 turningSpeed = Mathf.Max(0, EditorGUILayout.FloatField("Turning Speed", ai.turningSpeed));
+                ai.offsetVector = EditorGUILayout.Vector3Field("Rotational Offset Vector", ai.offsetVector);
+            } 
             else
                 lookAtPlayer = true;
            ai.turningSpeed = turningSpeed;
+           ai.offsetAngle = Quaternion.Inverse(Quaternion.Euler(ai.offsetVector));
            SerializedProperty rotationProp = serializedObject.FindProperty("rotaionTransform");
            EditorGUILayout.PropertyField(rotationProp);
+            
         }
         else
         {
             lookAtPlayer = false;
             ai.turningSpeed = 0;
             ai.rotaionTransform = ai.transform;
+            ai.offsetAngle = Quaternion.identity;
         }
 
         // Draw the 'head' Transform property so it can be assigned in the Inspector.
         SerializedProperty headProp = serializedObject.FindProperty("head");
-        EditorGUILayout.PropertyField(headProp);
-
         serializedObject.ApplyModifiedProperties();
         if (ai.head == null)
             ai.head = ai.transform;
+        EditorGUILayout.PropertyField(headProp);
+        EditorUtility.SetDirty(ai);
     }
 }

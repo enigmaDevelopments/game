@@ -10,6 +10,7 @@ public class AI : MonoBehaviour
         public bool hasWeapon;
         public bool omniscient;
         public bool lookAtPlayer;
+        public Vector3 offsetVector;
     #endif
 
     public LayerMask enviromentMask;
@@ -24,6 +25,7 @@ public class AI : MonoBehaviour
     public static bool playerInvisable = false;
     public Transform rotaionTransform;
     public Transform head;
+    public Quaternion offsetAngle;
 
     private NavMeshAgent agent;
     private Transform player;
@@ -74,7 +76,7 @@ public class AI : MonoBehaviour
         #region Turning
         if (agentReady)
         {
-            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * Quaternion.Inverse(Quaternion.Euler(-90f, 0f, 180f)), turningSpeed * Time.deltaTime);
+            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * offsetAngle, turningSpeed * Time.deltaTime);
         }
         #endregion
 
@@ -84,7 +86,7 @@ public class AI : MonoBehaviour
         if (!agentReady)
             Debug.DrawRay(head.position, Vector3.up, Color.yellow);
         Debug.DrawRay(head.position,head.forward * 100,Color.green);
-        Debug.DrawRay(rotaionTransform.position, Quaternion.Euler(-90, 0, 180) * rotaionTransform.forward * 100,Color.blue);
+        Debug.DrawRay(rotaionTransform.position, offsetAngle * rotaionTransform.forward * 100,Color.blue);
         #endif
         #endregion
     }
