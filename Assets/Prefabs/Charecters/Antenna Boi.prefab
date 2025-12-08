@@ -1316,7 +1316,7 @@ MonoBehaviour:
   attackSeconds: 1e-45
   loadEnabled: 1
   attackEnabled: 1
-  arm: {fileID: 1999362490747065917}
+  arm: {fileID: 6531982881333238155}
 --- !u!114 &1123543537072932445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,7 +1385,9 @@ MonoBehaviour:
   aimSensitivity: 2
   crosshairCanvas: {fileID: 0}
   crosshairImage: {fileID: 0}
-  weaponTransform: {fileID: 1999362490747065917}
+  weaponTransform: {fileID: 7401144542173567766}
+  rotationTransform: {fileID: 6531982881333238155}
+  rotationOffeset: {x: -180, y: 0, z: 90.685}
   returnSpeed: 90
   raycastDistance: 1000
   raycastLayers:

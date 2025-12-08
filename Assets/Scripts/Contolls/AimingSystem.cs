@@ -1,5 +1,4 @@
 using Unity.Cinemachine;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -19,6 +18,8 @@ public class AimingSystem : MonoBehaviour
     
     [Header("Weapon")]
     public Transform weaponTransform;           // The weapon to rotate
+    public Transform rotationTransform;
+    public Vector3 rotationOffeset; 
     public float returnSpeed;
     public float raycastDistance = 1000f;
     
@@ -32,7 +33,7 @@ public class AimingSystem : MonoBehaviour
     private bool isAiming = false;
     private Vector2 aimInput;
     private CinemachineOrbitalFollow follower;
-    private quaternion lastRotation;
+    private Quaternion lastRotation;
     private bool returning = false;
 
     public bool IsAiming => isAiming;
@@ -113,7 +114,7 @@ public class AimingSystem : MonoBehaviour
         foreach (WeponAnimation animation in canceledAnimations)
             animation.loadEnabled = false;
         if (!returning)
-            lastRotation = weaponTransform.localRotation;
+            lastRotation = rotationTransform.localRotation;
 
         Log("Entered aim mode - camera switched to aim camera");
     }
@@ -190,23 +191,23 @@ public class AimingSystem : MonoBehaviour
         
         // Rotate weapon to face the target point
         Vector3 directionToTarget = (targetPoint - weaponTransform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(Quaternion.Euler(rotationOffeset));
         
         // Smoothly rotate weapon
-        weaponTransform.rotation = Quaternion.Slerp(
-            weaponTransform.rotation,
-            targetRotation,
+        rotationTransform.rotation = Quaternion.Slerp(
+            rotationTransform.rotation,
+            targetRotation ,
             Time.deltaTime * 10f
         );
     }
 
     private IEnumerator ReturnWepon()
     {
-        if (returning)
+        if (returning) 
             yield break;
         returning = true;
-        while (weaponTransform.localRotation != lastRotation) {
-            weaponTransform.localRotation = Quaternion.RotateTowards(weaponTransform.localRotation, lastRotation, returnSpeed * Time.deltaTime);
+        while (rotationTransform.localRotation != lastRotation) {
+            rotationTransform.localRotation = Quaternion.RotateTowards(rotationTransform.localRotation, lastRotation, returnSpeed * Time.deltaTime);
             yield return null;
         }
         returning = false;
