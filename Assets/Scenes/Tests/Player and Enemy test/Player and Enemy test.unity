@@ -530,6 +530,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Priority.Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+      propertyPath: Priority.m_Value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 425749320}
@@ -868,6 +876,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7776837204564623913, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
   m_PrefabInstance: {fileID: 208842352}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1668298316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 106083060545330320, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+  m_PrefabInstance: {fileID: 1825917240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc3b580a75d50f47b1a73d2c19c8560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &1825917240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -876,6 +895,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 106083060545330320, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: loadSeconds
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 106083060545330320, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: attackSeconds
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: aimCamera
       value: 
@@ -892,6 +919,22 @@ PrefabInstance:
       propertyPath: crosshairCanvas
       value: 
       objectReference: {fileID: 1152512323}
+    - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: canceledAnimations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: 'canceledAnimations.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1668298316}
+    - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: 'canceledAnimations.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3001284121231995638, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: secondaryAnimation
+      value: 
+      objectReference: {fileID: 1668298316}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi

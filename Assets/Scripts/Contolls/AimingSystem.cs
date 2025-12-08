@@ -1,5 +1,4 @@
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +21,10 @@ public class AimingSystem : MonoBehaviour
     
     [Header("Layers")]
     public LayerMask raycastLayers;
-    
+
+    [Header("Animations")]
+    public WeponAnimation[] canceledAnimations;
+
     private PlayerInput playerInput;
     private bool isAiming = false;
     private Vector2 aimInput;
@@ -36,14 +38,14 @@ public class AimingSystem : MonoBehaviour
         
         if (playerInput == null)
         {
-            Debug.LogError("AimingSystem: PlayerInput component not found!");
+            LogError("AimingSystem: PlayerInput component not found!");
             return;
         }
         
         // Check if Aim action exists
         if (playerInput.actions.FindAction("Aim") == null)
         {
-            Debug.LogError("AimingSystem: 'Aim' action not found in input actions!");
+            LogError("AimingSystem: 'Aim' action not found in input actions!");
             return;
         }
         
@@ -51,14 +53,14 @@ public class AimingSystem : MonoBehaviour
         playerInput.actions["Aim"].started += OnAimStarted;
         playerInput.actions["Aim"].canceled += OnAimCanceled;
         
-        Debug.Log("AimingSystem: Input actions set up successfully");
-        
+        Log("AimingSystem: Input actions set up successfully");
+
         // Make sure cameras are set up
         if (normalCamera == null)
-            Debug.LogError("AimingSystem: normalCamera not assigned!");
+            LogError("AimingSystem: normalCamera not assigned!");
         if (aimCamera == null)
-            Debug.LogError("AimingSystem: aimCamera not assigned!");
-        
+            LogError("AimingSystem: aimCamera not assigned!");
+
         // Hide crosshair initially
         if (crosshairCanvas != null)
             crosshairCanvas.gameObject.SetActive(false);
@@ -68,14 +70,14 @@ public class AimingSystem : MonoBehaviour
     private void OnAimStarted(InputAction.CallbackContext context)
     {
         isAiming = true;
-        Debug.Log("Aim started!");
+        Log("Aim started!");
         EnterAimMode();
     }
     
     private void OnAimCanceled(InputAction.CallbackContext context)
     {
         isAiming = false;
-        Debug.Log("Aim ended!");
+        Log("Aim ended!");
         ExitAimMode();
     }
     
@@ -99,12 +101,14 @@ public class AimingSystem : MonoBehaviour
             aimCamera.Priority = 100;
             aimCamera.enabled = true;
         }
-        //move camera behind player
+        //Move camera behind player
         follower.HorizontalAxis.Value = transform.eulerAngles.y;
         ThirdPersonMovement.aiming = true;
-        #if UNITY_EDITOR
-            Debug.Log("Entered aim mode - camera switched to aim camera");
-        #endif
+        //Stop animations
+        foreach (WeponAnimation animation in canceledAnimations)
+            animation.loadEnabled = false;
+
+        Log("Entered aim mode - camera switched to aim camera");
     }
 
     private void ExitAimMode()
@@ -126,9 +130,9 @@ public class AimingSystem : MonoBehaviour
             normalCamera.enabled = true;
         }
         ThirdPersonMovement.aiming = false;
-        #if UNITY_EDITOR
-            Debug.Log("Exited aim mode - camera switched back to normal");
-        #endif
+        foreach (WeponAnimation animation in canceledAnimations)
+            animation.loadEnabled = true;
+        Log("Exited aim mode - camera switched back to normal");
     }
 
     private void Update()
@@ -195,6 +199,18 @@ public class AimingSystem : MonoBehaviour
             playerInput.actions["Aim"].started -= OnAimStarted;
             playerInput.actions["Aim"].canceled -= OnAimCanceled;
         }
+    }
+    private static void Log(string message)
+    {
+        #if UNITY_EDITOR
+            Debug.Log(message);
+        #endif
+    }
+    private static void LogError(string message)
+    {
+        #if UNITY_EDITOR
+            Debug.LogError(message);
+        #endif
     }
 }
 

@@ -9,6 +9,10 @@ public abstract class WeponAnimation : MonoBehaviour
     [Min(float.Epsilon)]
     public float attackSeconds = float.Epsilon;
     public float loadTimer = float.Epsilon;
+    [Header("Locks")]
+    public bool loadEnabled = true;
+    public bool attackEnabled = true;
+
     protected float attackTimer = float.Epsilon;
     private bool changingStance = false;
     private bool attacking = false;
@@ -16,10 +20,12 @@ public abstract class WeponAnimation : MonoBehaviour
     private bool attackReverse = false;
     public virtual IEnumerator AttackingStance(bool reverse = false)
     {
+        if (!loadEnabled)
+            yield break;
         stanceReverse = reverse;
         if (changingStance)
         {
-            yield return new WaitUntil(() => changingStance);
+            yield return new WaitUntil(() => !changingStance);
             yield break;
         }
         changingStance = true;
@@ -36,10 +42,12 @@ public abstract class WeponAnimation : MonoBehaviour
     }
     public virtual IEnumerator Attack(bool reverse = false)
     {
+        if (!attackEnabled) 
+            yield break;
         attackReverse = reverse;
         if (attacking)
         {
-            yield return new WaitUntil(() => attacking);
+            yield return new WaitUntil(() => !attacking);
             yield break;
         }
         attacking = true;
