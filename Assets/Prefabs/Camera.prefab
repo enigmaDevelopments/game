@@ -411,13 +411,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7988512619769652293}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505945, y: -0.000000016366524, z: 0.000000002230894, w: 0.9908375}
+  m_LocalRotation: {x: 0.13505939, y: -1.05630074e-10, z: 8.370451e-12, w: 0.9908375}
   m_LocalPosition: {x: -4.5231094, y: 15.977552, z: -24.377579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1618604417090651405}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.138, y: 0.219, z: 0.333}
 --- !u!114 &7946272772222009149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,8 +671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001

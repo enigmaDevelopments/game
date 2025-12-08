@@ -1,6 +1,8 @@
 using Unity.Cinemachine;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class AimingSystem : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class AimingSystem : MonoBehaviour
     
     [Header("Weapon")]
     public Transform weaponTransform;           // The weapon to rotate
+    public float returnSpeed;
     public float raycastDistance = 1000f;
     
     [Header("Layers")]
@@ -29,6 +32,8 @@ public class AimingSystem : MonoBehaviour
     private bool isAiming = false;
     private Vector2 aimInput;
     private CinemachineOrbitalFollow follower;
+    private quaternion lastRotation;
+    private bool returning = false;
 
     public bool IsAiming => isAiming;
     
@@ -107,6 +112,8 @@ public class AimingSystem : MonoBehaviour
         //Stop animations
         foreach (WeponAnimation animation in canceledAnimations)
             animation.loadEnabled = false;
+        if (!returning)
+            lastRotation = weaponTransform.localRotation;
 
         Log("Entered aim mode - camera switched to aim camera");
     }
@@ -132,6 +139,7 @@ public class AimingSystem : MonoBehaviour
         ThirdPersonMovement.aiming = false;
         foreach (WeponAnimation animation in canceledAnimations)
             animation.loadEnabled = true;
+        StartCoroutine(ReturnWepon());
         Log("Exited aim mode - camera switched back to normal");
     }
 
@@ -191,7 +199,19 @@ public class AimingSystem : MonoBehaviour
             Time.deltaTime * 10f
         );
     }
-    
+
+    private IEnumerator ReturnWepon()
+    {
+        if (returning)
+            yield break;
+        returning = true;
+        while (weaponTransform.localRotation != lastRotation) {
+            weaponTransform.localRotation = Quaternion.RotateTowards(weaponTransform.localRotation, lastRotation, returnSpeed * Time.deltaTime);
+            yield return null;
+        }
+        returning = false;
+    }
+
     private void OnDisable()
     {
         if (playerInput != null)

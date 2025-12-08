@@ -1312,9 +1312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc3b580a75d50f47b1a73d2c19c8560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  loadSeconds: 0.01
-  attackSeconds: 0.01
-  loadTimer: 1e-45
+  loadSeconds: 0.25
+  attackSeconds: 1e-45
   loadEnabled: 1
   attackEnabled: 1
   arm: {fileID: 1999362490747065917}
@@ -1332,7 +1331,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   loadSeconds: 0.25
   attackSeconds: 0.15
-  loadTimer: 1e-45
   loadEnabled: 1
   attackEnabled: 1
   arm: {fileID: 1609817267010828817}
@@ -1388,6 +1386,7 @@ MonoBehaviour:
   crosshairCanvas: {fileID: 0}
   crosshairImage: {fileID: 0}
   weaponTransform: {fileID: 1999362490747065917}
+  returnSpeed: 90
   raycastDistance: 1000
   raycastLayers:
     serializedVersion: 2

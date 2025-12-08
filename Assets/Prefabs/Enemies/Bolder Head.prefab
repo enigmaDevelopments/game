@@ -409,7 +409,7 @@ MonoBehaviour:
   rotaionTransform: {fileID: 2874664872790771975}
   head: {fileID: 7703866436787312931}
   offsetAngle: {x: -0.00000003090862, y: -0.70710677, z: -0.70710677, w: -0.00000003090862}
-  pitchMaximum: 180
+  pitchMaximum: 4
 --- !u!114 &3758053351209604504
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,11 +8,10 @@ public abstract class WeponAnimation : MonoBehaviour
     public float loadSeconds = float.Epsilon;
     [Min(float.Epsilon)]
     public float attackSeconds = float.Epsilon;
-    public float loadTimer = float.Epsilon;
     [Header("Locks")]
     public bool loadEnabled = true;
     public bool attackEnabled = true;
-
+    protected float loadTimer = float.Epsilon;
     protected float attackTimer = float.Epsilon;
     private bool changingStance = false;
     private bool attacking = false;
