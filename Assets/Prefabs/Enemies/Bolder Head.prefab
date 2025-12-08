@@ -453,7 +453,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.45
+      time: 0.5
       value: 0
       inSlope: -9.574262
       outSlope: 0
@@ -488,11 +488,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.5
       value: 1
-      inSlope: -0.0066789147
+      inSlope: -0.8560556
+      outSlope: -0.8560556
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5555556
+      outWeight: 0.37209237
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
       outSlope: 0
       tangentMode: 1
       weightedMode: 0
-      inWeight: 0.5555556
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 0
@@ -523,11 +532,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   footDistence: 1.360998
   stepHeight: 2
-  stepDistence: 3.5
+  stepDistence: 2.3
   defultHeight: 7
   hipMovment: 0.2
   idleTime: 0.5
-  footHeight: 0.7
+  footHeight: 0.6
   footLength: 2
   heelLength: -1.6
   hitCylinderRadius: 2.5

@@ -1292,7 +1292,7 @@ MonoBehaviour:
   footDistence: 0.548911
   stepHeight: 2
   stepDistence: 3.5
-  defultHeight: 7
+  defultHeight: 6.5
   hipMovment: 0.2
   idleTime: 0.5
   footHeight: 0.7
