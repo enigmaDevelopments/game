@@ -8,8 +8,6 @@ public class MoveToShoot : WeponAnimation
     Quaternion shoot = Quaternion.Euler(0, 90, 0);
     protected override void moveStance()
     {
-        Debug.Log("stance");
-        Debug.Log(shoot);
         arm.localRotation = Quaternion.Slerp(start, shoot, loadTimer);
     }
     protected override void moveAttack()

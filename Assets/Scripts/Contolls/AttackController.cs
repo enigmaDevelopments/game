@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class AttackController : MonoBehaviour
 {
+
     [Header("Control Mode")]
     [Tooltip("If true, attacks are controlled by AI instead of player input")]
     public bool isAIControlled = false;

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class WeponAnimation : MonoBehaviour
+public abstract class WeponAnimation : Animation
 {
     [Header("Timings")]
     [Min(float.Epsilon)]

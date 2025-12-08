@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1139436419783367546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96ac4323b1aa96b47a825f4644de4cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleGenerater
+  animation: {fileID: 0}
   attackCooldown: 60
+  damage: 0
   canHold: 0
   diamater: 20
   duration: 20

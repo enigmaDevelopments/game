@@ -1,10 +1,6 @@
-using System.Xml;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class WalkCycle : MonoBehaviour
+public class WalkCycle : Animation
 {
     [Header("Transforms")]
     public Transform leftFoot;
