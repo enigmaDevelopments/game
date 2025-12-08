@@ -1,6 +1,7 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Splines;
 
 public class AI : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class AI : MonoBehaviour
     private Vector3 lastDirection;
     private AttackController attackController;
     private float timer;
+    private bool playerDetected = false;
 
     private bool AgentReady()
     {
@@ -66,23 +68,22 @@ public class AI : MonoBehaviour
         if (1 < timer)
         {
             timer %= 1;
-            if (distance < detectionRadius ||
+            playerDetected = distance < detectionRadius ||
             (distance < veiwRadius &&
              angle < veiwAngle / 2 &&
-            (!raycast || !Physics.Raycast(head.position, direction, distance, enviromentMask))))
+            (!raycast || !Physics.Raycast(head.position, direction, distance, enviromentMask)));
+            if (playerDetected && agentReady)
             {
-                #region On Player Detection
                 lastDirection = direction;
                 if (agentReady)
-                {
                     agent.SetDestination(player.position + runAwayRadius * -direction);
-                }
-                // attack logic
-                if (angle < attackAngle / 2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
-                    attack.TryAttack();
-                #endregion
             }
+
         }
+        #endregion
+        #region attack
+        if (playerDetected && angle < attackAngle / 2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
+            attack.TryAttack();
         #endregion
 
         #region Turning

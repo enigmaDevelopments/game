@@ -11,7 +11,7 @@ public class AiEditorScript : Editor
     private bool hasWeapon = true;
     private bool lookAtPlayer = true;
     private bool pitch = true;
-    private bool check;
+    private bool check = true;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
