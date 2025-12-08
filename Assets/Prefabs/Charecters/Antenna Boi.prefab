@@ -1126,7 +1126,7 @@ MonoBehaviour:
   attackController: {fileID: 3001284121231995638}
   meleeWeponLocation: {fileID: 3711282334340283073}
   projectileWeponLocation: {fileID: 7401144542173567766}
-  specialWeponLocation: {fileID: 1945493739616060615}
+  specialWeponLocation: {fileID: 7401144542173567766}
   defultMeleeWeapon: {fileID: 3510184050645953104, guid: b66b1c0bc9a0f4e4a906bd1b5b5d6aeb, type: 3}
   defultProjectileWeapon: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
   defultSpecialWeapon: {fileID: 0}
