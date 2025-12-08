@@ -1,6 +1,7 @@
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 
 public class AimingSystem : MonoBehaviour
 {
@@ -23,17 +24,15 @@ public class AimingSystem : MonoBehaviour
     public LayerMask raycastLayers;
     
     private PlayerInput playerInput;
-    private Rigidbody playerRb;
     private bool isAiming = false;
     private Vector2 aimInput;
-    private Vector3 cameraRotation = Vector3.zero;
-    
+    private CinemachineOrbitalFollow follower;
+
     public bool IsAiming => isAiming;
     
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        playerRb = GetComponent<Rigidbody>();
         
         if (playerInput == null)
         {
@@ -63,6 +62,7 @@ public class AimingSystem : MonoBehaviour
         // Hide crosshair initially
         if (crosshairCanvas != null)
             crosshairCanvas.gameObject.SetActive(false);
+        follower = aimCamera.GetComponent<CinemachineOrbitalFollow>();
     }
     
     private void OnAimStarted(InputAction.CallbackContext context)
@@ -99,10 +99,14 @@ public class AimingSystem : MonoBehaviour
             aimCamera.Priority = 100;
             aimCamera.enabled = true;
         }
-        
-        Debug.Log("Entered aim mode - camera switched to aim camera");
+        //move camera behind player
+        follower.HorizontalAxis.Value = transform.eulerAngles.y;
+        ThirdPersonMovement.aiming = true;
+        #if UNITY_EDITOR
+            Debug.Log("Entered aim mode - camera switched to aim camera");
+        #endif
     }
-    
+
     private void ExitAimMode()
     {
         // Hide crosshair
@@ -121,10 +125,12 @@ public class AimingSystem : MonoBehaviour
             normalCamera.Priority = 10;  // Higher than aim camera when disabled
             normalCamera.enabled = true;
         }
-        
-        Debug.Log("Exited aim mode - camera switched back to normal");
+        ThirdPersonMovement.aiming = false;
+        #if UNITY_EDITOR
+            Debug.Log("Exited aim mode - camera switched back to normal");
+        #endif
     }
-    
+
     private void Update()
     {
         if (!isAiming) return;
@@ -146,17 +152,8 @@ public class AimingSystem : MonoBehaviour
         // Rotate player based on horizontal mouse movement
         float horizontalRotation = aimInput.x * aimSensitivity * Time.deltaTime;
         transform.Rotate(0, horizontalRotation, 0);
-        
-        // Rotate aim camera up/down based on vertical mouse movement
-        if (aimCamera != null)
-        {
-            cameraRotation.x -= aimInput.y * aimSensitivity * Time.deltaTime;
-            cameraRotation.x = Mathf.Clamp(cameraRotation.x, -30f, 60f);
-            
-            aimCamera.transform.localRotation = Quaternion.Euler(cameraRotation);
-        }
+        follower.HorizontalAxis.Value += horizontalRotation;
     }
-    
     private void UpdateWeaponRotation()
     {
         if (weaponTransform == null) return;
