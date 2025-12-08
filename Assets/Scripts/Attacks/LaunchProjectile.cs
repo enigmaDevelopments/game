@@ -14,6 +14,8 @@ public class LaunchProjectile : AttackBase
     {
         if (projectile == null)
             yield break;
+        if (animation != null)
+            yield return StartCoroutine(animation.AttackingStance());
         Shoot();
         // No additional timing needed; projectile is fired instantly.
         yield break;

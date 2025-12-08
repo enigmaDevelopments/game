@@ -443,47 +443,47 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.5231094
+      value: -6.7757034
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.977552
+      value: 15.970476
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -24.377579
+      value: -39.64901
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9908375
+      value: 0.99870104
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.13505945
+      value: 0.05095322
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016366522
+      value: 0.00000016176695
       objectReference: {fileID: 0}
     - target: {fileID: 85249026825325004, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000022308941
+      value: -0.000000008253267
       objectReference: {fileID: 0}
     - target: {fileID: 98771160071014015, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: field of view
-      value: 25
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 98771160071014015, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: far clip plane
-      value: 1000
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 98771160071014015, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: near clip plane
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 98771160071014015, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 512375356366277632, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_Name

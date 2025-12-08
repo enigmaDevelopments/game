@@ -9,7 +9,7 @@ public class meleAttack : AttackBase
     {
         attacking = true;
         id = Random.Range(int.MinValue, int.MaxValue);
-        yield return StartCoroutine(animation.attackingStance());
+        yield return StartCoroutine(animation.AttackingStance());
         yield return StartCoroutine(animation.Attack());
         attacking = false;
         yield break;

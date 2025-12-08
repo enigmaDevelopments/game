@@ -4,15 +4,17 @@ using UnityEngine;
 public abstract class WeponAnimation : MonoBehaviour
 {
     [Header("Timings")]
-    public float loadSeconds;
-    public float attackSeconds;
-    protected float loadTimer = float.Epsilon;
+    [Min(float.Epsilon)]
+    public float loadSeconds = float.Epsilon;
+    [Min(float.Epsilon)]
+    public float attackSeconds = float.Epsilon;
+    public float loadTimer = float.Epsilon;
     protected float attackTimer = float.Epsilon;
     private bool changingStance = false;
     private bool attacking = false;
     private bool stanceReverse = false;
     private bool attackReverse = false;
-    public virtual IEnumerator attackingStance(bool reverse = false)
+    public virtual IEnumerator AttackingStance(bool reverse = false)
     {
         stanceReverse = reverse;
         if (changingStance)
@@ -26,6 +28,7 @@ public abstract class WeponAnimation : MonoBehaviour
             moveStance();
             yield return null;
         }
+        moveStance();
         loadTimer = Mathf.Clamp(loadTimer,float.Epsilon,1-float.Epsilon);
         changingStance = false;
         yield break;
@@ -47,6 +50,7 @@ public abstract class WeponAnimation : MonoBehaviour
             if (1 <= attackTimer)
                 attackReverse = true;
         }
+        moveAttack();
         attackTimer = float.Epsilon;
         attacking = false;
         yield break;
