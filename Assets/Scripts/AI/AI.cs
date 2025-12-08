@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,10 +29,13 @@ public class AI : MonoBehaviour
     public Transform head;
     public Quaternion offsetAngle;
     public float pitchMaximum;
+    public float checksPerSecond;
 
     private NavMeshAgent agent;
     private Transform player;
     private Vector3 lastDirection;
+    private AttackController attackController;
+    private float timer;
 
     private bool AgentReady()
     {
@@ -43,6 +47,7 @@ public class AI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
+        attackController = GetComponent<AttackController>();
         // Initialize directions to avoid zero-vector LookRotation
         lastDirection = head.forward;
     }
@@ -56,22 +61,27 @@ public class AI : MonoBehaviour
         Vector3 direction = (player.position - head.position).normalized;
         float angle = Vector3.Angle(head.forward, direction);
         bool agentReady = AgentReady();
+        timer += Time.fixedDeltaTime * checksPerSecond;
         #region Detection
-        if (distance < detectionRadius || 
-        (distance < veiwRadius &&
-         angle  < veiwAngle / 2 &&
-        (!raycast || !Physics.Raycast(head.position, direction, distance, enviromentMask))))
+        if (1 < timer)
         {
-            #region On Player Detection
-            lastDirection = direction;
-            if (agentReady)
+            timer %= 1;
+            if (distance < detectionRadius ||
+            (distance < veiwRadius &&
+             angle < veiwAngle / 2 &&
+            (!raycast || !Physics.Raycast(head.position, direction, distance, enviromentMask))))
             {
-                agent.SetDestination(player.position + runAwayRadius * -direction);
+                #region On Player Detection
+                lastDirection = direction;
+                if (agentReady)
+                {
+                    agent.SetDestination(player.position + runAwayRadius * -direction);
+                }
+                // attack logic
+                if (angle < attackAngle / 2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
+                    attack.TryAttack();
+                #endregion
             }
-            // attack logic
-            if (angle < attackAngle/2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
-                attack.TryAttack();
-            #endregion
         }
         #endregion
 
@@ -81,7 +91,7 @@ public class AI : MonoBehaviour
             //rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * offsetAngle, turningSpeed * Time.deltaTime);
             Vector3 lookAt = (Quaternion.LookRotation(lastDirection) ).eulerAngles;
             lookAt.x = Mathf.Clamp(lookAt.x - (lookAt.x<180?0:360), -pitchMaximum, pitchMaximum);
-            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.Euler(lookAt) * offsetAngle, turningSpeed * Time.deltaTime);
+            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.Euler(lookAt) * offsetAngle, turningSpeed * Time.fixedDeltaTime);
         }
         #endregion
 

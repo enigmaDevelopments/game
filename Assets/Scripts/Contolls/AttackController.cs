@@ -24,13 +24,6 @@ public class AttackController : MonoBehaviour
     public WeponAnimation secondaryAnimation; // Projectile
      public WeponAnimation tertiaryAnimation; // special
 
-    [Header("AI Settings")]
-    [Tooltip("Reference to player/target for AI attacks")]
-    public Transform aiTarget;
-
-    [Tooltip("Tag to find AI target if not manually set")]
-    public string aiTargetTag = "Player";
-
     private void Awake()
     {
         if (input == null)
@@ -42,16 +35,6 @@ public class AttackController : MonoBehaviour
 
     private void Start()
     {
-        // Find AI target if in AI mode and no target is set
-        if (isAIControlled && aiTarget == null)
-        {
-            GameObject targetObj = GameObject.FindGameObjectWithTag(aiTargetTag);
-            if (targetObj != null)
-            {
-                aiTarget = targetObj.transform;
-            }
-        }
-
         if (primaryAttack != null && primaryAnimation != null)
             primaryAttack.animation = primaryAnimation;
         if (secondaryAttack != null && secondaryAnimation != null)
@@ -63,12 +46,7 @@ public class AttackController : MonoBehaviour
     private void Update()
     {
         if (isAIControlled)
-        {
-            // AI mode - let individual attack AI behaviors handle when to attack
-            // The attacks will call TryPrimary/TrySecondary/TryTertiary themselves
             return;
-        }
-
         // Player input mode
         if (input != null)
         {
@@ -78,18 +56,11 @@ public class AttackController : MonoBehaviour
             var special = actions?.FindAction("Special", throwIfNotFound: false);
 
             if (brain.hasMeleeWeapon && ((primaryAttack.CanHold && melee.IsPressed()) || melee.WasPerformedThisFrame()))
-            {
                 TryPrimary();
-            }
-
             if (brain.hasProjectileWeapon && ((secondaryAttack.CanHold && projectile.IsPressed()) || projectile.WasPerformedThisFrame()))
-            {
                 TrySecondary();
-            }
             if (brain.hasSpecialeWeapon && ((tertiaryAttack.CanHold && special.IsPressed()) || special.WasPerformedThisFrame()))
-            {
                 TryTertiary();
-            }
         }
     }
 

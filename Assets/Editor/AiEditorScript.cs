@@ -11,12 +11,14 @@ public class AiEditorScript : Editor
     private bool hasWeapon = true;
     private bool lookAtPlayer = true;
     private bool pitch = true;
+    private bool check;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
     private float attackAngle = 0;
     private float turningSpeed = 0;
     private float maxPitch = 0;
+    private float checksPerSecond = 0;
 
     private void OnSceneGUI()
     {
@@ -153,12 +155,26 @@ public class AiEditorScript : Editor
             ai.offsetAngle = Quaternion.identity;
         }
 
-        // Draw the 'head' Transform property so it can be assigned in the Inspector.
         SerializedProperty headProp = serializedObject.FindProperty("head");
-        serializedObject.ApplyModifiedProperties();
         if (ai.head == null)
             ai.head = ai.transform;
         EditorGUILayout.PropertyField(headProp);
+
+        if (ai.detection || ai.sight)
+        {
+            if (check)
+                checksPerSecond = EditorGUILayout.Slider("Checks Per Second", ai.checksPerSecond, 0, 1 / Time.fixedDeltaTime);
+            else
+                check = true;
+            ai.checksPerSecond = checksPerSecond; 
+        }
+        else
+        {
+            ai.checksPerSecond = ai.omniscient? 1/Time.fixedDeltaTime:0;
+            check = false;
+        }
+
+        serializedObject.ApplyModifiedProperties();
         EditorUtility.SetDirty(ai);
     }
 }

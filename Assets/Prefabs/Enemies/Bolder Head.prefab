@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 972880045470474029}
   - component: {fileID: 3758053351209604504}
   - component: {fileID: 6013335029441677393}
+  - component: {fileID: 5512492802100586395}
   m_Layer: 7
   m_Name: Bolder Head
   m_TagString: Enemy
@@ -410,6 +411,7 @@ MonoBehaviour:
   head: {fileID: 7703866436787312931}
   offsetAngle: {x: -0.00000003090862, y: -0.70710677, z: -0.70710677, w: -0.00000003090862}
   pitchMaximum: 4
+  checksPerSecond: 0
 --- !u!114 &3758053351209604504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +546,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 5
   canTakeDamage: 1
+--- !u!114 &5512492802100586395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3318681447473263729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85704a30a4f04df4490335e952456f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackController
+  isAIControlled: 0
+  input: {fileID: 0}
+  brain: {fileID: 0}
+  primaryAttack: {fileID: 3304264625608708018}
+  secondaryAttack: {fileID: 0}
+  tertiaryAttack: {fileID: 0}
+  primaryAnimation: {fileID: 0}
+  secondaryAnimation: {fileID: 0}
+  tertiaryAnimation: {fileID: 0}
 --- !u!1 &4908207136846185843
 GameObject:
   m_ObjectHideFlags: 0
