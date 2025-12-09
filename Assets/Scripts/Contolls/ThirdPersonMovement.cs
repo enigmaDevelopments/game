@@ -31,6 +31,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private Transform cameraTransform;
     protected bool canFasttFall = true;
 
+    public Vector3 CurrentMoveDirection => currentMoveDirection;
+
     public void OnMove(InputValue value)
     {
         movement = Vector2.ClampMagnitude(value.Get<Vector2>(),1);
@@ -38,7 +40,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     protected virtual void Start()
     {
-        cameraTransform = Camera.main.transform;
+        cameraTransform = Camera.main?.transform;
 
         // Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,8 +64,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (controller == null || cameraTransform == null)
+            return;
+
         isGrounded = controller.isGrounded;
-        if (isGrounded)
+        if (isGrounded && walkCycle != null)
             walkCycle.jumping = false;
         // Apply gravity
         if (!isGrounded)
@@ -84,7 +89,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 playerVelocity.y = jumpForce;
         }
         else
-            walkCycle.jumping = true;
+        {
+            if (walkCycle != null)
+                walkCycle.jumping = true;
+        }
 
             // Get camera-relative movement direction
             Vector3 forward = cameraTransform.forward;

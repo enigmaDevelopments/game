@@ -6,6 +6,7 @@ public abstract class AttackBase : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] protected float attackCooldown = 0.5f;
     [SerializeField] private bool canHold;
+    [SerializeField] protected float baseDamage = 10f;
 
     protected bool isAttacking;
     protected bool canAttack = true;
@@ -13,8 +14,8 @@ public abstract class AttackBase : MonoBehaviour
     public bool IsAttacking => isAttacking;
     public float Cooldown => attackCooldown;
     public bool CanHold => canHold;
+    public float Damage => baseDamage;
 
-    // Public entry point that consumers (like AttackController) call
     public bool TryAttack()
     {
         if (!canAttack || isAttacking)
@@ -22,6 +23,11 @@ public abstract class AttackBase : MonoBehaviour
 
         StartCoroutine(AttackFlow());
         return true;
+    }
+
+    public void SetDamage(float newDamage)
+    {
+        baseDamage = newDamage;
     }
 
     private IEnumerator AttackFlow()

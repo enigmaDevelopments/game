@@ -22,6 +22,12 @@ public class GuardianGraceUpgrade : MonoBehaviour
     private PlayerHealth playerHealth;
     private bool canTrigger = true;
 
+    public void Activate()
+    {
+        isActive = true;
+        Debug.Log("Guardian Grace Upgrade Activated!");
+    }
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");  // update tag

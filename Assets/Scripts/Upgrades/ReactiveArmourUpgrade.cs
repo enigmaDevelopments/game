@@ -29,6 +29,12 @@ public class ReactiveArmorUpgrade : MonoBehaviour
         PlayerHealth.OnPlayerDamaged -= OnPlayerDamaged;
     }
 
+    public void Activate()
+    {
+        isActive = true;
+        Debug.Log("Reactive Armor Upgrade Activated!");
+    }
+
     private void OnPlayerDamaged()
     {
         if (!isActive || !canTrigger || player == null) return;

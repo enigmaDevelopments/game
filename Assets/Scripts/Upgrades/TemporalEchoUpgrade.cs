@@ -59,7 +59,7 @@ public class TemporalEchoUpgrade : MonoBehaviour
         playerMovement.transform.position = echoPosition;
 
         // Move in the same direction
-        Vector3 movement = playerMovement.currentMoveDirection * echoRepeatFactor;
+        Vector3 movement = playerMovement.CurrentMoveDirection * echoRepeatFactor;
         playerMovement.transform.Translate(movement, Space.World);
 
         // Repeat attack if available

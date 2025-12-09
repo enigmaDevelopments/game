@@ -62,5 +62,10 @@ public class BarrierScript : MonoBehaviour
         Debug.Log("Barrier Surge Deactivated.");
     }
 
+    public void ClampBarrier()
+    {
+        currentBarrier = Mathf.Min(currentBarrier, maxBarrier);
+    }
+
     public float GetCurrentBarrier() => currentBarrier;
 }
