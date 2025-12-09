@@ -38,6 +38,7 @@ public class AI : MonoBehaviour
     private Vector3 lastDirection;
     private float timer;
     private bool playerDetected = false;
+    private bool searching = false;
 
     private bool AgentReady()
     {
@@ -85,22 +86,21 @@ public class AI : MonoBehaviour
         #endregion
 
         #region Turning
-        if (agentReady)
+        if (agentReady && !searching)
         {
             LookAt(rotaionTransform, lastDirection, offsetAngle);
         }
         #endregion
 
         #region attack
-        foreach (AttackController.AiSettings attack in attackController.attacks)
-        {
-            if (attack.canUse && playerDetected && angle < attack.attackAngle / 2 && agentReady && (attack.canAttackWhileMoving || agent.remainingDistance <= agent.stoppingDistance))
-            {
-                if (attack.rotationTransform != null && attack.weponTransform != null)
-                    LookAt(attack.rotationTransform, (player.position - attack.weponTransform.position).normalized, attack.rotationOffset, false);
-                attack.attack.TryAttack();
-            }
-        }
+        if (playerDetected)
+            foreach (AttackController.AiSettings attack in attackController.attacks)
+                if (attack.canUse && angle < attack.attackAngle / 2 && (attack.canAttackWhileMoving || (agentReady && agent.remainingDistance <= agent.stoppingDistance)))
+                {
+                    if (attack.rotationTransform != null && attack.weponTransform != null)
+                        LookAt(attack.rotationTransform, (player.position - attack.weponTransform.position).normalized, attack.rotationOffset, false);
+                    attack.attack.TryAttack();
+                }
         #endregion
 
         #region Debug
@@ -120,20 +120,31 @@ public class AI : MonoBehaviour
     }
     private IEnumerator Search()
     {
-        Quaternion right = new Quaternion(0f, -0.7071068f, 0f, 0.7071068f);
-        Vector3 orignalDirection = lastDirection;
-        for (int i = 0; i<3 && !playerDetected; i++)
+        if (searching)
+            yield break;
+        searching = true;
+        Vector3[] directions = new Vector3[4];
+        Quaternion direction;
+        directions[0] = (player.position - head.position).normalized;
+        if (0 < Vector3.Dot(transform.right, directions[0]))
+            direction = new Quaternion(0, 0.7071068f, 0, 0.7071068f);
+        else
+            direction = new Quaternion(0, -0.7071068f, 0, 0.7071068f);
+        directions[1] = direction * directions[0];
+        directions[2] = direction * directions[1];
+
+        directions[3] = head.forward;
+
+        for (int i = 0; i<4 && !playerDetected; i++)
         {
-            lastDirection = right * lastDirection;
             for (Quaternion last = Quaternion.identity; last != rotaionTransform.rotation && !playerDetected;)
             {
                 last = rotaionTransform.rotation;
+                LookAt(rotaionTransform, directions[i], offsetAngle, false);
                 yield return new WaitForFixedUpdate();
             }
-            if (i == 2)
-                right = Quaternion.Inverse(right);
         }
-        lastDirection = orignalDirection;
+        searching = false;
         yield break;
     }
     private void LookAt(Transform rotaionTransform, Vector3 direction, Quaternion offsetAngle, bool clamp = true)

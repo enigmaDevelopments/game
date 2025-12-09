@@ -578,7 +578,7 @@ MonoBehaviour:
     rotationOffsetAngle: {x: 0, y: 0, z: 0}
   secondaryAttackSettings:
     attackAngle: 60
-    canAttackWhileMoving: 1
+    canAttackWhileMoving: 0
     rotationTransform: {fileID: 1513105238368766581}
     weponTransform: {fileID: 1847028882671367111}
     rotationOffsetAngle: {x: 0, y: 180, z: 0}
