@@ -8,14 +8,12 @@ public class AiEditorScript : Editor
     private bool runAway = true;
     private bool detection = true;
     private bool seight = true;
-    private bool hasWeapon = true;
     private bool lookAtPlayer = true;
     private bool pitch = true;
     private bool check = true;
     private float runAwayRadius = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
-    private float attackAngle = 0;
     private float turningSpeed = 0;
     private float maxPitch = 0;
     private float checksPerSecond = 0;
@@ -109,21 +107,13 @@ public class AiEditorScript : Editor
             }
         }
 
-        ai.hasWeapon = EditorGUILayout.Toggle("Has Weapon", ai.hasWeapon);
-        if (ai.hasWeapon)
+        bool hasWeapon = EditorGUILayout.Toggle("Has Wepon", ai.hasWeapon);
+        if (hasWeapon)
         {
-            ai.attack = (AttackBase)EditorGUILayout.ObjectField("Attack", ai.attack, typeof(AttackBase), true);
-            if (hasWeapon)
-                attackAngle = EditorGUILayout.Slider("Attack Angle", ai.attackAngle, 0, 360);
-            else
-                hasWeapon = true;
-            ai.attackAngle = attackAngle;
+            ai.attackController = ai.GetComponent<AttackController>();
+            hasWeapon = ai.health != null;
         }
-        else
-        {
-            hasWeapon = false;
-            ai.attackAngle = 0;
-        }
+        ai.hasWeapon = hasWeapon;
 
         ai.lookAtPlayer = EditorGUILayout.Toggle("Look At Player", ai.lookAtPlayer);
         if (ai.lookAtPlayer)

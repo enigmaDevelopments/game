@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.VisualScripting.FullSerializer;
 
 public class AI : MonoBehaviour
 {
@@ -24,8 +25,7 @@ public class AI : MonoBehaviour
     public bool search;
     public Enemy health;
     public float turningSpeed;
-    public AttackBase attack;
-    public float attackAngle;
+    public AttackController attackController;
     public static bool playerInvisable = false;
     public Transform rotaionTransform;
     public Transform head;
@@ -36,7 +36,6 @@ public class AI : MonoBehaviour
     private NavMeshAgent agent;
     private Transform player;
     private Vector3 lastDirection;
-    private AttackController attackController;
     private float timer;
     private bool playerDetected = false;
 
@@ -85,22 +84,27 @@ public class AI : MonoBehaviour
         }
         #endregion
 
-        #region attack
-        if (playerDetected && angle < attackAngle / 2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
-            attack.TryAttack();
-        #endregion
-
         #region Turning
         if (agentReady)
         {
-            Vector3 lookAt = Quaternion.LookRotation(lastDirection).eulerAngles;
-            lookAt.x = Mathf.Clamp(lookAt.x - (lookAt.x<180?0:360), -pitchMaximum, pitchMaximum);
-            rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.Euler(lookAt) * offsetAngle, turningSpeed * Time.fixedDeltaTime);
+            LookAt(rotaionTransform, lastDirection, offsetAngle);
+        }
+        #endregion
+
+        #region attack
+        foreach (AttackController.AiSettings attack in attackController.attacks)
+        {
+            if (attack.canUse && playerDetected && angle < attack.attackAngle / 2 && agentReady && (attack.canAttackWhileMoving || agent.remainingDistance <= agent.stoppingDistance))
+            {
+                if (attack.rotationTransform != null && attack.weponTransform != null)
+                    LookAt(attack.rotationTransform, (player.position - attack.weponTransform.position).normalized, attack.rotationOffset, false);
+                attack.attack.TryAttack();
+            }
         }
         #endregion
 
         #region Debug
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Debug.DrawRay(head.position, direction * distance, Color.red);
         if (!agentReady)
             Debug.DrawRay(head.position, Vector3.up, Color.yellow);
@@ -131,5 +135,16 @@ public class AI : MonoBehaviour
         }
         lastDirection = orignalDirection;
         yield break;
+    }
+    private void LookAt(Transform rotaionTransform, Vector3 direction, Quaternion offsetAngle, bool clamp = true)
+    {
+        Quaternion lookAt = Quaternion.LookRotation(direction);
+        if (clamp)
+        {
+            direction = lookAt.eulerAngles;
+            direction.x = Mathf.Clamp(direction.x - (direction.x < 180 ? 0 : 360), -pitchMaximum, pitchMaximum);
+            lookAt = Quaternion.Euler(direction);
+        }
+        rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, lookAt * offsetAngle, turningSpeed * Time.fixedDeltaTime);
     }
 }

@@ -40,8 +40,11 @@ public class PulseCreator : AttackBase
         float height = enemy.GetComponent<NavMeshAgent>().baseOffset;
         yield return null;
         do
+        {
             yield return new WaitForSeconds(proneTime);
-        while (NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, height + 1, NavMesh.AllAreas));
+            if (enemy == null)
+                yield break;
+        } while (NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, height + 1, NavMesh.AllAreas));
         Enable(enemy);
         enemy.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
         yield break;
