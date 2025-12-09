@@ -38,10 +38,7 @@ public class Projectile : MonoBehaviour
         #endif
 
         // Apply damage if the thing hit has an Enemy component (check root and children)
-        GameObject defenderRootObj = defender.transform.root.gameObject;
-        Health health = defenderRootObj.GetComponent<Health>();
-        if (health != null)
-            health.TakeDamage(damage, id);
+        AttackBase.Damage(defender.transform, damage, id);
 
         // When the projectile hits something, create an explosion
         // and remove the projectile.

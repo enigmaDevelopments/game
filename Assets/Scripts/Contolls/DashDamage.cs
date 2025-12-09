@@ -51,9 +51,7 @@ public class DashThroughDamage : PlayerDash
             if (hit.gameObject == gameObject) continue;
 
             // Try to find a PlayerStats component and deal damage
-            var health = hit.GetComponent<Health>();
-            if (health != null)
-                health.TakeDamage(dashDamage,id);
+            AttackBase.Damage(hit.transform, dashDamage, id);
 
         }
     }

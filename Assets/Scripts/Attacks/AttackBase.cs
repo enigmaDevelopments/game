@@ -47,4 +47,17 @@ public abstract class AttackBase : MonoBehaviour
 
     // Implement per-attack behavior. Return an IEnumerator to support animations/timings.
     protected abstract IEnumerator ExecuteAttack();
+
+    public static void Damage(Transform hit, float damage, int id)
+    {
+        Health health = hit.transform.root.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damage, id);
+    }
+    public static void Damage(Transform hit, float damage)
+    {
+        Health health = hit.transform.root.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damage);
+    }
 }

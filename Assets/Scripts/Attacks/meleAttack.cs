@@ -16,9 +16,7 @@ public class meleAttack : AttackBase
     }
     private void OnTriggerEnter(Collider other)
     {
-        GameObject attacked = other.transform.root.gameObject;
-        Health health = attacked.GetComponent<Health>();
-        if (health != null && attacking)
-            health.TakeDamage(damage, id);
+        if (attacking)
+            Damage(other.transform, damage, id);
     }
 }

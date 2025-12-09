@@ -1138,7 +1138,7 @@ MonoBehaviour:
   defultMeleeWeapon: {fileID: 3510184050645953104, guid: b66b1c0bc9a0f4e4a906bd1b5b5d6aeb, type: 3}
   defultProjectileWeapon: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
   defultSpecialWeapon: {fileID: 0}
-  defultPack: 3
+  defultPack: 1
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
