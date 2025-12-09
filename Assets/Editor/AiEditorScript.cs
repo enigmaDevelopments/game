@@ -89,6 +89,13 @@ public class AiEditorScript : Editor
                 seight = true;
             ai.veiwRadius = veiwRadius;
             ai.veiwAngle = EditorGUILayout.Slider("Veiw Angle", ai.veiwAngle, 0, 360);
+            bool search = EditorGUILayout.Toggle("Search On Hit", ai.search);
+            if (search)
+            {
+                ai.health = ai.GetComponent<Enemy>();
+                search = ai.health != null;
+            }
+            ai.search = search;
         }
         else
         {

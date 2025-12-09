@@ -1,7 +1,6 @@
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Splines;
+using System.Collections;
 
 public class AI : MonoBehaviour
 {
@@ -22,6 +21,8 @@ public class AI : MonoBehaviour
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
+    public bool search;
+    public Enemy health;
     public float turningSpeed;
     public AttackBase attack;
     public float attackAngle;
@@ -52,6 +53,8 @@ public class AI : MonoBehaviour
         attackController = GetComponent<AttackController>();
         // Initialize directions to avoid zero-vector LookRotation
         lastDirection = head.forward;
+        if (search)
+            health.OnEnemyHit += Hit;
     }
 
     // Update is called once per frame
@@ -81,6 +84,7 @@ public class AI : MonoBehaviour
 
         }
         #endregion
+
         #region attack
         if (playerDetected && angle < attackAngle / 2 && agentReady && agent.remainingDistance <= agent.stoppingDistance)
             attack.TryAttack();
@@ -89,8 +93,7 @@ public class AI : MonoBehaviour
         #region Turning
         if (agentReady)
         {
-            //rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.LookRotation(lastDirection) * offsetAngle, turningSpeed * Time.deltaTime);
-            Vector3 lookAt = (Quaternion.LookRotation(lastDirection) ).eulerAngles;
+            Vector3 lookAt = Quaternion.LookRotation(lastDirection).eulerAngles;
             lookAt.x = Mathf.Clamp(lookAt.x - (lookAt.x<180?0:360), -pitchMaximum, pitchMaximum);
             rotaionTransform.rotation = Quaternion.RotateTowards(rotaionTransform.rotation, Quaternion.Euler(lookAt) * offsetAngle, turningSpeed * Time.fixedDeltaTime);
         }
@@ -105,5 +108,28 @@ public class AI : MonoBehaviour
         Debug.DrawRay(rotaionTransform.position, offsetAngle * rotaionTransform.forward * 100,Color.blue);
         #endif
         #endregion
+    }
+    
+    private void Hit(Enemy enemy)
+    {
+        StartCoroutine(Search());
+    }
+    private IEnumerator Search()
+    {
+        Quaternion right = new Quaternion(0f, -0.7071068f, 0f, 0.7071068f);
+        Vector3 orignalDirection = lastDirection;
+        for (int i = 0; i<3 && !playerDetected; i++)
+        {
+            lastDirection = right * lastDirection;
+            for (Quaternion last = Quaternion.identity; last != rotaionTransform.rotation && !playerDetected;)
+            {
+                last = rotaionTransform.rotation;
+                yield return new WaitForFixedUpdate();
+            }
+            if (i == 2)
+                right = Quaternion.Inverse(right);
+        }
+        lastDirection = orignalDirection;
+        yield break;
     }
 }

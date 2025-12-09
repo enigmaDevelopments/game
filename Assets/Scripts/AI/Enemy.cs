@@ -9,6 +9,7 @@ public class Enemy : Health
 
     // Event fired when an enemy dies — upgrades or other systems can listen
     public static event Action<Enemy> OnEnemyDeath;
+    public event Action<Enemy> OnEnemyHit;
 
     protected override void Start()
     {
@@ -16,11 +17,17 @@ public class Enemy : Health
         // Find upgrades if you want to trigger them directly
         chainReactionUpgrade = FindAnyObjectByType<ChainReactionUpgrade>();
     }
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        OnEnemyHit?.Invoke(this);
+    }
 
     protected override void Die()
     {
+        #if UNITY_EDITOR
         Debug.Log($"{gameObject.name} died!");
-
+        #endif
         // Trigger chain reaction upgrade if it's active
         if (chainReactionUpgrade != null)
         {

@@ -404,6 +404,8 @@ MonoBehaviour:
   raycast: 1
   veiwAngle: 120
   veiwRadius: 80
+  search: 1
+  health: {fileID: 6013335029441677393}
   turningSpeed: 45
   attack: {fileID: 3304264625608708018}
   attackAngle: 90
