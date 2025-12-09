@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using Unity.VisualScripting.FullSerializer;
 
 public class AI : MonoBehaviour
 {

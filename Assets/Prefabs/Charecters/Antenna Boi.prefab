@@ -998,6 +998,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5820798529961940446, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: maxSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820798529961940446, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: jumpForce
+      value: 12.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5820798529961940446, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -1148,14 +1156,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   controller: {fileID: 718674062554021058}
   walkCycle: {fileID: 1181695093538206842}
-  maxSpeed: 8
+  maxSpeed: 16
   acceleration: 60
   deceleration: 40
   turnSpeed: 10
   jumpForce: 8
   gravity: -25
   bufferTime: 0.5
-  duration: 5
+  duration: 6
   force: 30
 --- !u!114 &3394114306118870196
 MonoBehaviour:

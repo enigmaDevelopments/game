@@ -138,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2737544816437784178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05095322, y: 0.00000016176695, z: -0.000000008253267, w: 0.99870104}
+  m_LocalRotation: {x: 0.0509532, y: 0.00000021649161, z: -0.0000000110452865, w: 0.9987011}
   m_LocalPosition: {x: -6.7757034, y: 15.970476, z: -39.64901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
     DefaultMode: 1
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 0.25
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -411,8 +411,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7988512619769652293}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13505939, y: -1.05630074e-10, z: 8.370451e-12, w: 0.9908375}
-  m_LocalPosition: {x: -4.5231094, y: 15.977552, z: -24.377579}
+  m_LocalRotation: {x: 0.016402017, y: 5.899033e-26, z: -6.58187e-27, w: 0.9998655}
+  m_LocalPosition: {x: -4.5231094, y: 13.693438, z: -21.955978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -505,8 +505,8 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 17.5
-    Center: 17.5
+    Value: 4
+    Center: 4
     Range: {x: -10, y: 45}
     Wrap: 0
     Recentering:
@@ -651,7 +651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8065559425004420404}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05095322, y: 0.00000016139722, z: -0.0000000010064362, w: 0.99870104}
+  m_LocalRotation: {x: 0.05095319, y: 0.00000021649385, z: -0.0000000110895035, w: 0.9987011}
   m_LocalPosition: {x: -6.7757034, y: 15.970476, z: -39.64901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

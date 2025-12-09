@@ -32,6 +32,7 @@ public class AimingSystem : MonoBehaviour
     private PlayerInput playerInput;
     private bool isAiming = false;
     private Vector2 aimInput;
+    private CinemachineOrbitalFollow normalFollower;
     private CinemachineOrbitalFollow follower;
     private Quaternion lastRotation;
     private bool returning = false;
@@ -70,6 +71,7 @@ public class AimingSystem : MonoBehaviour
         // Hide crosshair initially
         if (crosshairCanvas != null)
             crosshairCanvas.gameObject.SetActive(false);
+        normalFollower = normalCamera.GetComponent<CinemachineOrbitalFollow>();
         follower = aimCamera.GetComponent<CinemachineOrbitalFollow>();
     }
     
@@ -108,7 +110,12 @@ public class AimingSystem : MonoBehaviour
             aimCamera.enabled = true;
         }
         //Move camera behind player
-        follower.HorizontalAxis.Value = transform.eulerAngles.y;
+        float rotation = normalFollower.HorizontalAxis.Value + 180;
+        Vector3 angles = transform.eulerAngles;
+        angles.y = rotation;
+        transform.eulerAngles = angles;
+        follower.HorizontalAxis.Value = rotation;
+        follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         ThirdPersonMovement.aiming = true;
         //Stop animations
         foreach (WeponAnimation animation in canceledAnimations)

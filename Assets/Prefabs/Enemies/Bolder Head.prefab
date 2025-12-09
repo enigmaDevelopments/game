@@ -407,7 +407,7 @@ MonoBehaviour:
   veiwRadius: 80
   search: 1
   health: {fileID: 6013335029441677393}
-  turningSpeed: 45
+  turningSpeed: 60
   attackController: {fileID: 5512492802100586395}
   rotaionTransform: {fileID: 2874664872790771975}
   head: {fileID: 7703866436787312931}
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb514511f18b03c44a2a3f9ef6017caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 5
+  maxHealth: 20
   canTakeDamage: 1
 --- !u!114 &5512492802100586395
 MonoBehaviour:
@@ -572,7 +572,7 @@ MonoBehaviour:
   isAIControlled: 1
   primaryAttackSettings:
     attackAngle: 15
-    canAttackWhileMoving: 0
+    canAttackWhileMoving: 1
     rotationTransform: {fileID: 0}
     weponTransform: {fileID: 0}
     rotationOffsetAngle: {x: 0, y: 0, z: 0}
@@ -584,7 +584,7 @@ MonoBehaviour:
     rotationOffsetAngle: {x: 0, y: 180, z: 0}
   tertiaryAttackSettings:
     attackAngle: 90
-    canAttackWhileMoving: 1
+    canAttackWhileMoving: 0
     rotationTransform: {fileID: 0}
     weponTransform: {fileID: 0}
     rotationOffsetAngle: {x: 0, y: 0, z: 0}
