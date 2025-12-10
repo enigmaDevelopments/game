@@ -38,6 +38,7 @@ public class Laser : AttackBase
     private IEnumerator KillLaser(ulong time)
     {
         yield return null;
+        yield return null;
         yield return new WaitForEndOfFrame();
         if (time == timeStep)
         {
