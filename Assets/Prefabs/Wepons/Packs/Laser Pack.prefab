@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   animation: {fileID: 0}
   attackCooldown: 0
-  damage: 1
+  damage: 10
   canHold: 1
   lineRenderer: {fileID: 4545021731587371288}
   raduis: 0.5
