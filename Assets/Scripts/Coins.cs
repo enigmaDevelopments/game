@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
-    public int amount = 1; // how much currency this coin gives
+    [SerializeField] private int value = 10; // $10 per coin
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        // Example: player has a CurrencyManager component
-        var currency = other.GetComponent<CurrencyManager>();
-        if (currency != null)
+        if (other.CompareTag("Player"))
         {
-            currency.AddCoins(amount);
-            Debug.Log($"Picked up {amount} coins!");
-        }
+            if (CurrencyManager.Instance != null)
+            {
+                CurrencyManager.Instance.AddMoney(value);
+            }
 
-        Destroy(gameObject);
+            // Optionally play sound / VFX here
+
+            Destroy(gameObject);
+        }
     }
 }
