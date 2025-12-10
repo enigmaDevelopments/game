@@ -33,6 +33,7 @@ public class AI : MonoBehaviour
     public float checksPerSecond;
 
     private NavMeshAgent agent;
+    private Rigidbody rb;
     private Transform player;
     private Vector3 lastDirection;
     private float timer;
@@ -50,6 +51,7 @@ public class AI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         attackController = GetComponent<AttackController>();
+        rb = GetComponent<Rigidbody>();
         // Initialize directions to avoid zero-vector LookRotation
         lastDirection = head.forward;
         if (search)
@@ -92,7 +94,7 @@ public class AI : MonoBehaviour
         #endregion
 
         #region attack
-        if (playerDetected)
+        if (playerDetected && attackController != null)
             foreach (AttackController.AiSettings attack in attackController.attacks)
                 if (attack.canUse && angle < attack.attackAngle / 2 && (attack.canAttackWhileMoving || (agentReady && agent.remainingDistance <= agent.stoppingDistance)))
                 {
@@ -100,6 +102,11 @@ public class AI : MonoBehaviour
                         LookAt(attack.rotationTransform, (player.position - attack.weponTransform.position).normalized, attack.rotationOffset, false);
                     attack.attack.TryAttack();
                 }
+        #endregion
+
+        #region Stop Physics
+        if (rb != null)
+            rb.constraints = agent.remainingDistance<=agent.stoppingDistance?RigidbodyConstraints.FreezeAll:RigidbodyConstraints.FreezeRotation;
         #endregion
 
         #region Debug

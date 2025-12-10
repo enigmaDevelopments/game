@@ -113,6 +113,8 @@ public class AiEditorScript : Editor
             ai.attackController = ai.GetComponent<AttackController>();
             hasWeapon = ai.health != null;
         }
+        else
+            ai.attackController = null;
         ai.hasWeapon = hasWeapon;
 
         ai.lookAtPlayer = EditorGUILayout.Toggle("Look At Player", ai.lookAtPlayer);

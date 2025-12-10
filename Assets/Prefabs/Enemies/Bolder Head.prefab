@@ -369,7 +369,7 @@ NavMeshAgent:
   m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 35
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI
   sight: 1
-  runAway: 0
+  runAway: 1
   detection: 1
   hasWeapon: 1
   omniscient: 0
@@ -400,7 +400,7 @@ MonoBehaviour:
   enviromentMask:
     serializedVersion: 2
     m_Bits: 64
-  runAwayRadius: 0
+  runAwayRadius: 20
   detectionRadius: 20
   raycast: 1
   veiwAngle: 120
@@ -557,6 +557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 20
   canTakeDamage: 1
+  health: 0
 --- !u!114 &5512492802100586395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,7 +584,7 @@ MonoBehaviour:
     weponTransform: {fileID: 1847028882671367111}
     rotationOffsetAngle: {x: 0, y: 180, z: 0}
   tertiaryAttackSettings:
-    attackAngle: 90
+    attackAngle: 135
     canAttackWhileMoving: 0
     rotationTransform: {fileID: 0}
     weponTransform: {fileID: 0}
@@ -733,7 +734,7 @@ Transform:
   m_GameObject: {fileID: 7733251489494485816}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.00025, y: 0.01128, z: 0.00324}
+  m_LocalPosition: {x: 0.00025, y: 0.0021, z: 0.0033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1142,6 +1143,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 622417471860404987, guid: b5183aad796824f6d8163ab5eb183d0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8952817292887541454}
+    - targetCorrespondingSourceObject: {fileID: 622417471860404987, guid: b5183aad796824f6d8163ab5eb183d0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1079644966537246811}
     - targetCorrespondingSourceObject: {fileID: -1068374911571184961, guid: b5183aad796824f6d8163ab5eb183d0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2418181368750356741}
@@ -1172,7 +1176,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1295,6 +1299,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.0115
   m_Center: {x: 0.0000008479691, y: 0.0010457423, z: -0.0000000069844317}
+--- !u!65 &1079644966537246811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928539442810644141}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4087
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.023, y: 0.023, z: 0.001}
+  m_Center: {x: 0.0000008479691, y: 0.001045742, z: 0.012}
 --- !u!4 &1406809335991049905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7510757935528178969, guid: b5183aad796824f6d8163ab5eb183d0d, type: 3}
@@ -1423,7 +1448,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1446,6 +1471,14 @@ PrefabInstance:
     - target: {fileID: 65489598834470508, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
       propertyPath: damage
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65489598834470508, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
+      propertyPath: spreadX
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 65489598834470508, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
+      propertyPath: spreadY
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 65489598834470508, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
       propertyPath: singleHit
@@ -1531,6 +1564,10 @@ PrefabInstance:
     - target: {fileID: 2039137608553373550, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
       propertyPath: speed
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039137608553373550, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
+      propertyPath: damage
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2039137608553373550, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
       propertyPath: bullets
