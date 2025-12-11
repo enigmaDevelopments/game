@@ -18,6 +18,7 @@ public class AI : MonoBehaviour
     public LayerMask enviromentMask;
     public float runAwayRadius;
     public float detectionRadius;
+    public float runAwayDistance;
     public bool raycast;
     public float veiwAngle;
     public float veiwRadius;
@@ -31,6 +32,11 @@ public class AI : MonoBehaviour
     public Quaternion offsetAngle;
     public float pitchMaximum;
     public float checksPerSecond;
+    public float stoppingDistence;
+    public float speed;
+    public float runSpeed;
+    public float acceleration;
+    public float runAcceleration;
 
     private NavMeshAgent agent;
     private Rigidbody rb;
@@ -80,9 +86,26 @@ public class AI : MonoBehaviour
             {
                 lastDirection = direction;
                 if (agentReady)
-                    agent.SetDestination(player.position + runAwayRadius * -direction);
-            }
+                {
+                    Vector3 offset;
+                    if (distance < runAwayDistance)
+                    {
+                        agent.stoppingDistance = 0;
+                        agent.speed = runSpeed;
+                        agent.acceleration = runAcceleration;
+                        offset = runAwayRadius * -direction;
 
+                    }
+                    else
+                    {
+                        agent.stoppingDistance = stoppingDistence;
+                        agent.speed = speed;
+                        agent.acceleration = acceleration;
+                        offset = Vector3.zero;
+                    }
+                    agent.SetDestination(player.position + offset);
+                }
+            }
         }
         #endregion
 
@@ -105,12 +128,12 @@ public class AI : MonoBehaviour
         #endregion
 
         #region Stop Physics
-        if (rb != null)
+        if (rb != null && agentReady)
             rb.constraints = agent.remainingDistance<=agent.stoppingDistance?RigidbodyConstraints.FreezeAll:RigidbodyConstraints.FreezeRotation;
         #endregion
 
         #region Debug
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         Debug.DrawRay(head.position, direction * distance, Color.red);
         if (!agentReady)
             Debug.DrawRay(head.position, Vector3.up, Color.yellow);

@@ -12,11 +12,14 @@ public class AiEditorScript : Editor
     private bool pitch = true;
     private bool check = true;
     private float runAwayRadius = 0;
+    private float runAwayDistance = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
     private float turningSpeed = 0;
     private float maxPitch = 0;
     private float checksPerSecond = 0;
+    private float runAwaySpeed = 0;
+    private float runAcceleration = 0;
 
     private void OnSceneGUI()
     {
@@ -25,6 +28,8 @@ public class AiEditorScript : Editor
         {
             Handles.color = Color.red;
             Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayRadius);
+            Handles.color = Color.orangeRed;
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayDistance);
         }
         if (detection)
         {
@@ -37,6 +42,8 @@ public class AiEditorScript : Editor
             Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, ai.veiwAngle / 2, veiwRadius);
             Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, -ai.veiwAngle / 2, veiwRadius);
         }
+        Handles.color = Color.lightPink;
+        Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.stoppingDistence/2);
     }
     public override void OnInspectorGUI()
     {
@@ -46,10 +53,18 @@ public class AiEditorScript : Editor
         if (ai.runAway)
         {
             if (runAway)
+            {
                 runAwayRadius = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius));
+                runAwayDistance = EditorGUILayout.Slider("Run Away Distance", ai.runAwayDistance, 0, runAwayRadius);
+                runAwaySpeed = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Speed", ai.runSpeed));
+                runAcceleration = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Acceleration", ai.runAcceleration));
+            }
             else
                 runAway = true;
             ai.runAwayRadius = runAwayRadius;
+            ai.runAwayDistance = runAwayDistance;
+            ai.runSpeed = runAwaySpeed;
+            ai.runAcceleration = runAcceleration;
         }
         else
         {
@@ -106,6 +121,9 @@ public class AiEditorScript : Editor
                     ai.detectionRadius = float.PositiveInfinity;
             }
         }
+        ai.stoppingDistence = Mathf.Max(0, EditorGUILayout.FloatField("Stopping Distence", ai.stoppingDistence));
+        ai.speed = Mathf.Max(0, EditorGUILayout.FloatField("Speed", ai.speed));
+        ai.acceleration = Mathf.Max(0, EditorGUILayout.FloatField("Acceleration", ai.acceleration));
 
         bool hasWeapon = EditorGUILayout.Toggle("Has Wepon", ai.hasWeapon);
         if (hasWeapon)
