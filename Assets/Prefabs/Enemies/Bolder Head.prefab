@@ -405,7 +405,7 @@ MonoBehaviour:
   runAwayDistance: 15
   raycast: 1
   veiwAngle: 120
-  veiwRadius: 80
+  veiwRadius: 90
   search: 1
   health: {fileID: 6013335029441677393}
   turningSpeed: 60
