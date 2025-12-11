@@ -30,6 +30,7 @@ public class PulseCreator : AttackBase
             Enable(enemy.gameObject, false);
             Rigidbody rb = enemy.GetComponent<Rigidbody>();
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.AddExplosionForce(force, transform.position, raduis, upwardsModifyer, ForceMode.Impulse);
             StartCoroutine(GetUp(enemy.gameObject));
         }
@@ -44,9 +45,11 @@ public class PulseCreator : AttackBase
             yield return new WaitForSeconds(proneTime);
             if (enemy == null)
                 yield break;
-        } while (NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, height + 1, NavMesh.AllAreas));
+        } while (!NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, height + 1, NavMesh.AllAreas));
         Enable(enemy);
-        enemy.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
+        Rigidbody rb = enemy.GetComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         yield break;
     }
     private void Enable(GameObject enemy, bool enable = true)

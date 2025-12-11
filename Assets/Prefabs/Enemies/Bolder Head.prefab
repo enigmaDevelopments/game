@@ -353,7 +353,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!195 &9088964759533778998
 NavMeshAgent:
@@ -402,6 +402,7 @@ MonoBehaviour:
     m_Bits: 64
   runAwayRadius: 20
   detectionRadius: 20
+  runAwayDistance: 15
   raycast: 1
   veiwAngle: 120
   veiwRadius: 80
@@ -414,6 +415,11 @@ MonoBehaviour:
   offsetAngle: {x: -0.00000003090862, y: -0.70710677, z: -0.70710677, w: -0.00000003090862}
   pitchMaximum: 4
   checksPerSecond: 5
+  stoppingDistence: 35
+  speed: 7
+  runSpeed: 15
+  acceleration: 3
+  runAcceleration: 15
 --- !u!114 &3758053351209604504
 MonoBehaviour:
   m_ObjectHideFlags: 0
