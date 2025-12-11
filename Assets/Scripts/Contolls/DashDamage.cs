@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DashThroughDamage : PlayerDash
 {
+    public IntangibilityManager.FlashType flashType = IntangibilityManager.FlashType.visable;
     [Header("Damage Settings")]
     public int dashDamage = 10; // how much damage to deal per dash hit
     public float hitRadius = 0.5f;
@@ -22,6 +23,7 @@ public class DashThroughDamage : PlayerDash
 
         // Disable collision so you can move through objects
         intangibilityManager.Timer = dashDuration;
+        intangibilityManager.flashType = flashType;
 
         int id = Random.Range(int.MinValue, int.MaxValue);
         // Apply dash velocity

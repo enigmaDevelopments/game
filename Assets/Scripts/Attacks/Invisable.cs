@@ -9,12 +9,12 @@ public class Invisable : AttackBase
     public float duration;
     public float speedMultiplier = 1f;
     public bool intagable = false;
-    private IntangibilityManager IntangibilityManager;
+    private IntangibilityManager intangibilityManager;
     void Start()
     {
         if (user == null)
             user = transform.parent.gameObject;
-        IntangibilityManager = user.GetComponent<IntangibilityManager>();
+        intangibilityManager = user.GetComponent<IntangibilityManager>();
     }
 
     protected override IEnumerator ExecuteAttack()
@@ -22,7 +22,10 @@ public class Invisable : AttackBase
         ThirdPersonMovement controller = user.GetComponent<ThirdPersonMovement>();
         Material material = user.GetComponent<Material>();
         if (intagable)
-            IntangibilityManager.Timer = duration;
+        {
+            intangibilityManager.Timer = duration;
+            intangibilityManager.flashType = IntangibilityManager.FlashType.invisable;
+        }
         controller.maxSpeed *= speedMultiplier;
         AI.playerInvisable = true;
         yield return new WaitForSeconds(duration);

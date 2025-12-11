@@ -20,6 +20,7 @@ public class PlayerStats : Health
         healthBar.SetHealth((int)health);
         canTakeDamage = false;
         intangibilityManager.Timer = intangibilityDuration;
+        intangibilityManager.flashType = IntangibilityManager.FlashType.flashing;
     }
     protected override void Die()
     {

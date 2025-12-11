@@ -57,7 +57,7 @@ public class CharacterBrain : MonoBehaviour
         _hasSpecialeWeapon = false;
         Destroy(activeSpecialeWeapon);
     }
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         if (defultMeleeWeapon != null) 
             SetMeleeWeapon(defultMeleeWeapon);

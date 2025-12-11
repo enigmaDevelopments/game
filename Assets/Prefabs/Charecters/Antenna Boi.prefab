@@ -927,7 +927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: intangibilityDuration
-      value: 1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalScale.x
@@ -1374,6 +1374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fff141c630b284a944376488a5e6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  flashRate: 0.12
+  flashType: 0
   mainLayer: 3
   intangibleLayer: 11
 --- !u!114 &382599228179248179
