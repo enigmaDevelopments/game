@@ -1086,10 +1086,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1253977779}
-    - target: {fileID: 6354886169092116565, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
-      propertyPath: defultProjectileWeapon
-      value: 
-      objectReference: {fileID: 6731096243086275829, guid: 805bdb35e81771a4c95d4635bb1cfc90, type: 3}
     - target: {fileID: 6494226583712110411, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.74156666
