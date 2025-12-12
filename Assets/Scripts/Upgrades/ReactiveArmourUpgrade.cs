@@ -18,10 +18,15 @@ public class ReactiveArmorUpgrade : MonoBehaviour
     private bool canTrigger = true;
     private Transform player;
 
-    private void Start()
+    public void Activate()
     {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        PlayerHealth.OnPlayerDamaged += OnPlayerDamaged;
+        if (!isActive)
+        {
+            isActive = true;
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+            PlayerHealth.OnPlayerDamaged += OnPlayerDamaged;
+            Debug.Log("Reactive Armor Upgrade Activated!");
+        }
     }
 
     private void OnDestroy()
@@ -39,27 +44,21 @@ public class ReactiveArmorUpgrade : MonoBehaviour
     {
         canTrigger = false;
 
-        Debug.Log("?? Reactive Armor triggered!");
-
-        // Detect enemies within radius
-        Collider2D[] hits = Physics2D.OverlapCircleAll(player.position, explosionRadius);
-
+        Collider[] hits = Physics.OverlapSphere(player.position, explosionRadius);
         foreach (var hit in hits)
         {
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
                 enemy.TakeDamage(explosionDamage);
-                // Optional: Apply knockback
-                Vector2 knockbackDir = (enemy.transform.position - player.position).normalized;
-                Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+                Rigidbody rb = enemy.GetComponent<Rigidbody>();
                 if (rb != null)
-                    rb.AddForce(knockbackDir * 200f); // tweak force as needed
+                {
+                    Vector2 knockbackDir = (enemy.transform.position - player.position).normalized;
+                    rb.AddForce(knockbackDir * 200f);
+                }
             }
         }
-
-        // Optional: Add visual or sound effect here
-        // e.g. Instantiate(explosionEffectPrefab, player.position, Quaternion.identity);
 
         yield return new WaitForSeconds(cooldown);
         canTrigger = true;

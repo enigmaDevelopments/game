@@ -22,23 +22,29 @@ public class GuardianGraceUpgrade : MonoBehaviour
     private PlayerHealth playerHealth;
     private bool canTrigger = true;
 
-    private void Start()
+    public void Activate()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update tag
-        if (player != null)
+        if (!isActive)
         {
-            playerHealth = player.GetComponent<PlayerHealth>(); //update script name
+            isActive = true;
+
+            // Find player reference
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                playerHealth = player.GetComponent<PlayerHealth>();
+            }
+
+            Debug.Log("Guardian Grace Upgrade Activated!");
         }
     }
 
     private void Update()
     {
-        if (!isActive || playerHealth == null) return;
+        if (!isActive || playerHealth == null || !canTrigger) return;
 
-        // Check health percentage
         float healthPercent = playerHealth.currentHealth / playerHealth.maxHealth;
-
-        if (healthPercent <= triggerThreshold && canTrigger)
+        if (healthPercent <= triggerThreshold)
         {
             StartCoroutine(ActivateGuardianGrace());
         }
@@ -54,18 +60,15 @@ public class GuardianGraceUpgrade : MonoBehaviour
         float healAmount = playerHealth.maxHealth * healPercent;
         playerHealth.RestoreHealth(healAmount);
 
-        // Grant invulnerability
+        // Grant temporary invulnerability
         playerHealth.isInvulnerable = true;
 
-        // Optional: Add visual or sound effects here
         yield return new WaitForSeconds(graceDuration);
 
-        // End invulnerability
         playerHealth.isInvulnerable = false;
-
         Debug.Log("Guardian Grace ended.");
 
-        // Start cooldown
+        // Cooldown before it can trigger again
         yield return new WaitForSeconds(cooldown);
         canTrigger = true;
     }

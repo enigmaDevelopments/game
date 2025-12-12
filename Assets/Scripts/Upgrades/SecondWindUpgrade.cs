@@ -1,21 +1,25 @@
 using UnityEngine;
+using System.Collections;
 
 public class SecondWindUpgrade : MonoBehaviour
 {
-    [Header("Second Wind Settings")]
-    public bool isActive = false;            // If player bought the upgrade
-    public float healthRestorePercent = 0.5f; // % of max health restored
-    public float invulnerableDuration = 2f;   // Temporary invulnerability
-    private bool hasTriggeredThisLife = false;
+    public bool isActive = false;
+    public float healthRestorePercent = 0.5f;
+    public float invulnerableDuration = 2f;
 
+    private bool hasTriggeredThisLife = false;
     private PlayerHealth playerHealth;
 
-    private void Start()
+    public void Activate()
     {
-        playerHealth = FindAnyObjectByType<PlayerHealth>();
-        if (playerHealth != null)
+        if (!isActive)
         {
-            PlayerHealth.OnPlayerDamaged += OnPlayerDamaged;
+            isActive = true;
+            playerHealth = FindAnyObjectByType<PlayerHealth>();
+            if (playerHealth != null)
+                PlayerHealth.OnPlayerDamaged += OnPlayerDamaged;
+
+            Debug.Log("Second Wind Upgrade Activated!");
         }
     }
 
@@ -30,7 +34,6 @@ public class SecondWindUpgrade : MonoBehaviour
         if (!isActive || hasTriggeredThisLife || playerHealth.currentHealth > 0)
             return;
 
-        // Player would die, trigger second wind
         TriggerSecondWind();
     }
 
@@ -38,25 +41,20 @@ public class SecondWindUpgrade : MonoBehaviour
     {
         hasTriggeredThisLife = true;
 
-        // Restore health
         float restoreAmount = playerHealth.maxHealth * healthRestorePercent;
         playerHealth.RestoreHealth(restoreAmount);
 
-        // Temporarily make the player invulnerable
         StartCoroutine(TemporaryInvulnerability());
-
-        // Optional: visual or sound feedback
-        Debug.Log("? Second Wind Activated! Health restored.");
+        Debug.Log("Second Wind Activated!");
     }
 
-    private System.Collections.IEnumerator TemporaryInvulnerability()
+    private IEnumerator TemporaryInvulnerability()
     {
         playerHealth.isInvulnerable = true;
         yield return new WaitForSeconds(invulnerableDuration);
         playerHealth.isInvulnerable = false;
     }
 
-    // Call this when the player respawns or starts a new life
     public void ResetSecondWind()
     {
         hasTriggeredThisLife = false;
