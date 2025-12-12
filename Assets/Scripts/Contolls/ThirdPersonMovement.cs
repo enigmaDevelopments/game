@@ -23,12 +23,14 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector2 movement;
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
+    public Vector3 CurrentMoveDirection => currentMoveDirection;
     private float currentSpeed;
     protected bool isGrounded;
     private float buffer = 0;
     private Transform cameraTransform;
     protected bool canFastFall = true;
     public static bool aiming;
+
 
 
     public void OnMove(InputValue value)
