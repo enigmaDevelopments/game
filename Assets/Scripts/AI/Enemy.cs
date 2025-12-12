@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : Health
 {
     [Header("Enemy Settings")]
-    //public float health = 100f;  // Enemy health
 
     [Header("Coin Drop Settings")]
     public GameObject coinPrefab;        // assign your Coin prefab here
