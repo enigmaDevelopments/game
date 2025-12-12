@@ -6,7 +6,7 @@ public abstract class Health : MonoBehaviour
 {
     public float maxHealth = 7;
     [HideInInspector]  public bool canTakeDamage = true;
-    public float health;
+    protected float health;
     private List<int> attackIds = new();
     protected virtual void Start()
     {

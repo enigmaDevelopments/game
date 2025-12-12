@@ -10,6 +10,7 @@ public class PlayerStats : Health
     {
         base.Start();
         intangibilityManager = GetComponent<IntangibilityManager>();
+        healthBar.SetMaxHealth((int)maxHealth);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
