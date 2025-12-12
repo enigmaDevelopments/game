@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class EnergyRecyclerUpgrade : MonoBehaviour
+{
+    [Header("Energy Restore Settings")]
+    [Range(0f, 1f)] public float energyRestorePercent = 0.1f; // 10% of max energy
+    public bool isActive = false;  // Will be set true when purchased
+
+    private PlayerEnergy playerEnergy;
+
+    public void Activate()
+    {
+        if (!isActive)
+        {
+            isActive = true;
+
+            // Find the player and get their energy component
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                playerEnergy = player.GetComponent<PlayerEnergy>();
+            }
+
+            // Subscribe to enemy death event
+            Enemy.OnEnemyDeath += HandleEnemyDeath;
+
+            Debug.Log("Energy Recycler Upgrade Activated!");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (isActive)
+        {
+            // Unsubscribe to prevent memory leaks
+            Enemy.OnEnemyDeath -= HandleEnemyDeath;
+        }
+    }
+
+    private void HandleEnemyDeath(Enemy enemy)
+    {
+        // Only do anything if the upgrade is active and the player has an energy component
+        if (!isActive || playerEnergy == null) return;
+
+        float restoreAmount = playerEnergy.maxEnergy * energyRestorePercent;
+        playerEnergy.RestoreEnergy(restoreAmount);
+
+        Debug.Log($"Energy Recycler activated! Restored {restoreAmount} energy.");
+    }
+}
