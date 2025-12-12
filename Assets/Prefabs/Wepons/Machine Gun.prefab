@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
   animation: {fileID: 0}
   attackCooldown: 0.01
-  damage: 0.1
+  baseDamage: 0.05
   canHold: 1
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 40
   duration: 3
-  spawnOffset: {x: 0, y: 0, z: 0}
+  spawnTransform: {fileID: 0}
   layer: 8

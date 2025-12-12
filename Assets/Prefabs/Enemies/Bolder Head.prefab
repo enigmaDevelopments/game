@@ -564,6 +564,9 @@ MonoBehaviour:
   maxHealth: 20
   canTakeDamage: 1
   health: 0
+  coinPrefab: {fileID: 0}
+  coinsToDrop: 5
+  dropSpread: 0.5
 --- !u!114 &5512492802100586395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1506,6 +1509,10 @@ PrefabInstance:
       propertyPath: singleHit
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 65489598834470508, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
+      propertyPath: baseDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4685077590881048422, guid: 419567b59c8e88c4e846d47c7992c99e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0027
@@ -1608,6 +1615,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2039137608553373550, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
+      propertyPath: baseDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039137608553373550, guid: ab34f180e62f46940ac0bcbe6badeb7b, type: 3}
       propertyPath: attackCooldown
       value: 5
       objectReference: {fileID: 0}
@@ -1694,6 +1705,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
       propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
+      propertyPath: baseDamage
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2889467249914942030, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}

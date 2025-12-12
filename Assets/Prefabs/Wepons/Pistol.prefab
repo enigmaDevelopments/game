@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
   animation: {fileID: 0}
   attackCooldown: 0.5
-  damage: 2
+  baseDamage: 2
   canHold: 0
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 75

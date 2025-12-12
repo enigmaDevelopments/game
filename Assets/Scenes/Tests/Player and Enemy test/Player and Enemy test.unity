@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &155017112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6646543326904484731, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+  m_PrefabInstance: {fileID: 1825917240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &156736360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -608,6 +613,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6494226583712110411, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
   m_PrefabInstance: {fileID: 1825917240}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &444177609 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1527086160545041574, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+  m_PrefabInstance: {fileID: 1825917240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &467255799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3919312768381919009, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
@@ -1078,6 +1088,14 @@ PrefabInstance:
       propertyPath: crosshairCanvas
       value: 
       objectReference: {fileID: 1152512323}
+    - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: weaponTransform
+      value: 
+      objectReference: {fileID: 444177609}
+    - target: {fileID: 382599228179248179, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
+      propertyPath: rotationTransform
+      value: 
+      objectReference: {fileID: 155017112}
     - target: {fileID: 3793712660526083117, guid: 8ec4c18397422e24995967d11fa61c4f, type: 3}
       propertyPath: m_Name
       value: Antenna Boi
@@ -1139,10 +1157,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 972880045470474029, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
-      propertyPath: veiwRadius
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 3318681447473263729, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
       propertyPath: m_Name
       value: Bolder Head
