@@ -563,7 +563,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 20
   canTakeDamage: 1
-  health: 0
   coinPrefab: {fileID: 0}
   coinsToDrop: 5
   dropSpread: 0.5

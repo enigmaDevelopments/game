@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
         GameObject defender = collision.gameObject;
         if (owner != null)
         {
-            Debug.Log($"{owner.name} {attackName} hit {defender.name} id {id}");
+            Debug.Log($"{owner.name} {attackName} hit {defender.name} id");
         }
         else
         {
@@ -46,6 +46,8 @@ public class Projectile : MonoBehaviour
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
+        if (defender.layer == 10) 
+            Debug.Log(true);
         Destroy(gameObject);
     }
 }
