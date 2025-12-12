@@ -117,9 +117,9 @@ public class AntennaBrain : CharacterBrain
     }
     #endregion
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         if (defultPack == Pack.laserPack)
             laserPack = true;
         else if (defultPack == Pack.pulsePack)

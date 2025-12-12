@@ -1,14 +1,44 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class AttackController : MonoBehaviour
 {
+    [System.Serializable]
+    public class AiSettings
+    {
+        [Range(0f, 180f)]
+        public float attackAngle;
+        public bool canAttackWhileMoving;
+        [SerializeField]
+        public Transform rotationTransform;
+        public Transform weponTransform;
+        public Vector3 rotationOffsetAngle;
+        [NonSerialized]
+        public AttackBase attack;
+        [NonSerialized]
+        public Quaternion rotationOffset;
+        [NonSerialized]
+        public bool canUse;
+    }
+
+
+
     [Header("Control Mode")]
     [Tooltip("If true, attacks are controlled by AI instead of player input")]
     public bool isAIControlled = false;
+    [SerializeField]
+    private AiSettings primaryAttackSettings;
+    [SerializeField]
+    private AiSettings secondaryAttackSettings;
+    [SerializeField]
+    private AiSettings tertiaryAttackSettings;
+
 
     [Header("Scripts")]
-    [Tooltip("Optional. If not provided, will try to GetComponent<PlayerInput>()")] 
+    [Tooltip("Optional. If not provided, will try to GetComponent<PlayerInput>()")]
     public PlayerInput input;
 
     [Tooltip("Optional. If not provided, will try to GetComponent<CharacterBrain>()")]
@@ -18,13 +48,31 @@ public class AttackController : MonoBehaviour
     public AttackBase primaryAttack;   // Melee
     public AttackBase secondaryAttack; // Projectile
     public AttackBase tertiaryAttack; // special
+    [Header("Animations")]
+    public WeponAnimation primaryAnimation;   // Melee
+    public WeponAnimation secondaryAnimation; // Projectile
+    public WeponAnimation tertiaryAnimation; // special
 
-    [Header("AI Settings")]
-    [Tooltip("Reference to player/target for AI attacks")]
-    public Transform aiTarget;
-
-    [Tooltip("Tag to find AI target if not manually set")]
-    public string aiTargetTag = "Player";
+    public AiSettings[] attacks
+    {
+        get
+        {
+            AiSettings[] output = new AiSettings[3];
+            output[0] = primaryAttackSettings;
+            output[1] = secondaryAttackSettings;
+            output[2] = tertiaryAttackSettings;
+            output[0].attack = primaryAttack;
+            output[1].attack = secondaryAttack;
+            output[2].attack = tertiaryAttack;
+            output[0].rotationOffset = Quaternion.Inverse(Quaternion.Euler(output[0].rotationOffsetAngle));
+            output[1].rotationOffset = Quaternion.Inverse(Quaternion.Euler(output[1].rotationOffsetAngle));
+            output[2].rotationOffset = Quaternion.Inverse(Quaternion.Euler(output[2].rotationOffsetAngle));
+            output[0].canUse = CanUsePrimary();
+            output[1].canUse = CanUseSecondary();
+            output[2].canUse = CanUseTertiary();
+            return output;
+        }
+    }
 
     private void Awake()
     {
@@ -34,28 +82,21 @@ public class AttackController : MonoBehaviour
             brain = GetComponent<CharacterBrain>();
     }
 
+
     private void Start()
     {
-        // Find AI target if in AI mode and no target is set
-        if (isAIControlled && aiTarget == null)
-        {
-            GameObject targetObj = GameObject.FindGameObjectWithTag(aiTargetTag);
-            if (targetObj != null)
-            {
-                aiTarget = targetObj.transform;
-            }
-        }
+        if (primaryAttack != null && primaryAnimation != null)
+            primaryAttack.animation = primaryAnimation;
+        if (secondaryAttack != null && secondaryAnimation != null)
+            secondaryAttack.animation = secondaryAnimation;
+        if (tertiaryAttack != null && tertiaryAnimation != null)
+            tertiaryAttack.animation = tertiaryAnimation;
     }
 
     private void Update()
     {
         if (isAIControlled)
-        {
-            // AI mode - let individual attack AI behaviors handle when to attack
-            // The attacks will call TryPrimary/TrySecondary/TryTertiary themselves
             return;
-        }
-
         // Player input mode
         if (input != null)
         {
@@ -65,18 +106,11 @@ public class AttackController : MonoBehaviour
             var special = actions?.FindAction("Special", throwIfNotFound: false);
 
             if (brain.hasMeleeWeapon && ((primaryAttack.CanHold && melee.IsPressed()) || melee.WasPerformedThisFrame()))
-            {
                 TryPrimary();
-            }
-
             if (brain.hasProjectileWeapon && ((secondaryAttack.CanHold && projectile.IsPressed()) || projectile.WasPerformedThisFrame()))
-            {
                 TrySecondary();
-            }
             if (brain.hasSpecialeWeapon && ((tertiaryAttack.CanHold && special.IsPressed()) || special.WasPerformedThisFrame()))
-            {
                 TryTertiary();
-            }
         }
     }
 
@@ -104,16 +138,16 @@ public class AttackController : MonoBehaviour
     // Helper methods for AI to check attack readiness
     public bool CanUsePrimary()
     {
-        return primaryAttack != null && !primaryAttack.IsAttacking && brain.hasMeleeWeapon;
+        return primaryAttack != null && !primaryAttack.IsAttacking;
     }
 
     public bool CanUseSecondary()
     {
-        return secondaryAttack != null && !secondaryAttack.IsAttacking && brain.hasProjectileWeapon;
+        return secondaryAttack != null && !secondaryAttack.IsAttacking;
     }
 
     public bool CanUseTertiary()
     {
-        return tertiaryAttack != null && !tertiaryAttack.IsAttacking && brain.hasSpecialeWeapon;
+        return tertiaryAttack != null && !tertiaryAttack.IsAttacking;
     }
 }

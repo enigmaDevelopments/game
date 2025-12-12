@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+// add to enemy script
 
-public class Enemy : MonoBehaviour
+public class Enemy : Health
 {
     [Header("Enemy Settings")]
     public float health = 100f;  // Enemy health
@@ -13,27 +14,26 @@ public class Enemy : MonoBehaviour
 
     private ChainReactionUpgrade chainReactionUpgrade;
 
-    // Event fired when an enemy dies — upgrades or other systems can listen
+    // Event fired when an enemy dies â€” upgrades or other systems can listen
     public static event Action<Enemy> OnEnemyDeath;
+    public event Action<Enemy> OnEnemyHit;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         chainReactionUpgrade = FindAnyObjectByType<ChainReactionUpgrade>();
     }
-
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            Die();
-        }
+        base.TakeDamage(damage);
+        OnEnemyHit?.Invoke(this);
     }
 
-    private void Die()
+    protected override void Die()
     {
+        #if UNITY_EDITOR
         Debug.Log($"{gameObject.name} died!");
-
+        #endif
         // Trigger chain reaction upgrade if it's active
         if (chainReactionUpgrade != null)
         {

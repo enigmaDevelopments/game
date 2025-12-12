@@ -14,7 +14,7 @@ public class Fly : ThirdPersonMovement
 
     protected override void Start()
     {
-        //canFasttFall = false;
+        canFastFall = false;
         base.Start();
     }
     public override void OnJump(InputValue value)

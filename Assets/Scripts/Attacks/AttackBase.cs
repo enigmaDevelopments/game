@@ -3,9 +3,11 @@ using UnityEngine;
 
 public abstract class AttackBase : MonoBehaviour
 {
+    public new WeponAnimation animation;
     [Header("Attack Settings")]
-    [SerializeField] protected float attackCooldown = 0.5f;
-    [SerializeField] private bool canHold;
+    public float attackCooldown = 0.5f;
+    public float damage = 0;
+    public bool canHold;
 
     protected bool isAttacking;
     protected bool canAttack = true;
@@ -45,4 +47,17 @@ public abstract class AttackBase : MonoBehaviour
 
     // Implement per-attack behavior. Return an IEnumerator to support animations/timings.
     protected abstract IEnumerator ExecuteAttack();
+
+    public static void Damage(Transform hit, float damage, int id)
+    {
+        Health health = hit.transform.root.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damage, id);
+    }
+    public static void Damage(Transform hit, float damage)
+    {
+        Health health = hit.transform.root.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damage);
+    }
 }

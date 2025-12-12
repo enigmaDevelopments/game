@@ -24,12 +24,12 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 currentMoveDirection;
     private Vector3 lastMoveDirection;
     private float currentSpeed;
-    private float coyoteTimeCounter;
     protected bool isGrounded;
-    private bool wasGrounded;
     private float buffer = 0;
     private Transform cameraTransform;
-    protected bool canFasttFall = true;
+    protected bool canFastFall = true;
+    public static bool aiming;
+
 
     public void OnMove(InputValue value)
     {
@@ -54,7 +54,7 @@ public class ThirdPersonMovement : MonoBehaviour
             else
                 buffer = bufferTime;
         }
-        else if (canFasttFall && 0 < playerVelocity.y)
+        else if (canFastFall && 0 < playerVelocity.y)
             playerVelocity.y = 0;
         else
             buffer = 0;
@@ -86,8 +86,8 @@ public class ThirdPersonMovement : MonoBehaviour
         else
             walkCycle.jumping = true;
 
-            // Get camera-relative movement direction
-            Vector3 forward = cameraTransform.forward;
+        // Get camera-relative movement direction
+        Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         forward.y = 0;
         right.y = 0;
@@ -115,17 +115,20 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         // Rotate player
-        if (currentSpeed > 0.1f)
+        if (!aiming)
         {
-            float targetAngle = Mathf.Atan2(currentMoveDirection.x, currentMoveDirection.z) * Mathf.Rad2Deg;
-            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-        }
-        else if (lastMoveDirection != Vector3.zero)
-        {
-            // Keep facing the last movement direction when stopped
-            float lastAngle = Mathf.Atan2(lastMoveDirection.x, lastMoveDirection.z) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, lastAngle, 0);
+            if (currentSpeed > 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(currentMoveDirection.x, currentMoveDirection.z) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+            }
+            else if (lastMoveDirection != Vector3.zero)
+            {
+                // Keep facing the last movement direction when stopped
+                float lastAngle = Mathf.Atan2(lastMoveDirection.x, lastMoveDirection.z) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, lastAngle, 0);
+            }
         }
 
         // Apply movement

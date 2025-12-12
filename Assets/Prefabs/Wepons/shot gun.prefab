@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotGun
   attackCooldown: 2
+  damage: 1
   canHold: 0
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 25
@@ -54,3 +55,4 @@ MonoBehaviour:
   spreadX: 15
   spreadY: 30
   bullets: 20
+  singleHit: 1
