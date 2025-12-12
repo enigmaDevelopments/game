@@ -17,6 +17,6 @@ public class meleAttack : AttackBase
     private void OnTriggerEnter(Collider other)
     {
         if (attacking)
-            Damage(other.transform, damage, id);
+            Damage(other.transform, currentDamage, id);
     }
 }

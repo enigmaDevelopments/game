@@ -22,7 +22,7 @@ public class Laser : AttackBase
         if (Physics.SphereCast(transform.position, raduis, transform.forward, out RaycastHit hit, range, hitMask))
         {
             positions[1] = hit.point + hit.normal * raduis;
-            Damage(hit.transform, damage * (lastTime==0?0:Time.time-lastTime));
+            Damage(hit.transform, currentDamage * (lastTime==0?0:Time.time-lastTime));
             lastTime = Time.time;
         }
         else

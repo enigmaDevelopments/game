@@ -35,7 +35,7 @@ public class LaunchProjectile : AttackBase
         Projectile projectileScript = p.GetComponent<Projectile>();
         projectileScript.duration = duration;
         projectileScript.owner = gameObject;
-        projectileScript.damage = damage;
+        projectileScript.damage = currentDamage;
         p.gameObject.layer = layer;
         return projectileScript;
     } 
