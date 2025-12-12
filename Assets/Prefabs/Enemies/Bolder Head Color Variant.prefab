@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3318681447473263729, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
       propertyPath: m_Name
-      value: Bolder Head
+      value: Bolder Head Color Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5749020389944765904, guid: 66b0f9baa6ee54d47985d223557652e3, type: 3}
       propertyPath: m_LocalPosition.x

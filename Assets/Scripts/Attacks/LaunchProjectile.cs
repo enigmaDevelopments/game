@@ -7,7 +7,7 @@ public class LaunchProjectile : AttackBase
     public Rigidbody projectile;
     public float speed = 4f;
     public float duration;
-    public Vector3 spawnOffset = new Vector3(0f, 0f, 0.5f);
+    public Transform spawnTransform;
     public int layer;
 
     protected override IEnumerator ExecuteAttack()
@@ -16,6 +16,8 @@ public class LaunchProjectile : AttackBase
             yield break;
         if (animation != null)
             yield return StartCoroutine(animation.AttackingStance());
+        if (spawnTransform == null)
+            spawnTransform = transform;
         Shoot();
         // No additional timing needed; projectile is fired instantly.
         yield break;
@@ -28,7 +30,7 @@ public class LaunchProjectile : AttackBase
 
     protected Projectile Shoot(Quaternion rotation)
     {
-        Rigidbody p = Instantiate(projectile, transform.position + transform.TransformDirection(spawnOffset), transform.rotation);
+        Rigidbody p = Instantiate(projectile, spawnTransform.position, spawnTransform.rotation);
         p.linearVelocity = rotation * transform.forward * speed;
         Projectile projectileScript = p.GetComponent<Projectile>();
         projectileScript.duration = duration;
