@@ -1,20 +1,26 @@
 using System;
 using UnityEngine;
-
 // add to enemy script
 
 public class Enemy : Health
 {
+    [Header("Enemy Settings")]
+    public float health = 100f;  // Enemy health
+
+    [Header("Coin Drop Settings")]
+    public GameObject coinPrefab;        // assign your Coin prefab here
+    public int coinsToDrop = 5;          // number of coins per enemy
+    public float dropSpread = 0.5f;      // how far coins scatter
+
     private ChainReactionUpgrade chainReactionUpgrade;
 
-    // Event fired when an enemy dies — upgrades or other systems can listen
+    // Event fired when an enemy dies â€” upgrades or other systems can listen
     public static event Action<Enemy> OnEnemyDeath;
     public event Action<Enemy> OnEnemyHit;
 
     protected override void Start()
     {
         base.Start();
-        // Find upgrades if you want to trigger them directly
         chainReactionUpgrade = FindAnyObjectByType<ChainReactionUpgrade>();
     }
     public override void TakeDamage(float damage)
@@ -34,10 +40,44 @@ public class Enemy : Health
             chainReactionUpgrade.TryTriggerChainReaction(this);
         }
 
-        // Notify any listeners that this enemy has died (EnergyRecyclerUpgrade will handle its own logic)
+        // Spawn coins BEFORE the enemy is destroyed
+        SpawnCoins();
+
+        // Notify any listeners
         OnEnemyDeath?.Invoke(this);
 
         // Destroy the enemy
         Destroy(gameObject);
+    }
+
+    private void SpawnCoins()
+    {
+        if (coinPrefab == null)
+        {
+            Debug.LogWarning("Enemy has no coinPrefab assigned!");
+            return;
+        }
+
+        for (int i = 0; i < coinsToDrop; i++)
+        {
+            // random scatter around the enemy
+            Vector3 offset = UnityEngine.Random.insideUnitSphere * dropSpread;
+            offset.y = Mathf.Abs(offset.y) + 0.2f; // ensure coins spawn above the ground
+
+            GameObject coin = Instantiate(
+                coinPrefab,
+                transform.position + offset,
+                Quaternion.identity
+            );
+
+            // OPTIONAL: give coins a little pop/bounce
+            Rigidbody rb = coin.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Vector3 force = UnityEngine.Random.insideUnitSphere * 2f;
+                force.y = Mathf.Abs(force.y) + 1f;
+                rb.AddForce(force, ForceMode.Impulse);
+            }
+        }
     }
 }

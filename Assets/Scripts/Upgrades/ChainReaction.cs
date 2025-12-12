@@ -8,12 +8,12 @@ public class ChainReaction : MonoBehaviour
     public void TriggerChainReaction()
     {
         // Find all objects in the explosion radius
-        Collider2D[] affectedObjects = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        Collider[] affectedObjects = Physics.OverlapSphere(transform.position, explosionRadius);
 
-        foreach (Collider2D collider in affectedObjects)
+        foreach (Collider collider in affectedObjects)
         {
             // Check if the object is an enemy (or any other type of target)
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag("Bolder Head"))
             {
                 // Apply damage to the enemy
                 var enemy = collider.GetComponent<Enemy>();
@@ -25,7 +25,7 @@ public class ChainReaction : MonoBehaviour
             }
             // If there's a barrier, health packs, or other objects to trigger, add conditions here
             // For example, if there's a "Barrel" tag:
-            else if (collider.CompareTag("Barrel"))
+            //else if (collider.CompareTag("Barrel"))
             {
                 // Trigger an explosion on barrels (can destroy them or deal damage)
                 /*var barrel = collider.GetComponent<Barrel>();
