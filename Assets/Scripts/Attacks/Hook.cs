@@ -7,7 +7,7 @@ public class Hook : Projectile
     public Vector3 rotationOffset;
 
     private Transform grandParent;
-    private Transform parent;
+    private Renderer parentRenderer;
     private Transform root;
     private Vector3 startingPos;
     private Vector3 endingPos;
@@ -24,7 +24,7 @@ public class Hook : Projectile
     protected override void Start()
     {
         StartCoroutine(ReturnProjectile());
-        parent = owner.transform.parent;
+        Transform parent = owner.transform.parent;
         grandParent = parent.parent.parent.parent;
         root = owner.transform.root;
         startingRoation = grandParent.rotation;
@@ -32,6 +32,12 @@ public class Hook : Projectile
         lineRenderer = owner.GetComponent<LineRenderer>();
         characterController = root.GetComponent<CharacterController>();
         lineRenderer.enabled = true;
+        GetComponent<MeshFilter>().mesh = parent.GetComponent<MeshFilter>().mesh;
+        parentRenderer = parent.GetComponent<Renderer>();
+        GetComponent<Renderer>().materials = parentRenderer.materials;
+        transform.localScale = parent.lossyScale;
+        transform.rotation = parent.rotation;
+        parentRenderer.enabled = false;
     }
     private void Update()
     {
@@ -40,6 +46,7 @@ public class Hook : Projectile
             controller.enabled = true;
             lineRenderer.enabled = false;
             grandParent.rotation = startingRoation;
+            parentRenderer.enabled = true;
             Destroy(gameObject, .1f);
             return;
         }

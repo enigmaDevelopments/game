@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9093385657711472181}
   - component: {fileID: 5044661471326094843}
-  - component: {fileID: 5737284304790118494}
   - component: {fileID: -5473935627569324749}
   m_Layer: 3
   m_Name: Hook Hand
@@ -55,27 +54,6 @@ MonoBehaviour:
   duration: 3
   spawnOffset: {x: 0, y: 0, z: 0}
   layer: 8
---- !u!135 &5737284304790118494
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382332459953695344}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.125
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &-5473935627569324749
 LineRenderer:
   serializedVersion: 2
