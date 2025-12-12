@@ -6,7 +6,13 @@ public abstract class AttackBase : MonoBehaviour
     public new WeponAnimation animation;
     [Header("Attack Settings")]
     public float attackCooldown = 0.5f;
-    public float damage = 0;
+
+    // ?? Add these
+    [SerializeField] protected float baseDamage = 10f;   // set in Inspector
+    protected float currentDamage;                       // runtime damage
+
+    public float CurrentDamage => currentDamage;         // read-only from outside
+
     public bool canHold;
 
     protected bool isAttacking;
@@ -15,6 +21,17 @@ public abstract class AttackBase : MonoBehaviour
     public bool IsAttacking => isAttacking;
     public float Cooldown => attackCooldown;
     public bool CanHold => canHold;
+
+    public virtual void SetDamage(float newDamage)
+    {
+        currentDamage = newDamage;
+    }
+
+    protected virtual void Awake()
+    {
+        // Initialize current damage from baseDamage
+        currentDamage = baseDamage;
+    }
 
     // Public entry point that consumers (like AttackController) call
     public bool TryAttack()
