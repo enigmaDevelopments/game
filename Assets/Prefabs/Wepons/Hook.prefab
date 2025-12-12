@@ -50,7 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070735767230092881, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
       propertyPath: m_Name
-      value: Hook Variant
+      value: Hook
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070735767230092881, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -2821667838215781843, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
@@ -82,4 +86,8 @@ MonoBehaviour:
   owner: {fileID: 0}
   attackName: 
   duration: 0
-  pullInTime: 1.5
+  id: 0
+  damage: 1
+  pullInSpeed: 100
+  rotationSpeed: 0
+  rotationOffset: {x: 180, y: 0, z: 90}

@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class Hook : Projectile
 {
-    public float pullInTime = 2;
+    public float pullInSpeed = 2;
+    public Vector3 rotationOffset;
 
+    private Transform grandParent;
     private Transform parent;
+    private Transform root;
     private Vector3 startingPos;
     private Vector3 endingPos;
     private Quaternion startingRoation;
-    private Quaternion endingRoation;
     private bool hooked = false;
     private bool returning = false;
     private float timer = 0;
+    private float pullInTime = 0;
     private ThirdPersonMovement controller;
     private LineRenderer lineRenderer;
     private CharacterController characterController;
@@ -22,19 +25,33 @@ public class Hook : Projectile
     {
         StartCoroutine(ReturnProjectile());
         parent = owner.transform.parent;
-        controller = parent.GetComponent<ThirdPersonMovement>();
+        grandParent = parent.parent.parent.parent;
+        root = owner.transform.root;
+        startingRoation = grandParent.rotation;
+        controller = root.GetComponent<ThirdPersonMovement>();
         lineRenderer = owner.GetComponent<LineRenderer>();
-        characterController = parent.GetComponent<CharacterController>();
+        characterController = root.GetComponent<CharacterController>();
         lineRenderer.enabled = true;
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        lineRenderer.SetPositions(new Vector3[] {owner.transform.position, transform.position});
-        parent.rotation = Quaternion.LookRotation(transform.position - parent.transform.position, parent.transform.up);
+        if (1 < timer)
+        {
+            controller.enabled = true;
+            lineRenderer.enabled = false;
+            grandParent.rotation = startingRoation;
+            Destroy(gameObject, .1f);
+            return;
+        }
+        Vector3 directionY = (transform.position - owner.transform.position).normalized;
+        Vector3 direction = directionY;
+        direction.y = 0;
+        direction.Normalize();
+        root.rotation = Quaternion.LookRotation(direction);
+        grandParent.rotation = Quaternion.LookRotation(directionY) * Quaternion.Inverse(Quaternion.Euler(rotationOffset));
         if (hooked)
         {
-            characterController.Move(Vector3.Lerp(startingPos, endingPos, timer)-parent.transform.position);
-            parent.rotation = Quaternion.Slerp(startingRoation, endingRoation, timer * 3);
+            characterController.Move(Vector3.Lerp(startingPos, endingPos, timer)-root.transform.position);
             timer += Time.deltaTime / pullInTime;
         }
         else if (returning)
@@ -42,30 +59,17 @@ public class Hook : Projectile
             transform.position = Vector3.Lerp(startingPos, owner.transform.position, timer);
             timer += Time.deltaTime / pullInTime;
         }
-        if (1 < timer)
-        {
-            controller.enabled = true;
-            lineRenderer.enabled = false;
-            Destroy(gameObject);
-        }
-        if (!hooked)
-        {
-            Vector3 direction = transform.position - parent.transform.position;
-            direction.y = 0;
-            parent.rotation = Quaternion.LookRotation(direction, Vector3.up);
-        }
-
+        lineRenderer.SetPositions(new Vector3[] { owner.transform.position, transform.position });
     }
 
     protected override void OnTriggerEnter(Collider collision)
     {
         hooked = true;
         GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        startingPos = parent.position;
-        endingPos = transform.position -(parent.rotation* Vector3.Scale(parent.lossyScale, owner.transform.localPosition));
-        startingRoation = parent.rotation;
-        endingRoation = Quaternion.LookRotation(transform.position - owner.transform.position, Vector3.up);
+        startingPos = owner.transform.position;
+        endingPos = transform.position + root.position - owner.transform.position;
         controller.enabled = false;
+        pullInTime = Vector3.Distance(transform.position, owner.transform.position) / pullInSpeed;
     }
     private IEnumerator ReturnProjectile()
     {
@@ -74,6 +78,7 @@ public class Hook : Projectile
         {
             returning = true;
             startingPos = transform.position;
+            pullInTime = Vector3.Distance(transform.position, owner.transform.position)/pullInSpeed;
             GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         }
         yield break;
