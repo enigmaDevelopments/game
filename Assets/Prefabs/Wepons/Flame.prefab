@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070735767230092881, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
       propertyPath: m_Name
-      value: flame Variant
+      value: Flame
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2440847362929498954, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
@@ -75,7 +75,7 @@ PrefabInstance:
       addedObject: {fileID: -6802638207340606207}
     - targetCorrespondingSourceObject: {fileID: 6070735767230092881, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8760218100959068160}
+      addedObject: {fileID: 5199981473500457962}
   m_SourcePrefab: {fileID: 100100000, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
 --- !u!1 &4939095421791171128 stripped
 GameObject:
@@ -140,7 +140,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8760218100959068160
+--- !u!114 &5199981473500457962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,6 +149,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4939095421791171128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7055d3efdc0cbfa44ad44f05792e90bc, type: 3}
+  m_Script: {fileID: 11500000, guid: fdb71ab945d70fa46b8a2ede68368e0c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::billborder
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
