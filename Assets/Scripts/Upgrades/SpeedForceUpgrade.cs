@@ -1,38 +1,32 @@
-//using UnityEngine;
+using UnityEngine;
 
-//public class SpeedForceUpgrade : MonoBehaviour
-//{
-//    [Header("Speed Force Settings")]
-//    public bool isActive = false;
-//    public float speedMultiplier = 1.2f;  // 20% speed boost
+public class SpeedForceUpgrade : MonoBehaviour
+{
+    [Header("Speed Force Settings")]
+    public bool isActive = false;
+    public float speedMultiplier = 1.2f;  // 20% speed boost
 
-//    private PlayerMovement playerMovement;
+    private ThirdPersonMovement playerMovement;
 
-//    private void Start()
-//    {
-//        playerMovement = FindAnyObjectByType<PlayerMovement>();
+    public void Activate()
+    {
+        if (!isActive)
+        {
+            isActive = true;
 
-//        if (isActive && playerMovement != null)
-//        {
-//            ApplySpeedBoost();
-//        }
-//    }
+            if (playerMovement == null)
+                playerMovement = FindAnyObjectByType<ThirdPersonMovement>();
 
-//    public void Activate()
-//    {
-//        if (!isActive)
-//        {
-//            isActive = true;
-//            ApplySpeedBoost();
-//            Debug.Log("? Speed Force Upgrade Activated!");
-//        }
-//    }
+            ApplySpeedBoost();
+            Debug.Log("Speed Force Upgrade Activated!");
+        }
+    }
 
-//    private void ApplySpeedBoost()
-//    {
-//        if (playerMovement != null)
-//        {
-//            playerMovement.baseSpeed *= speedMultiplier;
-//        }
-//    }
-//}
+    private void ApplySpeedBoost()
+    {
+        if (playerMovement != null)
+        {
+            playerMovement.maxSpeed *= speedMultiplier;
+        }
+    }
+}

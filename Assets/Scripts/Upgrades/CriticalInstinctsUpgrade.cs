@@ -3,48 +3,25 @@ using System.Collections;
 
 public class CriticalInstinctsUpgrade : MonoBehaviour
 {
-    public float criticalChance = 0.2f;  // Chance to deal a critical hit (20% by default)
-    public float criticalDamageMultiplier = 2f;  // How much damage is increased on critical hits (e.g., 2x damage)
-    public float duration = 5f;  // How long the critical instinct upgrade lasts (e.g., 5 seconds)
-    private bool isUpgradeActive = false;  // Flag to check if the upgrade is active
+    public bool isActive = false;
+    public float criticalChance = 0.2f;
+    public float criticalDamageMultiplier = 2f;
+    public float duration = 5f;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Activate()
     {
-        if (other.CompareTag("Player"))
+        if (!isActive)
         {
-            ActivateCriticalInstincts();
-            Destroy(gameObject);  // Destroy the upgrade item after it's picked up
+            isActive = true;
+            Debug.Log("Critical Instincts Upgrade Activated!");
+            StartCoroutine(DeactivateAfterTime());
         }
     }
 
-    public void ActivateCriticalInstincts()
-    {
-        isUpgradeActive = true;
-        Debug.Log("Critical Instincts Upgrade Activated!");
-
-        // Automatically deactivate the upgrade after the duration ends
-        StartCoroutine(DeactivateCriticalInstinctsAfterTime());
-    }
-
-    private IEnumerator DeactivateCriticalInstinctsAfterTime()
+    private IEnumerator DeactivateAfterTime()
     {
         yield return new WaitForSeconds(duration);
-        isUpgradeActive = false;
+        isActive = false;
         Debug.Log("Critical Instincts Upgrade Expired.");
-    }
-
-    public bool IsUpgradeActive()
-    {
-        return isUpgradeActive;
-    }
-
-    public float GetCriticalChance()
-    {
-        return criticalChance;
-    }
-
-    public float GetCriticalDamageMultiplier()
-    {
-        return criticalDamageMultiplier;
     }
 }

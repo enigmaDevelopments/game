@@ -8,23 +8,33 @@ public class EnergyRecyclerUpgrade : MonoBehaviour
 
     private PlayerEnergy playerEnergy;
 
-    private void Start()
+    public void Activate()
     {
-        // Subscribe to enemy death event
-        Enemy.OnEnemyDeath += HandleEnemyDeath;
-
-        // Find the player and get their energy component
-        GameObject player = GameObject.FindGameObjectWithTag("Player");  // update with correct tag
-        if (player != null)
+        if (!isActive)
         {
-            playerEnergy = player.GetComponent<PlayerEnergy>();
+            isActive = true;
+
+            // Find the player and get their energy component
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                playerEnergy = player.GetComponent<PlayerEnergy>();
+            }
+
+            // Subscribe to enemy death event
+            Enemy.OnEnemyDeath += HandleEnemyDeath;
+
+            Debug.Log("Energy Recycler Upgrade Activated!");
         }
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe to prevent memory leaks
-        Enemy.OnEnemyDeath -= HandleEnemyDeath;
+        if (isActive)
+        {
+            // Unsubscribe to prevent memory leaks
+            Enemy.OnEnemyDeath -= HandleEnemyDeath;
+        }
     }
 
     private void HandleEnemyDeath(Enemy enemy)
