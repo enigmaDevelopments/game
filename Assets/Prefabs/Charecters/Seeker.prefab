@@ -1235,22 +1235,22 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.25
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.3144346
+      outSlope: -1.3144346
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.46296293
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 4
   footDistence: 0.8879428
-  stepHeight: 2
-  stepDistence: 3.5
+  stepHeight: 1
+  stepDistence: 3
   defultHeight: 6.5
-  hipMovment: 0.2
-  idleTime: 0.5
-  footHeight: 0.7
+  hipMovment: 0
+  idleTime: 0.25
+  footHeight: 0.05
   footLength: 2
   heelLength: -1.6
   hitCylinderRadius: 2.5
@@ -1352,7 +1352,7 @@ MonoBehaviour:
       y: 0
       z: 0
       w: 1
-  sholderRotation: {x: 0, y: 0, z: -0.70710677, w: 0.70710677}
+  sholderRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &3768356682468883803
 MonoBehaviour:
   m_ObjectHideFlags: 0
