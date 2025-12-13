@@ -49,7 +49,7 @@ MonoBehaviour:
   attackCooldown: 10
   baseDamage: 10
   canHold: 0
-  projectile: {fileID: 4489181809949306737, guid: b9a7c9075fd18ae45bb4452e0f4912b3, type: 3}
+  projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 200
   duration: 5
   spawnTransform: {fileID: 6406590691298509696}
