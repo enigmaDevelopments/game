@@ -32,6 +32,14 @@ public class MinimapCamera : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the player transform for the minimap to follow
+    /// </summary>
+    public void SetPlayerTransform(Transform newPlayer)
+    {
+        playerTransform = newPlayer;
+    }
+
     private void LateUpdate()
     {
         if (playerTransform == null || minimapCameraComponent == null)
