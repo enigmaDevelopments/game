@@ -10,16 +10,65 @@ public class AntennaBrain : CharacterBrain
         pulsePack,
         jetPack
     }
+    public enum Gun : byte
+    {
+        None,
+        pistol,
+        minigun
+    }
+    public Gun defultGuns = Gun.pistol;
     public Pack defultPack;
+    [Header("Guns")]
+    public GameObject pistolObject;
+    public GameObject miniGunObject;
     [Header("Pack Objects")]
     public GameObject laserPackObject;
     public GameObject pulsePackObject;
     public GameObject sheildPackObject;
 
+    private bool _pistol = false;
+    private bool _minigun = false;
     private bool _laserPack = false;
     private bool _pulsePack = false;
     private bool _sheildPack = false;
     private bool _jetPack = false;
+
+    #region guns
+    public bool pistol
+    {
+        get { return _pistol; }
+        set
+        {
+            if (value)
+            {
+                minigun = false;
+                SetProjectileWeapon(pistolObject);
+            }
+            else if (_laserPack)
+            {
+                RemoveProjectileWeapon();
+            }
+            _pistol = value;
+        }
+    }
+    public bool minigun
+    {
+        get { return _minigun; }
+        set
+        {
+            if (value)
+            {
+                pistol = false;
+                SetProjectileWeapon(miniGunObject);
+            }
+            else if (_pistol)
+            {
+                RemoveProjectileWeapon();
+            }
+            _minigun = value;
+        }
+    }
+    #endregion
 
     #region packs
     public bool laserPack
