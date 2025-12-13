@@ -16,7 +16,7 @@ public class AntennaBrain : CharacterBrain
         pistol,
         minigun
     }
-    public Gun defultGuns = Gun.pistol;
+    public Gun defultGun = Gun.pistol;
     public Pack defultPack;
     [Header("Guns")]
     public GameObject pistolObject;
@@ -169,13 +169,17 @@ public class AntennaBrain : CharacterBrain
     protected override void Awake()
     {
         base.Awake();
+        if (defultGun == Gun.pistol)
+            pistol = true;
+        else if (defultGun == Gun.minigun)
+            minigun = true;
         if (defultPack == Pack.laserPack)
             laserPack = true;
         else if (defultPack == Pack.pulsePack)
             pulsePack = true;
         else if (defultPack == Pack.sheildPack)
             sheildPack = true;
-        else if (defultPack == Pack.jetPack) 
+        else if (defultPack == Pack.jetPack)
             jetPack = true;
     }
 }

@@ -1445,8 +1445,14 @@ MonoBehaviour:
   projectileWeponLocation: {fileID: 8009681110258103301}
   specialWeponLocation: {fileID: 5821963497959101741}
   defultMeleeWeapon: {fileID: 2557020793098038182, guid: ce9574a1ee1be2344afa79858afb01e8, type: 3}
-  defultProjectileWeapon: {fileID: 4955777308072718435, guid: 06a677060acc0d64ba8c3f905f043ea2, type: 3}
-  defultSpecialWeapon: {fileID: 1382332459953695344, guid: a402cfa7cc2376e4aa1f4c5603dac618, type: 3}
+  defultProjectileWeapon: {fileID: 0}
+  defultSpecialWeapon: {fileID: 0}
+  defultGun: 1
+  defaultWeapons: 1
+  sniperObject: {fileID: 4955777308072718435, guid: 06a677060acc0d64ba8c3f905f043ea2, type: 3}
+  laserRifleObject: {fileID: 7835990208319720244, guid: ca8293c0d8006f94390789ea01762251, type: 3}
+  invisabilityChipObject: {fileID: 7305828059314668461, guid: 3e6e14d6bb3cb2140a5cdb3884612015, type: 3}
+  grapplingHookObject: {fileID: 1382332459953695344, guid: a402cfa7cc2376e4aa1f4c5603dac618, type: 3}
 --- !u!114 &7827887996694552191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1617,8 +1623,8 @@ MonoBehaviour:
   aimSensitivity: 2
   crosshairCanvas: {fileID: 0}
   crosshairImage: {fileID: 0}
-  weaponTransform: {fileID: 8009681110258103301}
-  rotationTransform: {fileID: 8638027785018429540}
+  weaponTransforms: []
+  rotationTransforms: []
   rotationOffeset: {x: -180, y: 0, z: 90.685}
   returnSpeed: 90
   raycastDistance: 1000
@@ -1627,6 +1633,7 @@ MonoBehaviour:
     m_Bits: 192
   canceledAnimations:
   - {fileID: 4166247172429534104}
+  - {fileID: 1448857231452143591}
 --- !u!114 &8938034074894192277
 MonoBehaviour:
   m_ObjectHideFlags: 0

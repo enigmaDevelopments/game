@@ -1,5 +1,5 @@
+using Unity.VisualScripting;
 using UnityEngine;
-using static AntennaBrain;
 
 public class SeekerBrain : CharacterBrain
 {
@@ -9,13 +9,60 @@ public class SeekerBrain : CharacterBrain
         invisabilityChip,
         grapplingHook
     }
+    public enum Gun : byte
+    {
+        None,
+        sniper,
+        laserRifle
+    }
+
+    public Gun defultGun = Gun.sniper;
     public Weapons defaultWeapons;
 
+    public GameObject sniperObject;
+    public GameObject laserRifleObject;
     public GameObject invisabilityChipObject;
     public GameObject grapplingHookObject;
 
+    private bool _sniper = false;
+    private bool _laserRifle = false;
     private bool _invisabilityChip = false;
     private bool _grapplingHook = false;
+
+    public bool sniper
+    {
+        get { return _sniper; }
+        set
+        {
+            if (value)
+            {
+                laserRifle = false;
+                SetProjectileWeapon(sniperObject);
+            }
+            else if (_sniper)
+            {
+                RemoveProjectileWeapon();
+            }
+            _sniper = value;
+        }
+    }
+    public bool laserRifle
+    {
+        get { return _laserRifle; }
+        set
+        {
+            if (value)
+            {
+                sniper = false;
+                SetProjectileWeapon(laserRifleObject);
+            }
+            else if (_laserRifle)
+            {
+                RemoveProjectileWeapon();
+            }
+            _laserRifle = value;
+        }
+    }
 
     public bool invisabilityChip
     {
@@ -66,6 +113,10 @@ public class SeekerBrain : CharacterBrain
     protected override void Awake()
     {
         base.Awake();
+        if (defultGun == Gun.sniper)
+            sniper = true;
+        else if (defultGun == Gun.laserRifle)
+            laserRifle = true;
         if (defaultWeapons == Weapons.invisabilityChip)
             invisabilityChip = true;
         else if (defaultWeapons == Weapons.grapplingHook)
