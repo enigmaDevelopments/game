@@ -11,10 +11,10 @@ public class WeponSwing : WeponAnimation
     public quaternion maxSwingAngle;
     public quaternion startHandAngle;
     public quaternion endHandAngle;
+    public Quaternion sholderRotation = Quaternion.Euler(0, 0, -90);
 
     Quaternion start = Quaternion.identity;
     Quaternion armRotation = Quaternion.Euler(0, 90, 0);
-    Quaternion sholderRotation = Quaternion.Euler(0, 0, -90);
 
 
     protected override void moveStance()
