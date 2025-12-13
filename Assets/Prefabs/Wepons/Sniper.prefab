@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8313044ea5696438fd8a46191f3bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
-  attackCooldown: 2
+  animation: {fileID: 0}
+  attackCooldown: 10
+  baseDamage: 10
   canHold: 0
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 200
   duration: 5
-  spawnOffset: {x: 0, y: 0, z: 0}
+  spawnTransform: {fileID: 0}
   layer: 8
-  damage: 100

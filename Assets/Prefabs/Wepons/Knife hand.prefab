@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::meleAttack
   animation: {fileID: 0}
   attackCooldown: 0
-  baseDamage: 5
+  baseDamage: 2
   canHold: 0
 --- !u!136 &-2608224956777779654
 CapsuleCollider:
@@ -115,7 +115,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
