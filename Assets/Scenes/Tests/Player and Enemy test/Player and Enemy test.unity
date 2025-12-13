@@ -310,6 +310,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: aimCamera
+      value: 
+      objectReference: {fileID: 1170833118}
+    - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: normalCamera
+      value: 
+      objectReference: {fileID: 225939660}
+    - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
       propertyPath: crosshairImage
       value: 
       objectReference: {fileID: 1152512324}
@@ -573,15 +581,15 @@ PrefabInstance:
       objectReference: {fileID: 185636365}
     - target: {fileID: 7571237502250182193, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.325033
+      value: 8.332157
       objectReference: {fileID: 0}
     - target: {fileID: 7571237502250182193, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.406158
+      value: 13.402807
       objectReference: {fileID: 0}
     - target: {fileID: 7571237502250182193, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -36.512257
+      value: -36.50486
       objectReference: {fileID: 0}
     - target: {fileID: 7625241424389537679, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -604,6 +612,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+--- !u!114 &225939660 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4674148632236565720, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+  m_PrefabInstance: {fileID: 208842352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &374392533
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +735,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1537787887995589438, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
   m_PrefabInstance: {fileID: 208842352}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1170833118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7946272772222009149, guid: df17e2f15777b394db7a4452bd5b615f, type: 3}
+  m_PrefabInstance: {fileID: 208842352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
 --- !u!1 &1337559387
 GameObject:
   m_ObjectHideFlags: 0
