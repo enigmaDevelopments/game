@@ -1318,6 +1318,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5077126637147418908, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
+      propertyPath: m_StepOffset
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5820798529961940446, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: maxSpeed
       value: 25
