@@ -120,9 +120,8 @@ public class AimingSystem : MonoBehaviour
         foreach (WeponAnimation animation in canceledAnimations)
             animation.loadEnabled = false;
         lastRotations = new Quaternion[rotationTransforms.Count];
-        if (!returning)
-            for (int i = 0; i < rotationTransforms.Count; i++)
-                lastRotations[i] = rotationTransforms[i].localRotation;
+        for (int i = 0; i < rotationTransforms.Count; i++)
+            lastRotations[i] = rotationTransforms[i].localRotation;
 
         Log("Entered aim mode - camera switched to aim camera");
     }
