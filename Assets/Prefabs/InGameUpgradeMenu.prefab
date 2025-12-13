@@ -876,8 +876,8 @@ MonoBehaviour:
   inGameUpgradeMenu: {fileID: 6026899822674117796}
   upgradeLabel: {fileID: 0}
   playerCurrencyText: {fileID: 3747485122392349229}
-  currencyManager: {fileID: 3781293615097484560, guid: 87a2766cdebe11c4ba000f945627e800, type: 3}
-  input: {fileID: 0}
+  currencyManager: {fileID: 3781293615097484560, guid: 2f148ae6c6e3e0d49aed42a99446ad52, type: 3}
+  input: {fileID: 6893793051631583428, guid: 3c693a8bc2f31694ab21d29afb61a1d5, type: 3}
   criticalInstinctsButton: {fileID: 7523165798454799004}
   criticalInstinctsCost: 3
   chainReactionButton: {fileID: 7251886949718543170}
