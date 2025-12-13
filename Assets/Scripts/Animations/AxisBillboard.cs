@@ -10,7 +10,7 @@ public class AxisBillboard : MonoBehaviour
         float x = rotation.x;
         float y = rotation.y;
         float z = rotation.z;
-        transform.localEulerAngles = new Vector3(0,y,-z);
+        transform.localEulerAngles = new Vector3(0,y,0);
         transform.parent.localEulerAngles = new Vector3(90-x,0,0);
     }
 }

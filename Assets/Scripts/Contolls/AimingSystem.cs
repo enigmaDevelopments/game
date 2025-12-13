@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AimingSystem : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class AimingSystem : MonoBehaviour
     public RectTransform crosshairImage;
     
     [Header("Weapon")]
-    public Transform weaponTransform;           // The weapon to rotate
-    public Transform rotationTransform;
+    public List<Transform> weaponTransforms;           // The weapon to rotate
+    public List<Transform> rotationTransforms;
     public Vector3 rotationOffeset; 
     public float returnSpeed;
     public float raycastDistance = 1000f;
@@ -33,7 +34,7 @@ public class AimingSystem : MonoBehaviour
     private bool isAiming = false;
     private Vector2 aimInput;
     private CinemachineOrbitalFollow follower;
-    private Quaternion lastRotation;
+    private Quaternion[] lastRotations;
     private bool returning = false;
 
     public bool IsAiming => isAiming;
@@ -118,8 +119,10 @@ public class AimingSystem : MonoBehaviour
         //Stop animations
         foreach (WeponAnimation animation in canceledAnimations)
             animation.loadEnabled = false;
+        lastRotations = new Quaternion[rotationTransforms.Count];
         if (!returning)
-            lastRotation = rotationTransform.localRotation;
+            for (int i = 0; i < rotationTransforms.Count; i++)
+                lastRotations[i] = rotationTransforms[i].localRotation;
 
         Log("Entered aim mode - camera switched to aim camera");
     }
@@ -174,15 +177,15 @@ public class AimingSystem : MonoBehaviour
     }
     private void UpdateWeaponRotation()
     {
-        if (weaponTransform == null) return;
-        
+        if (weaponTransforms.Count == 0) return;
+
         Camera mainCamera = Camera.main;
         if (mainCamera == null) return;
-        
+
         // Cast a ray from center of screen
         Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
         Vector3 targetPoint;
-        
+
         // Check if ray hits something
         if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, raycastLayers))
         {
@@ -193,17 +196,20 @@ public class AimingSystem : MonoBehaviour
             // If nothing hit, use a point far along the ray
             targetPoint = ray.origin + ray.direction * raycastDistance;
         }
-        
+
         // Rotate weapon to face the target point
-        Vector3 directionToTarget = (targetPoint - weaponTransform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(Quaternion.Euler(rotationOffeset));
-        
-        // Smoothly rotate weapon
-        rotationTransform.rotation = Quaternion.Slerp(
-            rotationTransform.rotation,
-            targetRotation ,
-            Time.deltaTime * 10f
-        );
+        for (int i = 0; i < rotationTransforms.Count; i++)
+        {
+            Vector3 directionToTarget = (targetPoint - weaponTransforms[i].position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(Quaternion.Euler(rotationOffeset));
+
+            // Smoothly rotate weapon
+            rotationTransforms[i].rotation = Quaternion.Slerp(
+                rotationTransforms[i].rotation,
+                targetRotation,
+                Time.deltaTime * 10f
+            );
+        }
     }
 
     private IEnumerator ReturnWepon()
@@ -211,10 +217,18 @@ public class AimingSystem : MonoBehaviour
         if (returning) 
             yield break;
         returning = true;
-        while (rotationTransform.localRotation != lastRotation) {
-            rotationTransform.localRotation = Quaternion.RotateTowards(rotationTransform.localRotation, lastRotation, returnSpeed * Time.deltaTime);
+        bool finished;
+        do
+        {
+            finished = true;
+            for (int i = 0; i < rotationTransforms.Count; i++)
+                if (rotationTransforms[i].localRotation != lastRotations[i])
+                {
+                    finished = false;
+                    rotationTransforms[i].localRotation = Quaternion.RotateTowards(rotationTransforms[i].localRotation, lastRotations[i], returnSpeed * Time.deltaTime);
+                }
             yield return null;
-        }
+        } while (!finished);
         returning = false;
     }
 
