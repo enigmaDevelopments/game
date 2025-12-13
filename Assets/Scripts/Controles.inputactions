@@ -95,6 +95,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpecialWeaponsMenu",
+                    "type": "Button",
+                    "id": "46120baf-355e-4477-9df0-6a856d4cb5d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -425,6 +434,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "UpgradeMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51fa6383-f765-4060-8cc4-99c278da1619",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialWeaponsMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ffde72f-3379-4849-8d09-f836e07a3f54",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialWeaponsMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
