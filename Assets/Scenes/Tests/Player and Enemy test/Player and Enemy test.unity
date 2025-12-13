@@ -314,10 +314,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5691902607541766242, guid: 0745a89565582714091a337388af9bcc, type: 3}
-      propertyPath: defultProjectileWeapon
-      value: 
-      objectReference: {fileID: 7835990208319720244, guid: ca8293c0d8006f94390789ea01762251, type: 3}
     - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
       propertyPath: aimCamera
       value: 
@@ -342,10 +338,6 @@ PrefabInstance:
       propertyPath: 'canceledAnimations.Array.data[1]'
       value: 
       objectReference: {fileID: 950278413}
-    - target: {fileID: 3768356682468883803, guid: 0745a89565582714091a337388af9bcc, type: 3}
-      propertyPath: input
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 0745a89565582714091a337388af9bcc, type: 3}
       propertyPath: m_Name
       value: Seeker

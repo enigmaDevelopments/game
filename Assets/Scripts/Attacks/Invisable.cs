@@ -13,14 +13,14 @@ public class Invisable : AttackBase
     void Start()
     {
         if (user == null)
-            user = transform.parent.gameObject;
+            user = transform.root.gameObject;
         intangibilityManager = user.GetComponent<IntangibilityManager>();
     }
 
     protected override IEnumerator ExecuteAttack()
     {
+        Debug.Log("invisable");
         ThirdPersonMovement controller = user.GetComponent<ThirdPersonMovement>();
-        Material material = user.GetComponent<Material>();
         if (intagable)
         {
             intangibilityManager.Timer = duration;

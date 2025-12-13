@@ -44,13 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef8b7eb3a02abe4bbf9f8c6a34bad58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  attackCooldown: 0.5
+  animation: {fileID: 0}
+  attackCooldown: 45
+  baseDamage: 0
   canHold: 0
   user: {fileID: 0}
   duration: 10
   speedMultiplier: 1
-  intagable: 0
-  defultLayer: 3
-  intangableLayer: 12
-  normal: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  invisalbe: {fileID: 0}
+  intagable: 1
+  intangibilityManager: {fileID: 0}
