@@ -1,12 +1,14 @@
 using UnityEngine;
-using TMPro;   // if you use TextMeshPro for UI
+using TMPro;
 
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance { get; private set; }
 
-    private int currentMoney = 0;
-    [SerializeField] private TextMeshProUGUI moneyText; // assign in Inspector
+    [SerializeField] private int startingMoney = 50;    // ? set starting value in Inspector or here
+    [SerializeField] private TextMeshProUGUI moneyText;
+
+    private int currentMoney;
 
     private void Awake()
     {
@@ -17,8 +19,12 @@ public class CurrencyManager : MonoBehaviour
         }
 
         Instance = this;
+
+        currentMoney = startingMoney;                   // ? actually assign it
         DontDestroyOnLoad(gameObject);
         UpdateUI();
+
+        Debug.Log($"[CurrencyManager] Awake. startingMoney={startingMoney}, currentMoney={currentMoney}");
     }
 
     public void AddMoney(int amount)
@@ -35,7 +41,6 @@ public class CurrencyManager : MonoBehaviour
             UpdateUI();
             return true;
         }
-
         return false;
     }
 
