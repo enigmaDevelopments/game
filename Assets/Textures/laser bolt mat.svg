@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="272.09335mm"
+   viewBox="0 0 100 272.09335"
+   version="1.1"
+   id="svg1"
+   inkscape:export-filename="laser bolt.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   sodipodi:docname="laser bolt.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1" />
+  <rect
+     style="fill:#f40000;fill-opacity:0.25;fill-rule:evenodd;stroke:none;stroke-width:1.66324;stroke-linejoin:round;stroke-opacity:0.75;paint-order:fill markers stroke"
+     id="rect37"
+     width="100"
+     height="271.99167"
+     x="2.6437929e-06"
+     y="-6.9388939e-18" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.25;paint-order:fill markers stroke"
+     d="M 12.975976,70.783743 V 133.70426"
+     id="path38" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.25;paint-order:fill markers stroke"
+     d="m 68.346031,121.12016 v 88.08872"
+     id="path39" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.25;paint-order:fill markers stroke"
+     d="M 24.301669,225.41092 V 169.25436"
+     id="path40" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.25;paint-order:fill markers stroke"
+     d="M 78.137071,27.964582 V 91.337373"
+     id="path41" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.25;paint-order:fill markers stroke"
+     d="M 62.342581,259.76542 V 235.29509"
+     id="path42" />
+</svg>
