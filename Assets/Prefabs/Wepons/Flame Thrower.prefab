@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd81c7a1c18dd34dbe63ed5862cd6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotGun
+  animation: {fileID: 0}
   attackCooldown: 0.1
+  damage: 0.1
   canHold: 1
-  projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
+  projectile: {fileID: 5310632468296115869, guid: c194594a19bd3714c9e4d98edfe39c0e, type: 3}
   speed: 25
   duration: 0.75
   spawnOffset: {x: 0, y: 0, z: 0.5}
@@ -54,3 +56,4 @@ MonoBehaviour:
   spreadX: 15
   spreadY: 30
   bullets: 20
+  singleHit: 0

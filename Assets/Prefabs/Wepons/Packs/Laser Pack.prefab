@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2432234657652548740}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.5, z: 0}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!114 &3039573348870146078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,13 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b197405a022d5a541ae03549e4dd7c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  animation: {fileID: 0}
   attackCooldown: 0
+  damage: 2
   canHold: 1
   lineRenderer: {fileID: 4545021731587371288}
-  raduis: 0.75
+  raduis: 0.5
+  range: 100000
   hitMask:
     serializedVersion: 2
-    m_Bits: 1731
+    m_Bits: 192
 --- !u!120 &4545021731587371288
 LineRenderer:
   serializedVersion: 2

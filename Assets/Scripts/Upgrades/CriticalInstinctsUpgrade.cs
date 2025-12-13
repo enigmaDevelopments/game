@@ -17,11 +17,6 @@ public class CriticalInstinctsUpgrade : MonoBehaviour
         }
     }
 
-    public void Activate()
-    {
-        ActivateCriticalInstincts();
-    }
-
     public void ActivateCriticalInstincts()
     {
         isUpgradeActive = true;

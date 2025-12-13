@@ -6,11 +6,11 @@ public class SpeedForceUpgrade : MonoBehaviour
     public bool isActive = false;
     public float speedMultiplier = 1.2f;  // 20% speed boost
 
-    private ThirdPersonMovement playerMovement;
+    private PlayerMovement playerMovement;
 
     private void Start()
     {
-        playerMovement = FindAnyObjectByType<ThirdPersonMovement>();
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
 
         if (isActive && playerMovement != null)
         {
@@ -32,7 +32,7 @@ public class SpeedForceUpgrade : MonoBehaviour
     {
         if (playerMovement != null)
         {
-            playerMovement.maxSpeed *= speedMultiplier;
+            playerMovement.baseSpeed *= speedMultiplier;
         }
     }
 }

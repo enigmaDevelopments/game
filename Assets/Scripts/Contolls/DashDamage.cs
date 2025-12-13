@@ -2,32 +2,37 @@ using UnityEngine;
 
 public class DashThroughDamage : PlayerDash
 {
+    public IntangibilityManager.FlashType flashType = IntangibilityManager.FlashType.visable;
     [Header("Damage Settings")]
     public int dashDamage = 10; // how much damage to deal per dash hit
     public float hitRadius = 0.5f;
     [Header("Layer Settings")]
     public LayerMask hitMask;
-    public int defultLayer;
-    public int intangableLayer;
+    private IntangibilityManager intangibilityManager;
 
+    protected override void Start()
+    {
+        base.Start();
+        intangibilityManager = GetComponent<IntangibilityManager>();
+    }
 
     protected override System.Collections.IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
 
-        // ?? Disable collision so you can move through objects
-        gameObject.layer = intangableLayer;
+        // Disable collision so you can move through objects
+        intangibilityManager.Timer = dashDuration;
+        intangibilityManager.flashType = flashType;
 
+        int id = Random.Range(int.MinValue, int.MaxValue);
         // Apply dash velocity
         StartCoroutine(base.Dash());
         while (isDashing)
         {
-            CheckDashHits();
+            CheckDashHits(id);
             yield return null;
         }
-
-        gameObject.layer = defultLayer; // re-enable collision
 
         isDashing = false;
 
@@ -35,19 +40,20 @@ public class DashThroughDamage : PlayerDash
         canDash = true;
     }
 
-    private void CheckDashHits()
+    private void CheckDashHits(int id)
     {
         // Detect objects the dash passes through (small sphere around player)
         Collider[] hitObjects = Physics.OverlapSphere(transform.position, hitRadius, hitMask);
 
         foreach (Collider hit in hitObjects)
         {
+            GameObject hitObject = hit.gameObject;
+            
             // Ignore self
             if (hit.gameObject == gameObject) continue;
 
             // Try to find a PlayerStats component and deal damage
-            var playerStats = hit.GetComponent<PlayerStats>();
-            playerStats.TakeDamage(dashDamage);
+            AttackBase.Damage(hit.transform, dashDamage, id);
 
         }
     }

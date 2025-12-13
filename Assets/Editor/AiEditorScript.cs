@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.ComTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,11 +8,18 @@ public class AiEditorScript : Editor
     private bool runAway = true;
     private bool detection = true;
     private bool seight = true;
-    private bool hasWeapon = true;
+    private bool lookAtPlayer = true;
+    private bool pitch = true;
+    private bool check = true;
     private float runAwayRadius = 0;
+    private float runAwayDistance = 0;
     private float detectionRadius = 0;
     private float veiwRadius = 0;
-    private float attackAngle = 0;
+    private float turningSpeed = 0;
+    private float maxPitch = 0;
+    private float checksPerSecond = 0;
+    private float runAwaySpeed = 0;
+    private float runAcceleration = 0;
 
     private void OnSceneGUI()
     {
@@ -22,6 +28,8 @@ public class AiEditorScript : Editor
         {
             Handles.color = Color.red;
             Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayRadius);
+            Handles.color = Color.orangeRed;
+            Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.runAwayDistance);
         }
         if (detection)
         {
@@ -34,6 +42,8 @@ public class AiEditorScript : Editor
             Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, ai.veiwAngle / 2, veiwRadius);
             Handles.DrawWireArc(ai.transform.position, Vector3.up, ai.transform.forward, -ai.veiwAngle / 2, veiwRadius);
         }
+        Handles.color = Color.lightPink;
+        Handles.DrawWireArc(ai.transform.position, Vector3.up, Vector3.forward, 360, ai.stoppingDistence/2);
     }
     public override void OnInspectorGUI()
     {
@@ -43,10 +53,18 @@ public class AiEditorScript : Editor
         if (ai.runAway)
         {
             if (runAway)
+            {
                 runAwayRadius = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Radius", ai.runAwayRadius));
+                runAwayDistance = EditorGUILayout.Slider("Run Away Distance", ai.runAwayDistance, 0, runAwayRadius);
+                runAwaySpeed = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Speed", ai.runSpeed));
+                runAcceleration = Mathf.Max(0, EditorGUILayout.FloatField("Run Away Acceleration", ai.runAcceleration));
+            }
             else
                 runAway = true;
             ai.runAwayRadius = runAwayRadius;
+            ai.runAwayDistance = runAwayDistance;
+            ai.runSpeed = runAwaySpeed;
+            ai.runAcceleration = runAcceleration;
         }
         else
         {
@@ -84,6 +102,13 @@ public class AiEditorScript : Editor
                 seight = true;
             ai.veiwRadius = veiwRadius;
             ai.veiwAngle = EditorGUILayout.Slider("Veiw Angle", ai.veiwAngle, 0, 360);
+            bool search = EditorGUILayout.Toggle("Search On Hit", ai.search);
+            if (search)
+            {
+                ai.health = ai.GetComponent<Enemy>();
+                search = ai.health != null;
+            }
+            ai.search = search;
         }
         else
         {
@@ -96,23 +121,77 @@ public class AiEditorScript : Editor
                     ai.detectionRadius = float.PositiveInfinity;
             }
         }
+        ai.stoppingDistence = Mathf.Max(0, EditorGUILayout.FloatField("Stopping Distence", ai.stoppingDistence));
+        ai.speed = Mathf.Max(0, EditorGUILayout.FloatField("Speed", ai.speed));
+        ai.acceleration = Mathf.Max(0, EditorGUILayout.FloatField("Acceleration", ai.acceleration));
 
-        ai.hasWeapon = EditorGUILayout.Toggle("HasWeapon", ai.hasWeapon);
-        if (ai.hasWeapon)
+        bool hasWeapon = EditorGUILayout.Toggle("Has Wepon", ai.hasWeapon);
+        if (hasWeapon)
         {
-            ai.attack = (AttackBase)EditorGUILayout.ObjectField("Attack", ai.attack, typeof(AttackBase), true);
-            if (hasWeapon)
-                attackAngle = EditorGUILayout.Slider("Attack Angle", ai.attackAngle, 0, 360);
+            ai.attackController = ai.GetComponent<AttackController>();
+            hasWeapon = ai.health != null;
+        }
+        else
+            ai.attackController = null;
+        ai.hasWeapon = hasWeapon;
+
+        ai.lookAtPlayer = EditorGUILayout.Toggle("Look At Player", ai.lookAtPlayer);
+        if (ai.lookAtPlayer)
+        {
+            if (lookAtPlayer)
+            {
+                turningSpeed = Mathf.Max(0, EditorGUILayout.FloatField("Turning Speed", ai.turningSpeed));
+                ai.offsetVector = EditorGUILayout.Vector3Field("Rotational Offset Vector", ai.offsetVector);
+            } 
             else
-                hasWeapon = true;
-            ai.attackAngle = attackAngle;
+                lookAtPlayer = true;
+            ai.pitchRotation = EditorGUILayout.Toggle("Has Pitch Rotation", ai.pitchRotation);
+            if (ai.pitchRotation)
+            {
+                if (pitch)
+                    maxPitch = EditorGUILayout.Slider("Max Pitch", ai.pitchMaximum, 0, 180);
+                pitch = true;
+                ai.pitchMaximum = maxPitch;
+            }
+            else
+            {
+                ai.pitchMaximum = 0;
+                pitch = false;
+            }
+            ai.turningSpeed = turningSpeed;
+            ai.offsetAngle = Quaternion.Inverse(Quaternion.Euler(ai.offsetVector));
+            SerializedProperty rotationProp = serializedObject.FindProperty("rotaionTransform");
+            EditorGUILayout.PropertyField(rotationProp);
+            
         }
         else
         {
-            hasWeapon = false;
-            ai.attackAngle = 0;
+            lookAtPlayer = false;
+            ai.turningSpeed = 0;
+            ai.rotaionTransform = ai.transform;
+            ai.offsetAngle = Quaternion.identity;
         }
 
-        ai.turningSpeed = EditorGUILayout.Slider("Turning Speed", ai.turningSpeed, 0, 1);
+        SerializedProperty headProp = serializedObject.FindProperty("head");
+        if (ai.head == null)
+            ai.head = ai.transform;
+        EditorGUILayout.PropertyField(headProp);
+
+        if (ai.detection || ai.sight)
+        {
+            if (check)
+                checksPerSecond = EditorGUILayout.Slider("Checks Per Second", ai.checksPerSecond, 0, 1 / Time.fixedDeltaTime);
+            else
+                check = true;
+            ai.checksPerSecond = checksPerSecond; 
+        }
+        else
+        {
+            ai.checksPerSecond = ai.omniscient? 1/Time.fixedDeltaTime:0;
+            check = false;
+        }
+
+        serializedObject.ApplyModifiedProperties();
+        EditorUtility.SetDirty(ai);
     }
 }

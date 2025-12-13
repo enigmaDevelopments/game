@@ -16,7 +16,7 @@ public class EvasiveMomentumUpgrade : MonoBehaviour
     [Tooltip("Enable or disable this upgrade")]
     public bool isActive = false;
 
-    private ThirdPersonMovement playerMovement;
+    private PlayerMovement playerMovement;
     private bool canTrigger = true;
 
     void Start()
@@ -24,13 +24,7 @@ public class EvasiveMomentumUpgrade : MonoBehaviour
         // Find the player and their movement script
         GameObject player = GameObject.FindGameObjectWithTag("Player"); // update with correct tag
         if (player != null)
-            playerMovement = player.GetComponent<ThirdPersonMovement>();
-    }
-
-    public void Activate()
-    {
-        isActive = true;
-        Debug.Log("Evasive Momentum Upgrade Activated!");
+            playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     // Call this when the player successfully dodges or evades
@@ -46,15 +40,15 @@ public class EvasiveMomentumUpgrade : MonoBehaviour
         canTrigger = false;
 
         // Boost the player speed temporarily
-        float originalSpeed = playerMovement.maxSpeed;
-        playerMovement.maxSpeed *= speedMultiplier;
+        float originalSpeed = playerMovement.moveSpeed;
+        playerMovement.moveSpeed *= speedMultiplier;
 
         Debug.Log("Evasive Momentum Activated! Speed boosted.");
 
         yield return new WaitForSeconds(boostDuration);
 
         // Restore original speed
-        playerMovement.maxSpeed = originalSpeed;
+        playerMovement.moveSpeed = originalSpeed;
 
         Debug.Log("Evasive Momentum ended.");
 

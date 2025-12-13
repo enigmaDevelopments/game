@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,20 +14,10 @@ public class PulseCreator : AttackBase
     public LayerMask enemyMask;
 
     private ParticleSystem particles;
-    private List<GameObject> pushed = new List<GameObject>();
 
     void Start()
     {
         particles = GetComponent<ParticleSystem>();
-    }
-    private void FixedUpdate()
-    {
-        foreach (GameObject enemy in pushed)
-        {
-            if (NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, 1, NavMesh.AllAreas))
-                StartCoroutine(GetUp(enemy));
-
-        }
     }
     protected override IEnumerator ExecuteAttack()
     {
@@ -36,23 +25,37 @@ public class PulseCreator : AttackBase
         Collider[] enemies = Physics.OverlapSphere(transform.position, raduis, enemyMask);
         foreach (Collider enemy in enemies)
         {
-            enemy.GetComponent<NavMeshAgent>().enabled = false;
+            if (enemy.transform.root != enemy.transform)
+                continue;
+            Enable(enemy.gameObject, false);
             Rigidbody rb = enemy.GetComponent<Rigidbody>();
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.AddExplosionForce(force, transform.position, raduis, upwardsModifyer, ForceMode.Impulse);
-            pushed.Add(enemy.gameObject);
-
+            StartCoroutine(GetUp(enemy.gameObject));
         }
         yield break;
     }
     private IEnumerator GetUp(GameObject enemy)
     {
-        yield return new WaitForSeconds(proneTime);
-        if (!NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, 1, NavMesh.AllAreas))
-            yield break;
-        enemy.GetComponent<NavMeshAgent>().enabled = true;
-        enemy.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
-        pushed.Remove(enemy);
+        float height = enemy.GetComponent<NavMeshAgent>().baseOffset;
+        yield return null;
+        do
+        {
+            yield return new WaitForSeconds(proneTime);
+            if (enemy == null)
+                yield break;
+        } while (!NavMesh.SamplePosition(enemy.transform.position, out NavMeshHit hit, height + 1, NavMesh.AllAreas));
+        Enable(enemy);
+        Rigidbody rb = enemy.GetComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         yield break;
+    }
+    private void Enable(GameObject enemy, bool enable = true)
+    {
+        enemy.GetComponent<NavMeshAgent>().enabled = enable;
+        foreach(Animation animation in enemy.GetComponents<Animation>())
+            animation.enabled = enable;
     }
 }

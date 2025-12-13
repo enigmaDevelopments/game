@@ -1,6 +1,7 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
+using System.Collections;
 
 public class AimingSystem : MonoBehaviour
 {
@@ -17,34 +18,40 @@ public class AimingSystem : MonoBehaviour
     
     [Header("Weapon")]
     public Transform weaponTransform;           // The weapon to rotate
+    public Transform rotationTransform;
+    public Vector3 rotationOffeset; 
+    public float returnSpeed;
     public float raycastDistance = 1000f;
     
     [Header("Layers")]
     public LayerMask raycastLayers;
-    
+
+    [Header("Animations")]
+    public WeponAnimation[] canceledAnimations;
+
     private PlayerInput playerInput;
-    private Rigidbody playerRb;
     private bool isAiming = false;
     private Vector2 aimInput;
-    private Vector3 cameraRotation = Vector3.zero;
-    
+    private CinemachineOrbitalFollow follower;
+    private Quaternion lastRotation;
+    private bool returning = false;
+
     public bool IsAiming => isAiming;
     
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        playerRb = GetComponent<Rigidbody>();
         
         if (playerInput == null)
         {
-            Debug.LogError("AimingSystem: PlayerInput component not found!");
+            LogError("AimingSystem: PlayerInput component not found!");
             return;
         }
         
         // Check if Aim action exists
         if (playerInput.actions.FindAction("Aim") == null)
         {
-            Debug.LogError("AimingSystem: 'Aim' action not found in input actions!");
+            LogError("AimingSystem: 'Aim' action not found in input actions!");
             return;
         }
         
@@ -52,30 +59,31 @@ public class AimingSystem : MonoBehaviour
         playerInput.actions["Aim"].started += OnAimStarted;
         playerInput.actions["Aim"].canceled += OnAimCanceled;
         
-        Debug.Log("AimingSystem: Input actions set up successfully");
-        
+        Log("AimingSystem: Input actions set up successfully");
+
         // Make sure cameras are set up
         if (normalCamera == null)
-            Debug.LogError("AimingSystem: normalCamera not assigned!");
+            LogError("AimingSystem: normalCamera not assigned!");
         if (aimCamera == null)
-            Debug.LogError("AimingSystem: aimCamera not assigned!");
-        
+            LogError("AimingSystem: aimCamera not assigned!");
+
         // Hide crosshair initially
         if (crosshairCanvas != null)
             crosshairCanvas.gameObject.SetActive(false);
+        follower = aimCamera.GetComponent<CinemachineOrbitalFollow>();
     }
     
     private void OnAimStarted(InputAction.CallbackContext context)
     {
         isAiming = true;
-        Debug.Log("Aim started!");
+        Log("Aim started!");
         EnterAimMode();
     }
     
     private void OnAimCanceled(InputAction.CallbackContext context)
     {
         isAiming = false;
-        Debug.Log("Aim ended!");
+        Log("Aim ended!");
         ExitAimMode();
     }
     
@@ -99,10 +107,23 @@ public class AimingSystem : MonoBehaviour
             aimCamera.Priority = 100;
             aimCamera.enabled = true;
         }
-        
-        Debug.Log("Entered aim mode - camera switched to aim camera");
+        //Move camera behind player
+        float rotation = normalCamera.transform.eulerAngles.y;
+        Vector3 angles = transform.eulerAngles;
+        angles.y = rotation;
+        transform.eulerAngles = angles;
+        follower.HorizontalAxis.Value = rotation;
+        follower.VerticalAxis.Value = follower.VerticalAxis.Center;
+        ThirdPersonMovement.aiming = true;
+        //Stop animations
+        foreach (WeponAnimation animation in canceledAnimations)
+            animation.loadEnabled = false;
+        if (!returning)
+            lastRotation = rotationTransform.localRotation;
+
+        Log("Entered aim mode - camera switched to aim camera");
     }
-    
+
     private void ExitAimMode()
     {
         // Hide crosshair
@@ -121,10 +142,13 @@ public class AimingSystem : MonoBehaviour
             normalCamera.Priority = 10;  // Higher than aim camera when disabled
             normalCamera.enabled = true;
         }
-        
-        Debug.Log("Exited aim mode - camera switched back to normal");
+        ThirdPersonMovement.aiming = false;
+        foreach (WeponAnimation animation in canceledAnimations)
+            animation.loadEnabled = true;
+        StartCoroutine(ReturnWepon());
+        Log("Exited aim mode - camera switched back to normal");
     }
-    
+
     private void Update()
     {
         if (!isAiming) return;
@@ -146,17 +170,8 @@ public class AimingSystem : MonoBehaviour
         // Rotate player based on horizontal mouse movement
         float horizontalRotation = aimInput.x * aimSensitivity * Time.deltaTime;
         transform.Rotate(0, horizontalRotation, 0);
-        
-        // Rotate aim camera up/down based on vertical mouse movement
-        if (aimCamera != null)
-        {
-            cameraRotation.x -= aimInput.y * aimSensitivity * Time.deltaTime;
-            cameraRotation.x = Mathf.Clamp(cameraRotation.x, -30f, 60f);
-            
-            aimCamera.transform.localRotation = Quaternion.Euler(cameraRotation);
-        }
+        follower.HorizontalAxis.Value += horizontalRotation;
     }
-    
     private void UpdateWeaponRotation()
     {
         if (weaponTransform == null) return;
@@ -181,16 +196,28 @@ public class AimingSystem : MonoBehaviour
         
         // Rotate weapon to face the target point
         Vector3 directionToTarget = (targetPoint - weaponTransform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(Quaternion.Euler(rotationOffeset));
         
         // Smoothly rotate weapon
-        weaponTransform.rotation = Quaternion.Slerp(
-            weaponTransform.rotation,
-            targetRotation,
+        rotationTransform.rotation = Quaternion.Slerp(
+            rotationTransform.rotation,
+            targetRotation ,
             Time.deltaTime * 10f
         );
     }
-    
+
+    private IEnumerator ReturnWepon()
+    {
+        if (returning) 
+            yield break;
+        returning = true;
+        while (rotationTransform.localRotation != lastRotation) {
+            rotationTransform.localRotation = Quaternion.RotateTowards(rotationTransform.localRotation, lastRotation, returnSpeed * Time.deltaTime);
+            yield return null;
+        }
+        returning = false;
+    }
+
     private void OnDisable()
     {
         if (playerInput != null)
@@ -198,6 +225,18 @@ public class AimingSystem : MonoBehaviour
             playerInput.actions["Aim"].started -= OnAimStarted;
             playerInput.actions["Aim"].canceled -= OnAimCanceled;
         }
+    }
+    private static void Log(string message)
+    {
+        #if UNITY_EDITOR
+            Debug.Log(message);
+        #endif
+    }
+    private static void LogError(string message)
+    {
+        #if UNITY_EDITOR
+            Debug.LogError(message);
+        #endif
     }
 }
 

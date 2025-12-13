@@ -332,7 +332,7 @@
                 {
                     "name": "",
                     "id": "1274ae9b-4f32-4787-98c5-7373558a7b33",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -354,7 +354,7 @@
                 {
                     "name": "",
                     "id": "dcc8dab5-acd1-4fc2-a567-32d62849c9f7",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -368,7 +368,18 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29197747-1a7c-494b-bedf-44370ea8e62a",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -389,7 +400,7 @@
                     "id": "c9d0e1f2-a3b4-c5d6-e7f8-a9b0c1d2e3f4",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=40,y=40)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -409,7 +420,7 @@
                 {
                     "name": "",
                     "id": "cbbc8496-a91f-43a5-a879-8ebb9ba5746e",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",

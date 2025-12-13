@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9093385657711472181}
   - component: {fileID: 5044661471326094843}
-  - component: {fileID: 5737284304790118494}
   - component: {fileID: -5473935627569324749}
   m_Layer: 3
   m_Name: Hook Hand
@@ -27,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382332459953695344}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!114 &5044661471326094843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,34 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8313044ea5696438fd8a46191f3bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
+  animation: {fileID: 0}
   attackCooldown: 5
+  baseDamage: 1
   canHold: 1
   projectile: {fileID: 4742079692066054924, guid: bdef777c6cf040d40b76096574fe810c, type: 3}
   speed: 50
   duration: 3
-  spawnOffset: {x: 0, y: 0, z: 0}
+  spawnTransform: {fileID: 0}
   layer: 8
---- !u!135 &5737284304790118494
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382332459953695344}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.125
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &-5473935627569324749
 LineRenderer:
   serializedVersion: 2

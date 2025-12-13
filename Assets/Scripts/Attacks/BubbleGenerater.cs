@@ -12,15 +12,18 @@ public class BubbleGenerater : AttackBase
 
     private Transform bubbleInstence;
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (isAttacking)
+        {
             if (bubbleInstence.localScale.x < diamater)
                 bubbleInstence.localScale += Vector3.one * speed * Time.deltaTime;
+            bubbleInstence.position = transform.position;
+        }
     }
     protected override IEnumerator ExecuteAttack()
     {
-        bubbleInstence = Instantiate(bubble,transform).transform;
+        bubbleInstence = Instantiate(bubble).transform;
         yield return new WaitForSeconds(duration);
         Destroy(bubbleInstence.gameObject);
         yield break;

@@ -9,18 +9,18 @@ public class DamageUpgrade : MonoBehaviour
     [SerializeField] private Text upgradeStatusText;       // Optional UI text
 
     [Header("References")]
-    [SerializeField] private AttackBase primaryAttack;    // Assign primary weapon here
-    [SerializeField] private CurrencyManager currencyManager; // Assign your currency manager
+    [SerializeField] private AttackBase primaryAttack;         // Assign primary weapon here
+    [SerializeField] private CurrencyManager currencyManager;  // Assign your currency manager
 
     private float originalDamage;   // Stores the original base damage
     public bool isActive = false;
 
     private void Start()
     {
-        // Store original damage from the primary weapon
         if (primaryAttack != null)
         {
-            originalDamage = primaryAttack.Damage;
+            // ?? Use the property we just added on AttackBase
+            originalDamage = primaryAttack.CurrentDamage;
         }
     }
 

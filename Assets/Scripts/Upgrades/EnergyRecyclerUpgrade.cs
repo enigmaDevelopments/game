@@ -27,12 +27,6 @@ public class EnergyRecyclerUpgrade : MonoBehaviour
         Enemy.OnEnemyDeath -= HandleEnemyDeath;
     }
 
-    public void Activate()
-    {
-        isActive = true;
-        Debug.Log("Energy Recycler Upgrade Activated!");
-    }
-
     private void HandleEnemyDeath(Enemy enemy)
     {
         // Only do anything if the upgrade is active and the player has an energy component

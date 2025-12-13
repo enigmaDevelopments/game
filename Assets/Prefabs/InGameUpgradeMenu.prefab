@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431485312475408569}
   m_LocalRotation: {x: -0, y: -0.9999328, z: -0, w: 0.011593472}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -453, y: 194}
+  m_AnchoredPosition: {x: -506, y: 220}
   m_SizeDelta: {x: 70.2139, y: 36.3524}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8295327150908682797
@@ -876,8 +876,8 @@ MonoBehaviour:
   inGameUpgradeMenu: {fileID: 6026899822674117796}
   upgradeLabel: {fileID: 0}
   playerCurrencyText: {fileID: 3747485122392349229}
-  currencyManager: {fileID: 0}
-  input: {fileID: 0}
+  currencyManager: {fileID: 3781293615097484560, guid: 2f148ae6c6e3e0d49aed42a99446ad52, type: 3}
+  input: {fileID: 6893793051631583428, guid: 3c693a8bc2f31694ab21d29afb61a1d5, type: 3}
   criticalInstinctsButton: {fileID: 7523165798454799004}
   criticalInstinctsCost: 3
   chainReactionButton: {fileID: 7251886949718543170}
@@ -2453,7 +2453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180.385, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 195}
+  m_AnchoredPosition: {x: 300, y: 223}
   m_SizeDelta: {x: 388.7789, y: 32.7261}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7145231461753895519
@@ -2484,7 +2484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Available Cash:'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2702,7 +2702,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6026899822674117796}
   m_LocalRotation: {x: 0.0022664852, y: 0.9999847, z: -0.000011449898, w: 0.0050517526}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2711,8 +2711,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0.003, y: 179.421, z: 0.26}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1, y: -12}
-  m_SizeDelta: {x: -117.5367, y: -65.2235}
+  m_AnchoredPosition: {x: -7.9639893, y: 4.905197}
+  m_SizeDelta: {x: -3.3436, y: -10.5683}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &740510851249965434
 CanvasRenderer:

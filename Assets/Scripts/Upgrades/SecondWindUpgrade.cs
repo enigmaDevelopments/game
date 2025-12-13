@@ -25,12 +25,6 @@ public class SecondWindUpgrade : MonoBehaviour
             PlayerHealth.OnPlayerDamaged -= OnPlayerDamaged;
     }
 
-    public void Activate()
-    {
-        isActive = true;
-        Debug.Log("Second Wind Upgrade Activated!");
-    }
-
     private void OnPlayerDamaged()
     {
         if (!isActive || hasTriggeredThisLife || playerHealth.currentHealth > 0)

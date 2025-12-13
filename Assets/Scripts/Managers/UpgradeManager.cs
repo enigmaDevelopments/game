@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class UpgradeManager : MonoBehaviour
 {
-    public GameObject upgradeMenuPanel;
+    public GameObject inGameUpgradeMenu;
     public Text upgradeLabel;
     public TMP_Text playerCurrencyText;
 
@@ -26,19 +26,20 @@ public class UpgradeManager : MonoBehaviour
     public Button secondWindButton; public int secondWindCost = 400; private SecondWindUpgrade secondWindUpgrade;
     public Button speedForceButton; public int speedForceCost = 300; private SpeedForceUpgrade speedForceUpgrade;
     public Button temporalEchoButton; public int temporalEchoCost = 500; private TemporalEchoUpgrade temporalEchoUpgrade;
+    public Button closeButton;
 
     private static UpgradeManager instance;
 
     private InputAction upgradeMenu;
 
-    void Awake()
+    /*void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
         DontDestroyOnLoad(gameObject);
 
         var InputAction = input.actions;
-        InputAction.FindAction("InGameUpgradeMenu");
+        InputAction.FindAction("UpgradeMenu");
     }
 
     private void Update()
@@ -47,7 +48,46 @@ public class UpgradeManager : MonoBehaviour
         {
             ShowUpgradeMenu();
         }
+    }*/
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Make sure we have a PlayerInput
+        if (input == null)
+        {
+            input = Object.FindFirstObjectByType<PlayerInput>();
+            if (input == null)
+            {
+                Debug.LogError("UpgradeManager: No PlayerInput found in the scene!");
+                return;
+            }
+        }
+
+        // Get the UpgradeMenu action
+        upgradeMenu = input.actions.FindAction("UpgradeMenu");
+        if (upgradeMenu == null)
+        {
+            Debug.LogError("UpgradeManager: Could not find an InputAction named 'UpgradeMenu'.");
+        }
     }
+
+    private void Update()
+    {
+        if (upgradeMenu != null && upgradeMenu.WasPerformedThisFrame())
+        {
+            ShowUpgradeMenu();
+        }
+    }
+
 
     public void RegisterPlayer(GameObject newPlayer)
     {
@@ -69,6 +109,16 @@ public class UpgradeManager : MonoBehaviour
 
     private void Start()
     {
+        currencyManager = CurrencyManager.Instance;
+        if (currencyManager == null)
+        {
+            Debug.LogError("UpgradeManager: No CurrencyManager.Instance found!");
+        }
+        else
+        {
+            Debug.Log("UpgradeManager: found CurrencyManager on " + currencyManager.gameObject.name);
+        }
+
         UpdateCurrencyDisplay();
         UpdateUpgradeUI();
 
@@ -84,6 +134,7 @@ public class UpgradeManager : MonoBehaviour
         secondWindButton.onClick.AddListener(OnSecondWindUpgrade);
         speedForceButton.onClick.AddListener(OnSpeedForceUpgrade);
         temporalEchoButton.onClick.AddListener(OnTemporalEchoUpgrade);
+        closeButton.onClick.AddListener(CloseUpgradeMenu);
     }
 
     public void UpdateCurrencyDisplay()
@@ -112,14 +163,21 @@ public class UpgradeManager : MonoBehaviour
 
     public void ShowUpgradeMenu()
     {
-        upgradeMenuPanel.SetActive(true);
+        inGameUpgradeMenu.SetActive(true);
         UpdateCurrencyDisplay();
         UpdateUpgradeUI();
     }
 
     public void CloseUpgradeMenu()
     {
-        upgradeMenuPanel.SetActive(false);
+        if (inGameUpgradeMenu == null)
+        {
+            Debug.LogError("UpgradeManager: upgradeMenuPanel is not assigned!");
+            return;
+        }
+
+        inGameUpgradeMenu.SetActive(false);
+        Debug.Log("Upgrade menu closed");
     }
 
     /*----------------------------------------------------------------------------------------------------Upgrade Handlers------------------------------------------------------------------------------------------*/
