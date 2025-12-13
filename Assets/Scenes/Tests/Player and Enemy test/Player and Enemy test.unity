@@ -334,9 +334,25 @@ PrefabInstance:
       propertyPath: crosshairCanvas
       value: 
       objectReference: {fileID: 1152512323}
+    - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: canceledAnimations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2186364845596981503, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: 'canceledAnimations.Array.data[1]'
+      value: 
+      objectReference: {fileID: 950278413}
+    - target: {fileID: 3768356682468883803, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: input
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3793712660526083117, guid: 0745a89565582714091a337388af9bcc, type: 3}
       propertyPath: m_Name
       value: Seeker
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793712660526083117, guid: 0745a89565582714091a337388af9bcc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6494226583712110411, guid: 0745a89565582714091a337388af9bcc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -993,6 +1009,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84cbd268db4fe494083a1174c7cf65a6, type: 3}
+--- !u!114 &950278413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1448857231452143591, guid: 0745a89565582714091a337388af9bcc, type: 3}
+  m_PrefabInstance: {fileID: 185636364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc3b580a75d50f47b1a73d2c19c8560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!4 &1074506888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3358695626738242234, guid: 239508378a001f547adf990b4faf0977, type: 3}
