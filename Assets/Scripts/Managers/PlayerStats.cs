@@ -9,6 +9,7 @@ public class PlayerStats : Health
     protected override void Start()
     {
         base.Start();
+        healthBar = FindFirstObjectByType<HealthBar>();
         intangibilityManager = GetComponent<IntangibilityManager>();
         healthBar.SetMaxHealth((int)maxHealth);
     }

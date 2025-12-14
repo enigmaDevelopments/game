@@ -1180,15 +1180,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.74156666
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.5
+      value: 5.43
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.983595
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1561778398895200917, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1373,12 +1373,12 @@ MonoBehaviour:
   projectileWeponLocation: {fileID: 1527086160545041574}
   specialWeponLocation: {fileID: 1945493739616060615}
   defultMeleeWeapon: {fileID: 3510184050645953104, guid: b66b1c0bc9a0f4e4a906bd1b5b5d6aeb, type: 3}
-  defultProjectileWeapon: {fileID: 6731096243086275829, guid: 805bdb35e81771a4c95d4635bb1cfc90, type: 3}
+  defultProjectileWeapon: {fileID: 0}
   defultSpecialWeapon: {fileID: 0}
   defultGun: 1
-  defultPack: 3
-  pistolObject: {fileID: 0}
-  miniGunObject: {fileID: 0}
+  defultPack: 2
+  pistolObject: {fileID: 7636642340844204842, guid: db36ed0101b28604587e0c76fd8059c7, type: 3}
+  miniGunObject: {fileID: 6731096243086275829, guid: 805bdb35e81771a4c95d4635bb1cfc90, type: 3}
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
