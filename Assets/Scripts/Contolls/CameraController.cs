@@ -1,7 +1,6 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
-
 public class CameraController : MonoBehaviour
 {
     public LayerMask enviromentMask;
@@ -15,6 +14,7 @@ public class CameraController : MonoBehaviour
     public float detectionStepsHorizontal = 5;
     public float detectionStepsInternal = 1;
     public float defultLensFOV;
+
     private new CinemachineCamera camera;
     private CinemachineOrbitalFollow follower;
     private Transform target;
@@ -27,18 +27,47 @@ public class CameraController : MonoBehaviour
         public float angle = float.NegativeInfinity;
         public float distance = float.NegativeInfinity;
         public bool noHit = false;
-        public AngleData(){}
+        public AngleData() { }
     }
-
 
     void Start()
     {
         camera = GetComponent<CinemachineCamera>();
         follower = GetComponent<CinemachineOrbitalFollow>();
-        target = GetComponent<CinemachineCamera>().Follow;
+
+        if (camera == null || follower == null)
+        {
+            Debug.LogError("CameraController: Missing CinemachineCamera or CinemachineOrbitalFollow component.");
+            enabled = false;
+            return;
+        }
+
+        // If the CinemachineCamera already has a follow target set in the Inspector, use it
+        if (camera.Follow != null)
+        {
+            target = camera.Follow;
+        }
     }
+
+    // ? Allow other scripts (like PlayerSpawner) to assign the player
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+
+        if (camera != null)
+        {
+            camera.Follow = newTarget;
+        }
+    }
+
     private void Update()
     {
+        // ? No target yet? Do nothing this frame (prevents NullReferenceException)
+        if (target == null || follower == null || camera == null)
+        {
+            return;
+        }
+
         #region change camera speed if player is jumping
         origin = transform.position + Quaternion.Euler(follower.VerticalAxis.Value, follower.HorizontalAxis.Value, 0) * Vector3.forward * follower.Radius;
         if (maxJumpHeight < target.position.y - origin.y)
@@ -72,7 +101,7 @@ public class CameraController : MonoBehaviour
             origin = target.position;
         Vector3 position = origin + Quaternion.Euler(follower.VerticalAxis.Center, follower.HorizontalAxis.Value, 0) * Vector3.back * follower.Radius;
         Vector3 direction = (target.position - position).normalized;
-        float distance = Mathf.Max(Vector3.Distance(position,target.position), follower.Radius + 1);
+        float distance = Mathf.Max(Vector3.Distance(position, target.position), follower.Radius + 1);
         #endregion
 
         if (Physics.Raycast(position, direction, distance, enviromentMask))
@@ -81,7 +110,7 @@ public class CameraController : MonoBehaviour
             AngleData best = BestAngle(follower.HorizontalAxis.Value, detectionSteps);
             if (minimumRaduis < best.distance && !distent)
             {
-                follower.RadialAxis.Value = best.distance/follower.Radius;
+                follower.RadialAxis.Value = best.distance / follower.Radius;
                 follower.VerticalAxis.Value = best.angle;
             }
             #endregion
@@ -131,16 +160,9 @@ public class CameraController : MonoBehaviour
             follower.RadialAxis.Value = 1;
             follower.VerticalAxis.Value = follower.VerticalAxis.Center;
         }
-        
+
         camera.Lens.FieldOfView = defultLensFOV / follower.RadialAxis.Value;
     }
-
-    /// <summary>
-    /// finds the best vertical angle for a given horizontal angle
-    /// </summary>
-    /// <param name="position">horizontal angle</param>
-    /// <param name="steps">step distence</param>
-    /// <returns>Information on the best angle</returns>
 
     private AngleData BestAngle(float position, float steps)
     {
@@ -149,10 +171,11 @@ public class CameraController : MonoBehaviour
         for (float i = follower.VerticalAxis.Range.x; i < follower.VerticalAxis.Range.y; i += steps)
         {
             Vector3 newPosition = origin + Quaternion.Euler(i, position, 0) * Vector3.back * follower.Radius;
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
+            if (target != null)
                 Debug.DrawLine(target.position, newPosition, Color.green);
-            #endif
-            if (Physics.Linecast(target.position, newPosition, out RaycastHit hit, enviromentMask))
+#endif
+            if (target != null && Physics.Linecast(target.position, newPosition, out RaycastHit hit, enviromentMask))
             {
                 if (best.distance < hit.distance)
                 {
