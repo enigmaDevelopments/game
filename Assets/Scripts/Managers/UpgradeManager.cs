@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class UpgradeManager : MonoBehaviour
 {
+
     public GameObject inGameUpgradeMenu;
     public Text upgradeLabel;
     public TMP_Text playerCurrencyText;
@@ -13,6 +15,8 @@ public class UpgradeManager : MonoBehaviour
     public CurrencyManager currencyManager;
 
     public PlayerInput input;
+    private bool isMenuOpen = false;
+
 
     // Upgrade Buttons and costs
     public Button criticalInstinctsButton; public int criticalInstinctsCost = 3; private CriticalInstinctsUpgrade criticalInstinctsUpgrade;
@@ -26,11 +30,13 @@ public class UpgradeManager : MonoBehaviour
     public Button secondWindButton; public int secondWindCost = 400; private SecondWindUpgrade secondWindUpgrade;
     public Button speedForceButton; public int speedForceCost = 300; private SpeedForceUpgrade speedForceUpgrade;
     public Button temporalEchoButton; public int temporalEchoCost = 500; private TemporalEchoUpgrade temporalEchoUpgrade;
-    public Button closeButton;
+
 
     private static UpgradeManager instance;
 
     private InputAction upgradeMenu;
+
+    [SerializeField] private Button firstSelectedButton;
 
     /*void Awake()
     {
@@ -84,9 +90,10 @@ public class UpgradeManager : MonoBehaviour
     {
         if (upgradeMenu != null && upgradeMenu.WasPerformedThisFrame())
         {
-            ShowUpgradeMenu();
+            ToggleUpgradeMenu();
         }
     }
+
 
 
     public void RegisterPlayer(GameObject newPlayer)
@@ -134,7 +141,7 @@ public class UpgradeManager : MonoBehaviour
         secondWindButton.onClick.AddListener(OnSecondWindUpgrade);
         speedForceButton.onClick.AddListener(OnSpeedForceUpgrade);
         temporalEchoButton.onClick.AddListener(OnTemporalEchoUpgrade);
-        closeButton.onClick.AddListener(CloseUpgradeMenu);
+
     }
 
     public void UpdateCurrencyDisplay()
@@ -161,24 +168,82 @@ public class UpgradeManager : MonoBehaviour
         temporalEchoButton.interactable = currencyManager.GetCoinCount() >= temporalEchoCost;
     }
 
+    private void ToggleUpgradeMenu()
+    {
+        if (inGameUpgradeMenu == null)
+        {
+            Debug.LogError("UpgradeManager: inGameUpgradeMenu is not assigned!");
+            return;
+        }
+
+        if (isMenuOpen)
+            CloseUpgradeMenu();
+        else
+            ShowUpgradeMenu();
+    }
+
+    private void SelectFirstUpgradeButton()
+    {
+        if (EventSystem.current == null)
+        {
+            Debug.LogWarning("UpgradeManager: No EventSystem in scene, cannot select button.");
+            return;
+        }
+
+        if (firstSelectedButton == null)
+        {
+            Debug.LogWarning("UpgradeManager: firstSelectedButton is not assigned.");
+            return;
+        }
+
+        // Clear previous selection first
+        EventSystem.current.SetSelectedGameObject(null);
+
+        // Select this button
+        EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
+        Debug.Log("UpgradeManager: Selected first upgrade button: " + firstSelectedButton.name);
+    }
+
+
+
     public void ShowUpgradeMenu()
     {
+        if (inGameUpgradeMenu == null)
+        {
+            Debug.LogError("UpgradeManager: inGameUpgradeMenu is not assigned!");
+            return;
+        }
+
         inGameUpgradeMenu.SetActive(true);
+        isMenuOpen = true;
+
         UpdateCurrencyDisplay();
         UpdateUpgradeUI();
+
+        // ?? Select the first button so keyboard/controller can navigate & highlight
+        SelectFirstUpgradeButton();
     }
+
 
     public void CloseUpgradeMenu()
     {
         if (inGameUpgradeMenu == null)
         {
-            Debug.LogError("UpgradeManager: upgradeMenuPanel is not assigned!");
+            Debug.LogError("UpgradeManager: inGameUpgradeMenu is not assigned!");
             return;
         }
 
         inGameUpgradeMenu.SetActive(false);
+        isMenuOpen = false;
+
+        // ?? Clear UI selection when closing
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
         Debug.Log("Upgrade menu closed");
     }
+
+
 
     /*----------------------------------------------------------------------------------------------------Upgrade Handlers------------------------------------------------------------------------------------------*/
     private void HandleUpgrade(Button button, int cost, System.Action activateMethod)
