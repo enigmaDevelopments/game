@@ -292,6 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2729640985162770771}
   - component: {fileID: 3655252983332029715}
+  - component: {fileID: 1222041547660831895}
   m_Layer: 0
   m_Name: CameraSetup
   m_TagString: Untagged
@@ -327,6 +328,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSetup
   autoConfigureCameras: 1
+--- !u!114 &1222041547660831895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4638379315420764356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82852deb1b440aa468127cd6ed45b521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  normalCamera: {fileID: 4674148632236565720}
+  aimCamera: {fileID: 7946272772222009149}
+  crosshairCanvas: {fileID: 1294364174430009346}
 --- !u!1 &7311301901080529477
 GameObject:
   m_ObjectHideFlags: 0
