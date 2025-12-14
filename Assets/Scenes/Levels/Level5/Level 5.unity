@@ -2367,8 +2367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973d3daa207c009439381ebdd59c2eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTransition
-  targetScene: {fileID: 102900000, guid: 94b28a35dd7ceec4091cef91f7f48abe, type: 3}
-  targetSceneName: Level 1
+  targetScene: {fileID: 102900000, guid: 0fc6ae52e1e6e5a44a3517232a62bfc9, type: 3}
+  targetSceneName: Win screen
   isStartDoor: 0
   isEndDoor: 1
   interactionPrompt: {fileID: 0}
@@ -2490,7 +2490,7 @@ Transform:
   m_GameObject: {fileID: 494572397}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 469.83, y: 5.34, z: 516.33}
+  m_LocalPosition: {x: 494.9, y: 5.34, z: 516.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

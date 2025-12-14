@@ -4108,8 +4108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973d3daa207c009439381ebdd59c2eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTransition
-  targetScene: {fileID: 102900000, guid: 94b28a35dd7ceec4091cef91f7f48abe, type: 3}
-  targetSceneName: Level 1
+  targetScene: {fileID: 102900000, guid: d366ff3ba483a764c85e84ff4ebc347d, type: 3}
+  targetSceneName: StartGame
   isStartDoor: 1
   isEndDoor: 0
   interactionPrompt: {fileID: 0}

@@ -1382,7 +1382,7 @@ MonoBehaviour:
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
-  jetPackObject: {fileID: 0}
+  jetPackObject: {fileID: 4818554811253769710, guid: 9889e77787d70e6448c6bb81bcff2dc5, type: 3}
 --- !u!114 &7047486508154381646
 MonoBehaviour:
   m_ObjectHideFlags: 0
