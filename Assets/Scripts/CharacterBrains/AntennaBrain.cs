@@ -25,6 +25,7 @@ public class AntennaBrain : CharacterBrain
     public GameObject laserPackObject;
     public GameObject pulsePackObject;
     public GameObject sheildPackObject;
+    public GameObject jetPackObject;
 
     private bool _pistol = false;
     private bool _minigun = false;
@@ -32,6 +33,8 @@ public class AntennaBrain : CharacterBrain
     private bool _pulsePack = false;
     private bool _sheildPack = false;
     private bool _jetPack = false;
+
+    private GameObject jetPackInstance;
 
     #region guns
     public bool pistol
@@ -143,12 +146,14 @@ public class AntennaBrain : CharacterBrain
                 sheildPack = false;
                 jetPack = false;
                 _hasSpecialeWeapon = false;
-                
+
+                jetPackInstance = Instantiate(jetPackObject,specialWeponLocation);
                 GetComponent<Fly>().enabled = true;
                 GetComponent<ThirdPersonMovement>().enabled = false;
             }
             else if (_jetPack)
             {
+                Destroy(jetPackInstance);
                 GetComponent<ThirdPersonMovement>().enabled = true;
                 GetComponent<Fly>().enabled = false;
             }
