@@ -71,6 +71,8 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
 
         if (isOpen)
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             // ?? Select the first Button so keyboard/controller can navigate
             var firstButton = currentMenu.GetComponentInChildren<Button>();
             if (firstButton != null && EventSystem.current != null)
@@ -81,6 +83,8 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             // Clear selection when closing
             if (EventSystem.current != null)
             {

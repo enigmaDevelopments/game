@@ -1156,7 +1156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: deathScene
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 72809220849867826, guid: dc49d2aee83268e4ca35c90606541776, type: 3}
       propertyPath: canTakeDamage
@@ -1382,6 +1382,7 @@ MonoBehaviour:
   laserPackObject: {fileID: 2432234657652548740, guid: bde0fbb3268132147a341f232be27741, type: 3}
   pulsePackObject: {fileID: 3699356558588022201, guid: 6e1996031d37de74095930456e708adf, type: 3}
   sheildPackObject: {fileID: 1139436419783367546, guid: 0fb0edc62ba3f184abdf3820cfc37bc5, type: 3}
+  jetPackObject: {fileID: 0}
 --- !u!114 &7047486508154381646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,14 +1633,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99026e6eadc114e5d870b41c7af04c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimingSystem
-  normalCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
   aimSensitivity: 2
-  crosshairCanvas: {fileID: 0}
-  crosshairImage: {fileID: 0}
   weaponTransforms: []
   rotationTransforms: []
-  rotationOffeset: {x: -180, y: 0, z: 90.685}
+  rotationOffesets: []
   returnSpeed: 90
   raycastDistance: 1000
   raycastLayers:

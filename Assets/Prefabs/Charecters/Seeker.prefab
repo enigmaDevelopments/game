@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1936912470158693719}
   m_Layer: 3
   m_Name: Aim
-  m_TagString: Untagged
+  m_TagString: Aim
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1622,14 +1622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99026e6eadc114e5d870b41c7af04c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimingSystem
-  normalCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
   aimSensitivity: 2
-  crosshairCanvas: {fileID: 0}
-  crosshairImage: {fileID: 0}
   weaponTransforms: []
   rotationTransforms: []
-  rotationOffeset: {x: -180, y: 0, z: 90.685}
+  rotationOffesets: []
   returnSpeed: 90
   raycastDistance: 1000
   raycastLayers:

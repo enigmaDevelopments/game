@@ -214,6 +214,9 @@ public class UpgradeManager : MonoBehaviour
             return;
         }
 
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
         inGameUpgradeMenu.SetActive(true);
         isMenuOpen = true;
 
@@ -232,6 +235,9 @@ public class UpgradeManager : MonoBehaviour
             Debug.LogError("UpgradeManager: inGameUpgradeMenu is not assigned!");
             return;
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         inGameUpgradeMenu.SetActive(false);
         isMenuOpen = false;

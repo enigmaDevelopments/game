@@ -5,6 +5,11 @@ public class StartMenu : MonoBehaviour
 {
     [SerializeField] private string gameSceneName = "GameScene";
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
     // Called when the Play / Start button is pressed
     public void StartGame()
     {
