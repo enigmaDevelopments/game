@@ -19,12 +19,11 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         GameObject prefabToSpawn = playerPrefabs[index];
-        Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+        GameObject player = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
 
         Debug.Log("PlayerSpawner: spawned prefab index " + index + " (" + prefabToSpawn.name + ")");
 
         // after Instantiate(...)
-        GameObject player = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
 
         var camController = FindAnyObjectByType<CameraController>();
         if (camController != null)

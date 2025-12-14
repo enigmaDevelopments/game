@@ -418,7 +418,7 @@
                 {
                     "name": "",
                     "id": "16e5d4b8-f9c6-4091-80ed-b8f34d57f061",
-                    "path": "",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -440,10 +440,10 @@
                 {
                     "name": "",
                     "id": "51fa6383-f765-4060-8cc4-99c278da1619",
-                    "path": "",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "SpecialWeaponsMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -451,10 +451,10 @@
                 {
                     "name": "",
                     "id": "6ffde72f-3379-4849-8d09-f836e07a3f54",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "SpecialWeaponsMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
