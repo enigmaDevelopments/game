@@ -46,12 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShotGun
   animation: {fileID: 0}
   attackCooldown: 0.1
-  damage: 0.1
+  baseDamage: 10
   canHold: 1
+  spawnTransform: {fileID: 0}
+  rotationTransform: {fileID: 0}
+  aim: {fileID: 0}
+  rotationOffeset: {x: -0.70710677, y: 0.70710677, z: -0.00000003090862, w: -0.00000003090862}
   projectile: {fileID: 5310632468296115869, guid: c194594a19bd3714c9e4d98edfe39c0e, type: 3}
   speed: 25
   duration: 0.75
-  spawnOffset: {x: 0, y: 0, z: 0.5}
   layer: 8
   spreadX: 15
   spreadY: 30

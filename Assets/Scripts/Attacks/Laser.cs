@@ -1,14 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class Laser : AttackBase
+public class Laser : LongRangeAttack
 {
     [Header("Laser settings")]
     public LineRenderer lineRenderer;
     public float raduis;
     public float range;
     public LayerMask hitMask;
-
     private ulong timeStep = 0;
     private float lastTime = 0;
 
@@ -18,8 +17,8 @@ public class Laser : AttackBase
         lineRenderer.positionCount = 2;
         lineRenderer.endWidth = raduis * 2;
         Vector3[] positions = new Vector3[2];
-        positions[0] = transform.position;
-        if (Physics.SphereCast(transform.position, raduis, transform.forward, out RaycastHit hit, range, hitMask))
+        positions[0] = spawnTransform.position;
+        if (Physics.SphereCast(spawnTransform.position, raduis, spawnTransform.forward, out RaycastHit hit, range, hitMask))
         {
             positions[1] = hit.point + hit.normal * raduis;
             Damage(hit.transform, currentDamage * (lastTime==0?0:Time.time-lastTime));
@@ -27,7 +26,7 @@ public class Laser : AttackBase
         }
         else
         {
-            positions[1] = transform.forward * range;
+            positions[1] = spawnTransform.forward * range;
             lastTime = 0;
         }
         lineRenderer.SetPositions(positions);

@@ -48,8 +48,11 @@ MonoBehaviour:
   attackCooldown: 0.01
   baseDamage: 0.05
   canHold: 1
+  spawnTransform: {fileID: 0}
+  rotationTransform: {fileID: 0}
+  aim: {fileID: 0}
+  rotationOffeset: {x: -0.70710677, y: 0.70710677, z: -0.00000003090862, w: -0.00000003090862}
   projectile: {fileID: 6415253484268864244, guid: 15dab938894f2c34c81601e8b2f1800c, type: 3}
   speed: 40
   duration: 3
-  spawnTransform: {fileID: 0}
   layer: 8

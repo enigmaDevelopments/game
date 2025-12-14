@@ -12,7 +12,7 @@ public class AimingSystem : MonoBehaviour
     [Header("Weapon")]
     public List<Transform> weaponTransforms;           // The weapon to rotate
     public List<Transform> rotationTransforms;
-    public Vector3 rotationOffeset; 
+    public List<Quaternion> rotationOffesets; 
     public float returnSpeed;
     public float raycastDistance = 1000f;
     
@@ -201,7 +201,7 @@ public class AimingSystem : MonoBehaviour
         for (int i = 0; i < rotationTransforms.Count; i++)
         {
             Vector3 directionToTarget = (targetPoint - weaponTransforms[i].position).normalized;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(Quaternion.Euler(rotationOffeset));
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Inverse(rotationOffesets[i]);
 
             // Smoothly rotate weapon
             rotationTransforms[i].rotation = Quaternion.Slerp(

@@ -125,6 +125,22 @@ PrefabInstance:
       propertyPath: spawnTransform
       value: 
       objectReference: {fileID: 1698879503958408520}
+    - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
+      propertyPath: rotationOffeset.w
+      value: -0.00000003090862
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
+      propertyPath: rotationOffeset.x
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
+      propertyPath: rotationOffeset.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841226644006353493, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
+      propertyPath: rotationOffeset.z
+      value: -0.00000003090862
+      objectReference: {fileID: 0}
     - target: {fileID: 2889467249914942030, guid: ebf1aee2bcae69d43bbfae22107bfd6b, type: 3}
       propertyPath: m_Icon
       value: 
