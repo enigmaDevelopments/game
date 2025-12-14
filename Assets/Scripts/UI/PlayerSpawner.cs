@@ -6,7 +6,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private int defaultIndex = 0;       // default if something goes weird
 
-    void Start()
+    void Awake()
     {
         int index = PlayerSelection.HasSelection
             ? PlayerSelection.SelectedIndex   // user picked one

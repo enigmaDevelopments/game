@@ -48,7 +48,7 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
             return;
 
         // ? This is the correct way for Input System–only projects
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
             Debug.Log("SWMenuManager: Q pressed");
             ToggleMenu();
