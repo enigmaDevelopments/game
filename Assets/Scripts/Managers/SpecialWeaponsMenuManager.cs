@@ -39,6 +39,9 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
         {
             Debug.LogWarning("SWMenuManager: seekerMenu is not assigned.");
         }
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(antennaboiMenu);
+        DontDestroyOnLoad(seekerMenu);
     }
 
     private void Update()

@@ -26,12 +26,14 @@ public class SeekerSpecialMenu : MonoBehaviour
     public void EquipInvisabiltyChip()
     {
         if (seekerBrain == null) return;
-        seekerBrain.invisabilityChip = true;    
+        seekerBrain.invisabilityChip = true;
+        Debug.Log("invisabl");
     }
 
     public void EquipGrapplingHook()
     {
         if (seekerBrain == null) return;
         seekerBrain.grapplingHook = true;
+        Debug.Log("chip");
     }
 }
