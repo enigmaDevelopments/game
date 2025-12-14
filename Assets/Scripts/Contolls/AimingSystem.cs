@@ -6,16 +6,8 @@ using System.Collections.Generic;
 
 public class AimingSystem : MonoBehaviour
 {
-    [Header("Camera Setup")]
-    public CinemachineCamera normalCamera;
-    public CinemachineCamera aimCamera;
-    
     [Header("Aiming Settings")]
     public float aimSensitivity = 2f;           // Mouse sensitivity while aiming
-    
-    [Header("Crosshair")]
-    public Canvas crosshairCanvas;
-    public RectTransform crosshairImage;
     
     [Header("Weapon")]
     public List<Transform> weaponTransforms;           // The weapon to rotate
@@ -36,13 +28,22 @@ public class AimingSystem : MonoBehaviour
     private CinemachineOrbitalFollow follower;
     private Quaternion[] lastRotations;
     private bool returning = false;
+    private CinemachineCamera normalCamera;
+    private CinemachineCamera aimCamera;
+    private Canvas crosshairCanvas;
 
     public bool IsAiming => isAiming;
     
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        
+        CameraData cameras = FindFirstObjectByType<CameraData>();
+        normalCamera = cameras.normalCamera;
+        aimCamera = cameras.aimCamera;
+        crosshairCanvas = cameras.crosshairCanvas;
+
+
+
         if (playerInput == null)
         {
             LogError("AimingSystem: PlayerInput component not found!");

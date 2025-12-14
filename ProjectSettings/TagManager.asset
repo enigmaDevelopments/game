@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - UpgradeMenu
+  - SpecialWeaponMenu
+  - Aim
   layers:
   - Default
   - TransparentFX
