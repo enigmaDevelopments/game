@@ -1,5 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;   // ? new Input System
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class SpecialWeaponsMenuManager : MonoBehaviour
 {
@@ -13,28 +16,18 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
     private GameObject currentMenu;
     private bool isOpen = false;
 
-    private PlayerInput input;
-    private InputAction specialMenuAction;
-
     private void Awake()
     {
-        input = FindFirstObjectByType<PlayerInput>();
-        if (input == null)
-        {
-            Debug.LogError("SpecialWeaponsMenuManager: No PlayerInput found.");
-            return;
-        }
-
-        specialMenuAction = input.actions.FindAction("SpecialWeaponsMenu");
-        if (specialMenuAction == null)
-        {
-            Debug.LogError("SpecialWeaponsMenuManager: No 'SpecialWeaponsMenu' action in Input Actions.");
-        }
+        Debug.Log("SWMenuManager: Awake on " + gameObject.name);
 
         if (antennaboiMenu != null)
         {
             antennaboiMenuScript = antennaboiMenu.GetComponent<AntennaboiSpecialMenu>();
             antennaboiMenu.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("SWMenuManager: antennaboiMenu is not assigned.");
         }
 
         if (seekerMenu != null)
@@ -42,12 +35,22 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
             seekerMenuScript = seekerMenu.GetComponent<SeekerSpecialMenu>();
             seekerMenu.SetActive(false);
         }
+        else
+        {
+            Debug.LogWarning("SWMenuManager: seekerMenu is not assigned.");
+        }
     }
 
     private void Update()
     {
-        if (specialMenuAction != null && specialMenuAction.WasPerformedThisFrame())
+        // If there's no keyboard (very rare on PC), just skip
+        if (Keyboard.current == null)
+            return;
+
+        // ? This is the correct way for Input System–only projects
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
+            Debug.Log("SWMenuManager: Q pressed");
             ToggleMenu();
         }
     }
@@ -56,29 +59,61 @@ public class SpecialWeaponsMenuManager : MonoBehaviour
     {
         AssignCurrentMenu();  // check who is spawned right now
 
-        if (currentMenu == null) return;
-
-        isOpen = !isOpen;
-        currentMenu.SetActive(isOpen);
-    }
-
-    private void AssignCurrentMenu()
-    {
-        // Is Antennaboi in the scene?
-        var antennaBrain = FindAnyObjectByType<AntennaBrain>();
-        if (antennaBrain != null && antennaboiMenu != null && antennaboiMenuScript != null)
+        if (currentMenu == null)
         {
-            currentMenu = antennaboiMenu;
-            antennaboiMenuScript.SetBrain(antennaBrain);
+            Debug.LogWarning("SWMenuManager: currentMenu is null, nothing to toggle.");
             return;
         }
 
-        // Is Seeker in the scene?
+        isOpen = !isOpen;
+        currentMenu.SetActive(isOpen);
+        Debug.Log($"SWMenuManager: Toggling {currentMenu.name} -> {(isOpen ? "OPEN" : "CLOSED")}");
+
+        if (isOpen)
+        {
+            // ?? Select the first Button so keyboard/controller can navigate
+            var firstButton = currentMenu.GetComponentInChildren<Button>();
+            if (firstButton != null && EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(firstButton.gameObject);
+                Debug.Log("SWMenuManager: Selected first button " + firstButton.name);
+            }
+        }
+        else
+        {
+            // Clear selection when closing
+            if (EventSystem.current != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+    }
+
+
+    private void AssignCurrentMenu()
+    {
+        // Look for the brains on the spawned player
         var seekerBrain = FindAnyObjectByType<SeekerBrain>();
+        var antennaBrain = FindAnyObjectByType<AntennaBrain>();
+
+        Debug.Log($"SWMenuManager: seekerBrain={(seekerBrain ? seekerBrain.gameObject.name : "null")}, " +
+                  $"antennaBrain={(antennaBrain ? antennaBrain.gameObject.name : "null")}");
+
+        // Prefer Seeker if present
         if (seekerBrain != null && seekerMenu != null && seekerMenuScript != null)
         {
             currentMenu = seekerMenu;
             seekerMenuScript.SetBrain(seekerBrain);
+            Debug.Log("SWMenuManager: Using Seeker menu.");
+            return;
+        }
+
+        // Otherwise use Antennaboi
+        if (antennaBrain != null && antennaboiMenu != null && antennaboiMenuScript != null)
+        {
+            currentMenu = antennaboiMenu;
+            antennaboiMenuScript.SetBrain(antennaBrain);
+            Debug.Log("SWMenuManager: Using Antennaboi menu.");
             return;
         }
 
