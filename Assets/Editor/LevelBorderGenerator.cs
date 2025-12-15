@@ -7,35 +7,35 @@ public class LevelBorderGenerator : EditorWindow
 {
     // Scene reference
     private SceneAsset targetScene;
-    
+
     // Prefab references
     private GameObject wallPrefab;
     private GameObject wallLongPrefab;
-    
+
     // Border settings
     private float borderAreaSize = 80f; // Size of the bordered area
     private float sizeMultiplier = 1f; // Multiplier to adjust from terrain size
     private float wallHeight = 0f; // Y position for walls
-    
+
     // Auto-detected terrain info
     private bool terrainDetected = false;
     private float detectedTerrainSize = 0f;
     private Vector3 terrainCenter = Vector3.zero;
-    
+
     // Prefab dimensions
     private Vector3 wallPrefabSize = Vector3.one;
     private Vector3 wallLongPrefabSize = Vector3.one;
-    
+
     // Border configuration
     private bool useTopBorder = true;
     private bool useBottomBorder = true;
     private bool useLeftBorder = true;
     private bool useRightBorder = true;
-    
+
     // Prefab selection
     private bool useLongWallsForHorizontal = true;
     private bool useLongWallsForVertical = false;
-    
+
     // Organization
     private string borderParentName = "LevelBorder";
     private bool createParentObject = true;
@@ -58,29 +58,29 @@ public class LevelBorderGenerator : EditorWindow
         EditorGUILayout.LabelField("Scene Setup", EditorStyles.boldLabel);
         SceneAsset previousScene = targetScene;
         targetScene = EditorGUILayout.ObjectField("Target Scene", targetScene, typeof(SceneAsset), false) as SceneAsset;
-        
+
         // Auto-detect terrain when scene changes
         if (targetScene != previousScene && targetScene != null)
         {
             DetectTerrainSize();
         }
-        
+
         // Show detected terrain info
         if (terrainDetected)
         {
             EditorGUILayout.HelpBox($"Detected Terrain Size: {detectedTerrainSize} units\nTerrain Center: ({terrainCenter.x:F2}, {terrainCenter.y:F2}, {terrainCenter.z:F2})", MessageType.Info);
         }
-        
+
         EditorGUILayout.Space();
 
         // Prefab selection
         EditorGUILayout.LabelField("Prefabs", EditorStyles.boldLabel);
         GameObject previousWallPrefab = wallPrefab;
         GameObject previousWallLongPrefab = wallLongPrefab;
-        
+
         wallPrefab = EditorGUILayout.ObjectField("Wall Prefab", wallPrefab, typeof(GameObject), false) as GameObject;
         wallLongPrefab = EditorGUILayout.ObjectField("Wall_Long Prefab", wallLongPrefab, typeof(GameObject), false) as GameObject;
-        
+
         // Auto-detect prefab sizes when prefabs change
         if (wallPrefab != previousWallPrefab && wallPrefab != null)
         {
@@ -90,7 +90,7 @@ public class LevelBorderGenerator : EditorWindow
         {
             wallLongPrefabSize = GetPrefabSize(wallLongPrefab);
         }
-        
+
         // Show prefab dimensions
         if (wallPrefab != null)
         {
@@ -100,12 +100,12 @@ public class LevelBorderGenerator : EditorWindow
         {
             EditorGUILayout.LabelField($"Wall_Long Size: {wallLongPrefabSize.x:F2} x {wallLongPrefabSize.y:F2} x {wallLongPrefabSize.z:F2}");
         }
-        
+
         EditorGUILayout.Space();
 
         // Grid settings
         EditorGUILayout.LabelField("Border Area Settings", EditorStyles.boldLabel);
-        
+
         if (terrainDetected)
         {
             sizeMultiplier = EditorGUILayout.Slider("Size Multiplier", sizeMultiplier, 0.1f, 2f);
@@ -116,9 +116,9 @@ public class LevelBorderGenerator : EditorWindow
         {
             borderAreaSize = EditorGUILayout.FloatField("Border Area Size", borderAreaSize);
         }
-        
+
         wallHeight = EditorGUILayout.FloatField("Wall Y Position", wallHeight);
-        
+
         EditorGUILayout.Space();
 
         // Border configuration
@@ -127,14 +127,14 @@ public class LevelBorderGenerator : EditorWindow
         useBottomBorder = EditorGUILayout.Toggle("Bottom Border", useBottomBorder);
         useLeftBorder = EditorGUILayout.Toggle("Left Border", useLeftBorder);
         useRightBorder = EditorGUILayout.Toggle("Right Border", useRightBorder);
-        
+
         EditorGUILayout.Space();
 
         // Prefab usage
         EditorGUILayout.LabelField("Wall Type Selection", EditorStyles.boldLabel);
         useLongWallsForHorizontal = EditorGUILayout.Toggle("Use Long Walls for Horizontal", useLongWallsForHorizontal);
         useLongWallsForVertical = EditorGUILayout.Toggle("Use Long Walls for Vertical", useLongWallsForVertical);
-        
+
         EditorGUILayout.Space();
 
         // Organization
@@ -150,14 +150,14 @@ public class LevelBorderGenerator : EditorWindow
 
         // Validation and Execute button
         bool canGenerate = ValidateSettings();
-        
+
         if (!canGenerate)
         {
             EditorGUILayout.HelpBox("Please assign a scene and at least one wall prefab to continue.", MessageType.Warning);
         }
 
         EditorGUI.BeginDisabledGroup(!canGenerate);
-        
+
         if (GUILayout.Button("GENERATE BORDER", GUILayout.Height(40)))
         {
             GenerateBorder();
@@ -278,7 +278,7 @@ public class LevelBorderGenerator : EditorWindow
     {
         if (targetScene == null)
             return false;
-        
+
         if (wallPrefab == null && wallLongPrefab == null)
             return false;
 
@@ -323,13 +323,13 @@ public class LevelBorderGenerator : EditorWindow
         // Generate borders - ensuring perfect alignment
         if (useBottomBorder)
             wallsCreated += GenerateHorizontalBorder(-halfSize, parentObject, "Bottom", true);
-        
+
         if (useTopBorder)
             wallsCreated += GenerateHorizontalBorder(halfSize, parentObject, "Top", true);
-        
+
         if (useLeftBorder)
             wallsCreated += GenerateVerticalBorder(-halfSize, parentObject, "Left", false);
-        
+
         if (useRightBorder)
             wallsCreated += GenerateVerticalBorder(halfSize, parentObject, "Right", false);
 
@@ -337,8 +337,8 @@ public class LevelBorderGenerator : EditorWindow
         EditorSceneManager.MarkSceneDirty(scene);
 
         // Show completion dialog
-        EditorUtility.DisplayDialog("Border Generated", 
-            $"Successfully generated {wallsCreated} wall objects in scene:\n{scene.name}\n\nDon't forget to save the scene!", 
+        EditorUtility.DisplayDialog("Border Generated",
+            $"Successfully generated {wallsCreated} wall objects in scene:\n{scene.name}\n\nDon't forget to save the scene!",
             "OK");
 
         Debug.Log($"Border generation complete: {wallsCreated} walls created in {scene.name}");
@@ -348,7 +348,7 @@ public class LevelBorderGenerator : EditorWindow
     {
         // Find all terrains in the current scene
         Terrain[] allTerrains = FindObjectsByType<Terrain>(FindObjectsSortMode.None);
-        
+
         if (allTerrains.Length > 0)
         {
             Bounds totalBounds = new Bounds();
@@ -392,18 +392,18 @@ public class LevelBorderGenerator : EditorWindow
         }
 
         Vector3 prefabSize = useLongWallsForHorizontal && wallLongPrefab != null ? wallLongPrefabSize : wallPrefabSize;
-        
+
         // Determine the wall depth (length along the border direction)
         float wallDepth = isHorizontal ? prefabSize.x : prefabSize.z;
-        
+
         // Calculate how many walls we need
         float halfSize = borderAreaSize / 2f;
         float totalLength = borderAreaSize;
         int wallCount = Mathf.CeilToInt(totalLength / wallDepth);
-        
+
         // Adjust to make walls fit perfectly
         float adjustedWallDepth = totalLength / wallCount;
-        
+
         // Start from the left edge
         float startX = -halfSize + adjustedWallDepth / 2f;
 
@@ -413,12 +413,12 @@ public class LevelBorderGenerator : EditorWindow
             Vector3 localPosition = new Vector3(xPosition, wallHeight, zPosition);
             Vector3 worldPosition = parent != null ? parent.transform.position + localPosition : terrainCenter + localPosition;
             GameObject wall = PrefabUtility.InstantiatePrefab(prefabToUse) as GameObject;
-            
+
             if (wall != null)
             {
                 wall.transform.position = worldPosition;
                 wall.transform.rotation = Quaternion.identity;
-                
+
                 // Scale to fit perfectly if needed
                 if (Mathf.Abs(adjustedWallDepth - wallDepth) > 0.001f)
                 {
@@ -426,9 +426,9 @@ public class LevelBorderGenerator : EditorWindow
                     scale.x *= (adjustedWallDepth / wallDepth);
                     wall.transform.localScale = scale;
                 }
-                
+
                 wall.name = $"{prefabToUse.name}_{borderName}_{i}";
-                
+
                 if (parent != null)
                 {
                     wall.transform.SetParent(parent.transform);
@@ -454,52 +454,52 @@ public class LevelBorderGenerator : EditorWindow
         }
 
         Vector3 prefabSize = useLongWallsForVertical && wallLongPrefab != null ? wallLongPrefabSize : wallPrefabSize;
-        
+
         // Determine the wall depth (length along the border direction)
         // For vertical walls rotated 90 degrees, X becomes Z
         float wallDepth = useLongWallsForVertical && wallLongPrefab != null ? wallLongPrefabSize.x : wallPrefabSize.x;
-        
+
         // Calculate how many walls we need
         float halfSize = borderAreaSize / 2f;
-        
+
         // Get horizontal wall thickness to extend into corners
         GameObject horizontalPrefab = useLongWallsForHorizontal && wallLongPrefab != null ? wallLongPrefab : wallPrefab;
         Vector3 horizontalSize = useLongWallsForHorizontal && wallLongPrefab != null ? wallLongPrefabSize : wallPrefabSize;
         float horizontalThickness = horizontalSize.z;
-        
+
         // Get vertical wall thickness
         Vector3 verticalSize = useLongWallsForVertical && wallLongPrefab != null ? wallLongPrefabSize : wallPrefabSize;
         float verticalThickness = verticalSize.z;
-        
+
         // Calculate total length for vertical wall - extend to meet horizontal walls
         // Add half of horizontal thickness on each end to ensure corners meet
         float totalLength = borderAreaSize + (useTopBorder ? horizontalThickness : 0) + (useBottomBorder ? horizontalThickness : 0);
         int wallCount = Mathf.CeilToInt(totalLength / wallDepth);
-        
+
         if (wallCount <= 0)
             wallCount = 1;
-        
+
         // Adjust to make walls fit perfectly
         float adjustedWallDepth = totalLength / wallCount;
-        
+
         // Start position - extend beyond the border edge to meet horizontal walls
         float startZ = -halfSize - (useBottomBorder ? horizontalThickness : 0) + adjustedWallDepth / 2f;
 
         for (int i = 0; i < wallCount; i++)
         {
             float zPosition = startZ + (i * adjustedWallDepth);
-            
+
             Vector3 localPosition = new Vector3(xPosition, wallHeight, zPosition);
             Vector3 worldPosition = parent != null ? parent.transform.position + localPosition : terrainCenter + localPosition;
             GameObject wall = PrefabUtility.InstantiatePrefab(prefabToUse) as GameObject;
-            
+
             if (wall != null)
             {
                 wall.transform.position = worldPosition;
-                
+
                 // Rotate vertical walls 90 degrees
                 wall.transform.rotation = Quaternion.Euler(0, 90, 0);
-                
+
                 // Scale to fit perfectly if needed
                 if (Mathf.Abs(adjustedWallDepth - wallDepth) > 0.001f)
                 {
@@ -507,9 +507,9 @@ public class LevelBorderGenerator : EditorWindow
                     scale.x *= (adjustedWallDepth / wallDepth);
                     wall.transform.localScale = scale;
                 }
-                
+
                 wall.name = $"{prefabToUse.name}_{borderName}_{i}";
-                
+
                 if (parent != null)
                 {
                     wall.transform.SetParent(parent.transform);

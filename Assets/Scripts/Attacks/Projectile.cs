@@ -25,8 +25,8 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider collision)
     {
-        #if UNITY_EDITOR
         GameObject defender = collision.gameObject;
+        #if UNITY_EDITOR
         if (owner != null)
         {
             Debug.Log($"{owner.name} {attackName} hit {defender.name} id");
