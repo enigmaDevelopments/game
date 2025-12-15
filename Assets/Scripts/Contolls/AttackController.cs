@@ -82,8 +82,7 @@ public class AttackController : MonoBehaviour
             brain = GetComponent<CharacterBrain>();
     }
 
-
-    private void Start()
+    private void Update()
     {
         if (primaryAttack != null && primaryAnimation != null)
             primaryAttack.animation = primaryAnimation;
@@ -91,10 +90,6 @@ public class AttackController : MonoBehaviour
             secondaryAttack.animation = secondaryAnimation;
         if (tertiaryAttack != null && tertiaryAnimation != null)
             tertiaryAttack.animation = tertiaryAnimation;
-    }
-
-    private void Update()
-    {
         if (isAIControlled)
             return;
         // Player input mode
